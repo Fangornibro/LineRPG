@@ -73,7 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 84feae7c354f9ae4490712e9bf1e5dc9, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b990a55dbc908404cab90f06b31f4752, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -157,7 +157,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 11c4defdb94a27b49a8851b8a6ad22b4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6d75ab6219ca0ff48859ad04dbeb39d2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -224,7 +224,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b1de1fd635964404898cede4bc57ab6d, type: 2}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -270,23 +270,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   state: 0
   EventSprites:
+  - {fileID: 21300000, guid: 84feae7c354f9ae4490712e9bf1e5dc9, type: 3}
   - {fileID: 21300000, guid: 32e59d3fa70a1584382e7b688418b4af, type: 3}
   - {fileID: 21300000, guid: 11c4defdb94a27b49a8851b8a6ad22b4, type: 3}
   - {fileID: 21300000, guid: 40070cd0dc825ef49a4a772412b7c4d9, type: 3}
-  - {fileID: 21300000, guid: 67fc2638b9f1db64cadac0be47b83a76, type: 3}
   - {fileID: 21300000, guid: 8bc8c4ccf0522e74ea353b35ac0ecda0, type: 3}
   - {fileID: 21300000, guid: 8bc8c4ccf0522e74ea353b35ac0ecda0, type: 3}
   - {fileID: 21300000, guid: 8bc8c4ccf0522e74ea353b35ac0ecda0, type: 3}
   - {fileID: 21300000, guid: 8bc8c4ccf0522e74ea353b35ac0ecda0, type: 3}
-  - {fileID: 21300000, guid: 85da4a914c9555d43bc50f0bf916b4c2, type: 3}
-  - {fileID: 21300000, guid: 85da4a914c9555d43bc50f0bf916b4c2, type: 3}
-  - {fileID: 21300000, guid: 85da4a914c9555d43bc50f0bf916b4c2, type: 3}
-  - {fileID: 21300000, guid: 85da4a914c9555d43bc50f0bf916b4c2, type: 3}
-  - {fileID: 21300000, guid: 85da4a914c9555d43bc50f0bf916b4c2, type: 3}
+  - {fileID: 21300000, guid: 6d75ab6219ca0ff48859ad04dbeb39d2, type: 3}
+  - {fileID: 21300000, guid: 6d75ab6219ca0ff48859ad04dbeb39d2, type: 3}
+  - {fileID: 21300000, guid: 6d75ab6219ca0ff48859ad04dbeb39d2, type: 3}
+  - {fileID: 21300000, guid: 6d75ab6219ca0ff48859ad04dbeb39d2, type: 3}
   LocationSprites:
+  - {fileID: 21300000, guid: fdb4a38d419eb764f937a5ba89487c0f, type: 3}
   - {fileID: 21300000, guid: 322681004a9a72549a3be3510a6945da, type: 3}
   - {fileID: 21300000, guid: 0623f69c4b3fb774197e65e554982f4a, type: 3}
-  - {fileID: 21300000, guid: 84feae7c354f9ae4490712e9bf1e5dc9, type: 3}
   - {fileID: 21300000, guid: b990a55dbc908404cab90f06b31f4752, type: 3}
   - {fileID: 21300000, guid: 858b256322282524e9d0e6106aea19d7, type: 3}
   - {fileID: 21300000, guid: c522e78ea8142d341ba4d0c0451c444d, type: 3}
@@ -297,6 +296,8 @@ MonoBehaviour:
   y: 6
   id: 0
   defaultSprite: {fileID: 0}
+  isBoss: 0
+  isStart: 0
 --- !u!61 &303798326485294490
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -15,7 +15,7 @@ public class Map : MonoBehaviour
     [HideInInspector]
     public List<Room> rooms, newrooms = new List<Room>();
     private Transform tr;
-    private LevelDialogue ld;
+    private FightManager ld;
     public void RoomsSpawn()
     {
         //for sorted by id list of rooms
@@ -49,6 +49,7 @@ public class Map : MonoBehaviour
         }
         rooms = newrooms;
         rooms[rooms.Count - 1].isBoss = true;
+        rooms[0].isStart = true;
     }
     public void NextRoom(int id, string curEventString, string curLocationString)
     {
@@ -60,7 +61,7 @@ public class Map : MonoBehaviour
                 Camera.main.transform.position = new Vector3(150, 0, -15);
                 ld.curEventString = curEventString;
                 ld.curLocationString = curLocationString;
-                ld.Start();
+                ld.RoomStart();
                 ld.start = true;
             }
             else if (r.id == id + 1)
@@ -71,7 +72,7 @@ public class Map : MonoBehaviour
     }
     void Start()
     {
-        ld = GameObject.Find("LevelDialogue").GetComponent<LevelDialogue>();
+        ld = GameObject.Find("LevelDialogue").GetComponent<FightManager>();
         tr = transform;
         //Rooms spawn
         RoomsSpawn();

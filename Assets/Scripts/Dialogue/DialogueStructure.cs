@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
-using static Room;
+using UnityEngine.EventSystems;
 
 public class DialogueStructure
 {
@@ -17,7 +17,11 @@ public class DialogueStructure
     public AudioSource textSound = GameObject.Find("textSound").GetComponent<AudioSource>();
     public DialogueBranch dialogue, curDialogueBranch;
     public int Statement = 0;
-    private LevelDialogue ld = GameObject.Find("LevelDialogue").GetComponent<LevelDialogue>();
+    private FightManager ld = GameObject.Find("LevelDialogue").GetComponent<FightManager>();
+    //For double click
+    private float clicked = 0;
+    private float clicktime = 0;
+    private float clickdelay = 1f;
     public DialogueStructure(DialogueBranch Dialogue)
     {
         dialogue = Dialogue;
@@ -34,6 +38,25 @@ public class DialogueStructure
             curDialogueBranch = dialogue;
             initialization = false;
             epressed = true;
+        }
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            clicked++;
+            if (clicked == 1) clicktime = Time.time;
+
+            if (clicked > 1 && Time.time - clicktime < clickdelay)
+            {
+                clicked = 0;
+                clicktime = 0;
+                if (!stringEnded)
+                {
+                    if (epressed)
+                    {
+                        startdelayBetweenLetters = 0;
+                    }
+                }
+            }
+            else if (clicked > 2 || Time.time - clicktime > 1) clicked = 0;
         }
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -87,6 +110,9 @@ public class DialogueStructure
             else
             {
                 faceIcon.GetComponent<Image>().sprite = curDialogueBranch.icon;
+                float iconWidth = faceIcon.GetComponent<RectTransform>().sizeDelta.x / curDialogueBranch.icon.rect.width;
+                float iconHeight = faceIcon.GetComponent<RectTransform>().sizeDelta.y / curDialogueBranch.icon.rect.height;
+                faceIcon.GetComponent<RectTransform>().sizeDelta = new Vector2 (curDialogueBranch.icon.rect.width * Mathf.Min(iconWidth, iconHeight), curDialogueBranch.icon.rect.height * Mathf.Min(iconWidth, iconHeight));
                 person.SetText(curDialogueBranch.person);
                 if (ichar < curDialogueBranch.textToChars().Count)
                 {
@@ -126,6 +152,7 @@ public class DialogueStructure
             button2.GetComponent<RectTransform>().anchoredPosition = new Vector3(-1000, -1000, 0);
             button3.GetComponent<RectTransform>().anchoredPosition = new Vector3(-1000, -1000, 0);
             button4.GetComponent<RectTransform>().anchoredPosition = new Vector3(-1000, -1000, 0);
+            faceIcon.GetComponent<RectTransform>().sizeDelta = new Vector2(360, 360);
             curDialogueBranch = nextDialogueBranch;
             text.SetText("");
             person.SetText("");

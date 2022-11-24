@@ -12,7 +12,7 @@ public class DialogueActivation : MonoBehaviour
         }
         else
         {
-            transform.Find("DialogueHud").GetComponent<RectTransform>().anchoredPosition = new Vector3(-1000, -1000, 0);
+            transform.Find("DialogueHud").GetComponent<RectTransform>().anchoredPosition = new Vector3(-2000, -2000, 0);
         }
     }
 }

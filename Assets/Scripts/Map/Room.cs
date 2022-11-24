@@ -14,15 +14,15 @@ public class Room : MonoBehaviour
     [HideInInspector]
     public Sprite defaultSprite;
     [HideInInspector]
-    public bool isBoss = false;
+    public bool isBoss = false, isStart = false;
     private void Awake()
     {
         map = GameObject.Find("Map").GetComponent<Map>();
         sr = GetComponent<SpriteRenderer>();
         EventSr = transform.Find("EventIcon").GetComponent<SpriteRenderer>();
         LocationSr = transform.Find("LocationIcon").GetComponent<SpriteRenderer>();
-        EventSr.sprite = EventSprites[Random.Range(1, EventSprites.Count)];
-        LocationSr.sprite = LocationSprites[Random.Range(0, LocationSprites.Count)];
+        EventSr.sprite = EventSprites[Random.Range(2, EventSprites.Count)];
+        LocationSr.sprite = LocationSprites[Random.Range(1, LocationSprites.Count)];
     }
     private void Update()
     {
@@ -40,7 +40,12 @@ public class Room : MonoBehaviour
         }
         if (isBoss)
         {
+            EventSr.sprite = EventSprites[1];
+        }
+        else if (isStart)
+        {
             EventSr.sprite = EventSprites[0];
+            LocationSr.sprite = LocationSprites[0];
         }
     }
     void OnMouseDown()
