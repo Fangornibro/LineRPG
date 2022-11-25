@@ -410,7 +410,6 @@
 "Assets/Scripts/UI/Item.cs"
 "Assets/Scripts/UI/ItemDropButton.cs"
 "Assets/Scripts/UI/ItemEventSystem.cs"
-"Assets/Scripts/UI/ItemUseButton.cs"
 "Assets/Scripts/UI/Menu.cs"
 "Assets/Scripts/UI/Pause.cs"
 "Assets/Scripts/UI/SelectionContextMenu.cs"

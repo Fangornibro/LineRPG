@@ -34,6 +34,8 @@ public class FightManager : MonoBehaviour
     public List<Item> StartObjects;
     //Event hud
     EventHud eh;
+    //Bottom panel
+    BottomPanel bp;
     public void Start()
     {
         //Player
@@ -44,12 +46,14 @@ public class FightManager : MonoBehaviour
         turnText = GameObject.Find("TurnText").GetComponent<TextMeshProUGUI>();
         //Event hud
         eh = GameObject.Find("EventHud").GetComponent<EventHud>();
+        //Bottom panel
+        bp = GameObject.Find("VisibleInventory").GetComponent<BottomPanel>();
     }
     public void RoomStart()
     {
-        player.NewTurn();
-        if (curEventString == "FightIcon")
+        if (curEventString == "FightIcon" || curEventString == "BossIcon")
         {
+            //Enemy type
             Enemy curEnemy = default(Enemy);
             string curFightEvent = fightEvents[Random.Range(0, fightEvents.Count)];
             foreach (GameObject e in enemies)
@@ -60,9 +64,12 @@ public class FightManager : MonoBehaviour
                     break;
                 }
             }
-            int chance, numberOfEnemies;
+            //Number of enemies, chance to leave
+            int numberOfEnemies = Random.Range(curEnemy.minNumberOfEnemies, curEnemy.maxNumberOfEnemies), chance = numberOfEnemies * curEnemy.chanceToLeave;
+            //Start fight dialogue, run away dialogue
             startFight = new DialogueBranch("Me", "There is no other choice.", playerIcon, "(Start fight)", null, null, null, null, null, null, null, 1);
             runAway = new DialogueBranch("Me", "Lucky!", playerIcon, "(Run away)", null, null, null, null, null, null, null, 2);
+            //Icon
             Sprite curIcon = default(Sprite);
             foreach (Sprite s in Icons)
             {
@@ -72,84 +79,60 @@ public class FightManager : MonoBehaviour
                     break;
                 }
             }
-            if (curFightEvent == "InferiorDemon")
+            //Spawn
+            for (int i = 0; i < numberOfEnemies; i++)
             {
-                numberOfEnemies = Random.Range(2, 4);
-                for (int i = 0; i < numberOfEnemies; i++)
-                {
-                    Instantiate(curEnemy, new Vector3(150 + i * 10, i % 2 == 0 ? -5 : 0, 0), Quaternion.Euler(0, 0, 0), temp);
-                }
-                chance = Random.Range(1, 2 * numberOfEnemies);
-                if (chance == 1)
-                {
-                    dialoguebranch2 = new DialogueBranch("Inferior Demon", "Where is he?", curIcon, "Bye Bye!", null, null, null, runAway, null, null, null, 0);
-                }
-                else
-                {
-                    dialoguebranch2 = new DialogueBranch("Inferior Demon", "Stop!", curIcon, "What a sticky demon.", null, null, null, startFight, null, null, null, 0);
-                }
-                dialoguebranch1 = new DialogueBranch("Inferior Demon", "Human!", curIcon, "Now you will die!", "Not today.", null, null, startFight, dialoguebranch2, null, null, 0);
+                Instantiate(curEnemy, new Vector3(150 + i * 10, i % 2 == 0 ? -5 : 0, 0), Quaternion.Euler(0, 0, 0), temp);
             }
-            else if (curFightEvent == "PettyDemon")
+            //Dialogue
+            switch (curFightEvent)
             {
-                numberOfEnemies = Random.Range(1, 2);
-                for (int i = 0; i < numberOfEnemies; i++)
-                {
-                    Instantiate(curEnemy, new Vector3(150 + i * 10, i % 2 == 0 ? -5 : 0, 0), Quaternion.Euler(0, 0, 0), temp);
-                }
-                chance = Random.Range(1, 4 * numberOfEnemies);
-                if (chance == 1)
-                {
-                    dialoguebranch2 = new DialogueBranch("Petty Demon", "He ran away...", curIcon, "Bye Bye!", null, null, null, runAway, null, null, null, 0);
-                }
-                else
-                {
-                    dialoguebranch2 = new DialogueBranch("Petty Demon", "Not so fast!", curIcon, "What a sticky demon.", null, null, null, startFight, null, null, null, 0);
-                }
-                dialoguebranch1 = new DialogueBranch("Petty Demon", "A new victim has arrived!", curIcon, "Now you will die!", "Not today.", null, null, startFight, dialoguebranch2, null, null, 0);
-            }
-            else if (curFightEvent == "Bloodhound")
-            {
-                numberOfEnemies = 3;
-                for (int i = 0; i < numberOfEnemies; i++)
-                {
-                    Instantiate(curEnemy, new Vector3(150 + i * 10, i % 2 == 0 ? -5 : 0, 0), Quaternion.Euler(0, 0, 0), temp);
-                }
-                chance = Random.Range(1, 4 * numberOfEnemies);
-                if (chance == 1)
-                {
-                    dialoguebranch2 = new DialogueBranch("Bloodhound", "Woof, woof, woof!", curIcon, "Bye Bye!", null, null, null, runAway, null, null, null, 0);
-                }
-                else
-                {
-                    dialoguebranch2 = new DialogueBranch("Bloodhound", "Woof!", curIcon, "What a sticky demon.", null, null, null, startFight, null, null, null, 0);
-                }
-                dialoguebranch1 = new DialogueBranch("Bloodhound", "Woof, woof!", curIcon, "Now you will die!", "Not today.", null, null, startFight, dialoguebranch2, null, null, 0);
-            }
-        }
-        else if (curEventString == "HouseIcon")
-        {
-            GameObject OldMan = default;
-            foreach (GameObject e in enemies)
-            {
-                if (e.name == "OldMan")
-                {
-                    OldMan = e;
+                case "InferiorDemon":
+                    if (chance == 1)
+                    {
+                        dialoguebranch2 = new DialogueBranch("Inferior Demon", "Where is he?", curIcon, "Bye Bye!", null, null, null, runAway, null, null, null, 0);
+                    }
+                    else
+                    {
+                        dialoguebranch2 = new DialogueBranch("Inferior Demon", "Stop!", curIcon, "What a sticky demon.", null, null, null, startFight, null, null, null, 0);
+                    }
+                    dialoguebranch1 = new DialogueBranch("Inferior Demon", "Human!", curIcon, "Now you will die!", "Not today.", null, null, startFight, dialoguebranch2, null, null, 0);
                     break;
-                }
-            }
-            Sprite curIcon = default(Sprite);
-            foreach (Sprite s in Icons)
-            {
-                if (s.name == "OldManIdle1")
-                {
-                    curIcon = s;
+                case "PettyDemon":
+                    if (chance == 1)
+                    {
+                        dialoguebranch2 = new DialogueBranch("Petty Demon", "He ran away...", curIcon, "Bye Bye!", null, null, null, runAway, null, null, null, 0);
+                    }
+                    else
+                    {
+                        dialoguebranch2 = new DialogueBranch("Petty Demon", "Not so fast!", curIcon, "What a sticky demon.", null, null, null, startFight, null, null, null, 0);
+                    }
+                    dialoguebranch1 = new DialogueBranch("Petty Demon", "A new victim has arrived!", curIcon, "Now you will die!", "Not today.", null, null, startFight, dialoguebranch2, null, null, 0);
                     break;
-                }
+                case "Bloodhound":
+                    if (chance == 1)
+                    {
+                        dialoguebranch2 = new DialogueBranch("Bloodhound", "Woof, woof, woof!", curIcon, "Bye Bye!", null, null, null, runAway, null, null, null, 0);
+                    }
+                    else
+                    {
+                        dialoguebranch2 = new DialogueBranch("Bloodhound", "Woof!", curIcon, "What a sticky demon.", null, null, null, startFight, null, null, null, 0);
+                    }
+                    dialoguebranch1 = new DialogueBranch("Bloodhound", "Woof, woof!", curIcon, "Now you will die!", "Not today.", null, null, startFight, dialoguebranch2, null, null, 0);
+                    break;
+                case "MiddleDemon":
+                    dialoguebranch3 = new DialogueBranch("Me", "He got me!", playerIcon, "(Take damage)", null, null, null, null, null, null, null, 3);
+                    if (chance == 1)
+                    {
+                        dialoguebranch2 = new DialogueBranch("MiddleDemon", "More victims will come...", curIcon, "Creepy.", null, null, null, runAway, null, null, null, 0);
+                    }
+                    else
+                    {
+                        dialoguebranch2 = new DialogueBranch("MiddleDemon", "I won't let you!", curIcon, "Graaah!", null, null, null, dialoguebranch3, null, null, null, 0);
+                    }
+                    dialoguebranch1 = new DialogueBranch("MiddleDemon", "All mankind must die for the needs of the king.", curIcon, "Now you will die!", "Not today.", null, null, startFight, dialoguebranch2, null, null, 0);
+                    break;
             }
-            Instantiate(OldMan, new Vector3(150, 0, 0), Quaternion.Euler(0, 0, 0), temp);
-            dialoguebranch2 = new DialogueBranch("Old Man", "No problem. I'll teach you a couple tricks.", curIcon, "Thanks... I guess.", null, null, null, null, null, null, null, 1);
-            dialoguebranch1 = new DialogueBranch("Old Man", "Woke up? There is no time to lie down, it's time to go into battle.", curIcon, "But I can't fight at all.", null, null, null, dialoguebranch2, null, null, null, 0);
         }
         else if (curEventString == "QuestionIcon")
         {
@@ -209,10 +192,9 @@ public class FightManager : MonoBehaviour
                 dialoguebranch1 = new DialogueBranch("Vampire", "Help meeee...", curIcon, "(Finish off the vampire)", "(Let the vampire drink your blood" + "(-" + Mathf.RoundToInt(player.maxHP / 4) + " HP)" + ")", "Leave", null, dialoguebranch2, dialoguebranch3, dialoguebranch4, null, 0);
             }
         }
-        else if (curEventString == "BreadIcon")
+        else if (curEventString == "HouseIcon")
         {
             GameObject curEventPerson = default;
-            int chance;
             foreach (GameObject e in enemies)
             {
                 if (e.name == "OldMan")
@@ -225,6 +207,31 @@ public class FightManager : MonoBehaviour
             foreach (Sprite s in Icons)
             {
                 if (s.name == "OldManIdle1")
+                {
+                    curIcon = s;
+                    break;
+                }
+            }
+            Instantiate(curEventPerson, new Vector3(150, 0, 0), Quaternion.Euler(0, 0, 0), temp);
+            dialoguebranch2 = new DialogueBranch("Old Man", "No problem. I'll teach you a couple tricks.", curIcon, "Thanks... I guess.", null, null, null, null, null, null, null, 1);
+            dialoguebranch1 = new DialogueBranch("Old Man", "Woke up? There is no time to lie down, it's time to go into battle.", curIcon, "But I can't fight at all.", null, null, null, dialoguebranch2, null, null, null, 0);
+        }
+        else if (curEventString == "BreadIcon")
+        {
+            GameObject curEventPerson = default;
+            int chance;
+            foreach (GameObject e in enemies)
+            {
+                if (e.name == "Baker")
+                {
+                    curEventPerson = e;
+                    break;
+                }
+            }
+            Sprite curIcon = default(Sprite);
+            foreach (Sprite s in Icons)
+            {
+                if (s.name == "BakerIdle1")
                 {
                     curIcon = s;
                     break;
@@ -245,6 +252,31 @@ public class FightManager : MonoBehaviour
             dialoguebranch2 = new DialogueBranch("Baker", "Enjoy your meal!", curIcon, "Thanks.", null, null, null, null, null, null, null, 3);
             dialoguebranch1 = new DialogueBranch("Baker", "Would you like to eat?", curIcon, "Yeah sure(Pay " + 20 + " gold.)", "I do not have money.", "Leave", null, dialoguebranch2, dialoguebranch3, dialoguebranch4, null, 0);
         }
+        else if (curEventString == "ChestIcon")
+        {
+            GameObject curEventPerson = default;
+            foreach (GameObject e in enemies)
+            {
+                if (e.name == "Chest")
+                {
+                    curEventPerson = e;
+                    break;
+                }
+            }
+            Sprite curIcon = default(Sprite);
+            foreach (Sprite s in Icons)
+            {
+                if (s.name == "ChestOpen1")
+                {
+                    curIcon = s;
+                    break;
+                }
+            }
+            Instantiate(curEventPerson, new Vector3(150, 0, 0), Quaternion.Euler(0, 0, 0), temp);
+            dialoguebranch3 = new DialogueBranch("Me", "Unjustified risk.", playerIcon, "(Leave)", null, null, null, null, null, null, null, 1);
+            dialoguebranch2 = new DialogueBranch("Me", "Opening...", curIcon, "(Loot)", null, null, null, null, null, null, null, 2);
+            dialoguebranch1 = new DialogueBranch("Me", "Is this a chest? Looks suspicious.", playerIcon, "Open chest.", "Better get out of here.", null, null, dialoguebranch2, dialoguebranch3, null, null, 0);
+        }
         else
         {
             //Back to map
@@ -262,6 +294,8 @@ public class FightManager : MonoBehaviour
                 if (st == 1)
                 {
                     player.SetArmour(0);
+                    bp.checkPassive();
+                    player.NewTurn();
                     curTurn = 1;
                     turnText.text = "Turn " + curTurn.ToString();
                     AllEnemiesPrepareHit();
@@ -272,15 +306,16 @@ public class FightManager : MonoBehaviour
                     //Back to map
                     eh.Activation("Running away");
                 }
-            }  
-            else if (curEventString == "HouseIcon")
-            {
-                int st = ds.Interaction();
-                if (st == 1)
+                else if (st == 3)
                 {
-                    eh.rewardItems.Add(rewardItems[0]);
-                    eh.rewardItems.Add(rewardItems[1]);
-                    eh.Activation("Victory");
+                    player.SetArmour(0);
+                    player.GetHit(5, EnemyAttack.Effect.none, "Middle Demon");
+                    bp.checkPassive();
+                    player.NewTurn();
+                    curTurn = 1;
+                    turnText.text = "Turn " + curTurn.ToString();
+                    AllEnemiesPrepareHit();
+                    startTempChecking = true;
                 }
             }
             else if (curEventString == "QuestionIcon")
@@ -300,14 +335,26 @@ public class FightManager : MonoBehaviour
                     else if (st == 3)
                     {
                         player.GetHit(Mathf.RoundToInt(player.maxHP / 4), EnemyAttack.Effect.none, "Vampire");
+                        player.NewTurn();
                         eh.Activation("Running away");
                     }
                     else if (st == 4)
                     {
                         player.GetHit(Mathf.RoundToInt(player.maxHP / 4), EnemyAttack.Effect.none, "Vampire");
+                        player.NewTurn();
                         eh.rewardItems.Add(rewardItems[2]);
                         eh.Activation("Victory");
                     }
+                }
+            }
+            else if (curEventString == "HouseIcon")
+            {
+                int st = ds.Interaction();
+                if (st == 1)
+                {
+                    eh.rewardItems.Add(rewardItems[0]);
+                    eh.rewardItems.Add(rewardItems[1]);
+                    eh.Activation("Victory");
                 }
             }
             else if (curEventString == "BreadIcon")
@@ -320,17 +367,32 @@ public class FightManager : MonoBehaviour
                 else if (st == 2)
                 {
                     player.GetHeal(5);
+                    player.NewTurn();
                     eh.Activation("Victory");
                 }
                 else if (st == 3)
                 {
                     //Minus money
                     player.GetHeal(10);
+                    player.NewTurn();
                     eh.Activation("Victory");
                 }
                 else if (st == 4)
                 {
                     //Minus money
+                    eh.Activation("Victory");
+                }
+            }
+            else if (curEventString == "ChestIcon")
+            {
+                int st = ds.Interaction();
+                if (st == 1)
+                {
+                    eh.Activation("Running away");
+                }
+                if (st == 2)
+                {
+                    eh.rewardItems.Add(rewardItems[Random.Range(3, rewardItems.Count)]);
                     eh.Activation("Victory");
                 }
             }
@@ -346,6 +408,7 @@ public class FightManager : MonoBehaviour
         {
             startTempChecking = false;
             //Back to map
+            eh.rewardItems.Add(rewardItems[Random.Range(3, rewardItems.Count)]);
             eh.Activation("Victory");
         }
     }
@@ -363,27 +426,12 @@ public class FightManager : MonoBehaviour
         for (int i = 0; i < temp.childCount; i++)
         {
             Enemy curEnemy = temp.GetChild(i).GetComponent<Enemy>();
-            if (!curEnemy.death)
+            if (!curEnemy.death && curEnemy.nextAttack != null)
             {
+                yield return new WaitForSeconds(0.6f);
                 curEnemy.StartAttackAnimation();
                 GameObject.Find(curEnemy.nextAttack.attackSound).GetComponent<AudioSource>().Play();
-                if (curEnemy.nextAttack.effect == EnemyAttack.Effect.armorUp)
-                {
-                    curEnemy.GetArmor(curEnemy.nextAttack.damage);
-                }
-                else if (curEnemy.nextAttack.effect == EnemyAttack.Effect.flock)
-                {
-                    for (int j = 0; j < temp.childCount; j++)
-                    {
-                        Enemy curEnemyForFlock = temp.GetChild(j).GetComponent<Enemy>();
-                        curEnemyForFlock.plusDamage++;
-                    }
-                }
-                else
-                {
-                    curEnemy.Hit();
-                }
-                yield return new WaitForSeconds(0.6f);
+                curEnemy.Hit();
             }
         }
         isEnemiesStillHit = false;

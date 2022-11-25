@@ -9,6 +9,10 @@ public class Player : MonoBehaviour
 {
     public int curMana, maxMana;
     public float HP, maxHP, armor;
+    [HideInInspector]
+    public float passiveArmor = 0;
+    [HideInInspector]
+    public int maxPassiveDamage = 0, passiveDamage = 0, passiveMana = 0;
     public int gold;
     private bool gotHit, attack;
     private SpriteRenderer sr;
@@ -80,8 +84,11 @@ public class Player : MonoBehaviour
     public void NewTurn()
     {
         hpBarHeight = defaultHpBarHeight / maxHP;
-        curMana = maxMana;
-        fightActivation.UpdateMana(maxMana, curMana);
+        curMana = maxMana + passiveMana;
+        armor += passiveArmor;
+        passiveDamage = maxPassiveDamage;
+        armourText.SetText(armor.ToString());
+        fightActivation.UpdateMana((maxMana + passiveMana), curMana);
     }
     public void GetHit(int damage, Effect effect, string enemyName)
     {
@@ -97,6 +104,15 @@ public class Player : MonoBehaviour
         damage += damageRand;
         //Popup
         Create(damage, false);
+        if (effect == Effect.minusMana)
+        {
+            curMana--;
+            if (curMana <= 0)
+            {
+                curMana = 0;
+            }
+            fightActivation.UpdateMana((maxMana + passiveMana), curMana);
+        }
         if (effect == Effect.throughArmor)
         {
             HP -= damage;
@@ -124,7 +140,6 @@ public class Player : MonoBehaviour
         sr.color = new Color(0.75f, 0.25f, 0.25f, 1f);
         gotHit = true;
     }
-
     public void GetHeal(int heal)
     {
         //Popup
@@ -180,7 +195,7 @@ public class Player : MonoBehaviour
     public void MinusMana(int cost)
     {
         curMana -= cost;
-        fightActivation.UpdateMana(maxMana, curMana);
+        fightActivation.UpdateMana((maxMana + passiveMana), curMana);
     }
     public void SetArmour(int armour)
     {
@@ -219,7 +234,6 @@ public class Player : MonoBehaviour
             }
         }
     }
-
     public void StartAttackAnimation()
     {
         anim.SetBool("Attack", true);

@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class EnemyAttack : MonoBehaviour
 {
-    //Name
-    public string Name;
     //Damage
     public int damage;
     //Sound

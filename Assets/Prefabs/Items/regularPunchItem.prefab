@@ -53,10 +53,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea63e90ffbe352645940d4c17bdcabec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iconPrefab: {fileID: 7324666136692259521, guid: 48ad40d06d84c17488cd407e15bc6b6d, type: 3}
+  iconPrefab: {fileID: 2721988790157410024, guid: 48ad40d06d84c17488cd407e15bc6b6d, type: 3}
   icon: {fileID: 0}
   Name: Regular Punch
-  usableType: 1
 --- !u!114 &3184083609400944719
 MonoBehaviour:
   m_ObjectHideFlags: 0

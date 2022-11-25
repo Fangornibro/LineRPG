@@ -7,6 +7,7 @@ public class Cell : MonoBehaviour
     [HideInInspector]
     public float x, y;
     public Icon icon;
+    public KeyCode key;
     private void Start()
     {
         x = GetComponent<RectTransform>().position.x;

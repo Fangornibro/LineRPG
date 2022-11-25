@@ -7,10 +7,10 @@ using UnityEngine.EventSystems;
 
 public class Item : MonoBehaviour, IPointerClickHandler
 {
-    public GameObject iconPrefab;
+    public Icon iconPrefab;
     private GameObject inventory;
     [HideInInspector]
-    public GameObject icon;
+    public Icon icon;
     public string Name;
     private void Start()
     {
@@ -23,18 +23,10 @@ public class Item : MonoBehaviour, IPointerClickHandler
             if (cell.icon == null && (cell.GetComponent<CellType>().cellType == GetComponent<CellType>().cellType || cell.GetComponent<CellType>().cellType == CellType.Type.Everything))
             {
                 icon = Instantiate(iconPrefab);
-                if (cell.GetComponent<CellType>().cellType == CellType.Type.Usable)
-                {
-                    icon.transform.SetParent(GameObject.Find("VisibleInventory").transform);
-                }
-                else
-                {
-                    icon.transform.SetParent(inventory.transform);
-                }
-                icon.GetComponent<RectTransform>().position = new Vector2(cell.x, cell.y);
-                icon.GetComponent<Icon>().cell = cell;
-                inventory.GetComponent<Inventory>().InventoryUI.Add(icon);
-                cell.icon = icon.GetComponent<Icon>();
+                icon.cell = cell;
+                icon.transform.SetParent(icon.cell.transform.parent);
+                icon.GetComponent<RectTransform>().anchoredPosition = cell.GetComponent<RectTransform>().anchoredPosition;
+                cell.icon = icon;
                 Destroy(gameObject);
                 break;
             }

@@ -1,62 +1,53 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class BottomPanel : MonoBehaviour
 {
-    public List<GameObject> UI;
-    public Cell cell1, cell2, cell3, cell4;
+    public List<Cell> cells;
     private FightManager fm;
-
+    private Inventory inv;
+    private Player player;
     private void Start()
     {
         fm = GameObject.Find("LevelDialogue").GetComponent<FightManager>();
+        inv = GameObject.Find("Inventory").GetComponent<Inventory>();
+        player = GameObject.Find("Player").GetComponent<Player>();
     }
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1) && cell1.icon != null)
+        foreach (Cell c in cells)
         {
-            cell1.icon.Use();
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha2) && cell2.icon != null)
-        {
-            cell2.icon.Use();
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha3) && cell3.icon != null)
-        {
-            cell3.icon.Use();
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha4) && cell4.icon != null)
-        {
-            cell4.icon.Use();
+            if (Input.GetKeyDown(c.key) && c.icon != null)
+            {
+                c.icon.Use();
+            }
         }
 
-        if (DialogueStructure.isDialogueOpen || !fm.startTempChecking)
+        if (DialogueStructure.isDialogueOpen || (!fm.startTempChecking && !inv.isInventOpen))
         {
-            foreach (GameObject go in UI)
-            {
-                if (go.GetComponent<Cell>() != null)
-                {
-                    if (go.GetComponent<Cell>().icon != null)
-                    {
-                        go.GetComponent<Cell>().icon.gameObject.SetActive(false);
-                    }
-                }
-                go.SetActive(false);
-            }
+            GetComponent<RectTransform>().anchoredPosition = new Vector2(-3000, -3000);
         }
         else
         {
-            foreach (GameObject go in UI)
+            GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
+        }
+    }
+
+    public void checkPassive()
+    {
+        player.passiveMana = 0;
+        player.passiveDamage = 0;
+        player.passiveArmor = 0;
+        foreach (Cell c in cells)
+        {
+            if (c.icon != null)
             {
-                if (go.GetComponent<Cell>() != null)
+                if (c.icon.AttackBlockOrPassive == "passive")
                 {
-                    if (go.GetComponent<Cell>().icon != null)
-                    {
-                        go.GetComponent<Cell>().icon.gameObject.SetActive(true);
-                    }
+                    c.icon.UpdatePassiveItem();
                 }
-                go.SetActive(true);
             }
         }
     }

@@ -6,24 +6,23 @@ using UnityEngine.UI;
 
 public class ItemEventSystem : MonoBehaviour, IPointerClickHandler, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler, IPointerUpHandler, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
-    public GameObject iconPrefab;
-    private GameObject inventory, DropButtonGO, UseButtonGO;
+    private ItemDropButton DropButtonGO;
+    private Inventory inventory;
+    private FightManager fm;
     private void Start()
     {
-        inventory = GameObject.FindGameObjectWithTag("Inventory");
+        fm = GameObject.Find("LevelDialogue").GetComponent<FightManager>();
+        inventory = GameObject.Find("Inventory").GetComponent<Inventory>();
     }
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (inventory.GetComponent<Inventory>().isInventOpen)
+        if (GetComponent<Icon>().cell.GetComponent<CellType>().cellType != CellType.Type.Usable && inventory.isInventOpen)
         {
             if (eventData.button == PointerEventData.InputButton.Right)
             {
                 SelectionContextMenu.Show();
-                DropButtonGO = GameObject.Find("DropButton");
-                DropButtonGO.GetComponent<ItemDropButton>().Icon = transform;
-                UseButtonGO = GameObject.Find("UseButton");
-                UseButtonGO.GetComponent<ItemUseButton>().Icon = transform;
-
+                DropButtonGO = GameObject.Find("DropButton").GetComponent<ItemDropButton>();
+                DropButtonGO.Icon = transform;
             }
         }
         else
@@ -54,7 +53,7 @@ public class ItemEventSystem : MonoBehaviour, IPointerClickHandler, IPointerDown
     public void OnPointerEnter(PointerEventData eventData)
     {
         transform.GetComponent<Image>().color = Color.white;
-        ContextMenu.Show(transform.GetComponent<Icon>().name, transform.GetComponent<Icon>().itemType, transform.GetComponent<Icon>().description, transform.position);
+        ContextMenu.Show(transform.GetComponent<Icon>().name, transform.GetComponent<Icon>().rarity, transform.GetComponent<Icon>().description, transform.position);
     }
 
     public void OnPointerExit(PointerEventData eventData)
@@ -65,7 +64,7 @@ public class ItemEventSystem : MonoBehaviour, IPointerClickHandler, IPointerDown
 
     public void OnDrag(PointerEventData eventData)
     {
-        if (inventory.GetComponent<Inventory>().isInventOpen)
+        if (!fm.startTempChecking && inventory.isInventOpen)
         {
             ContextMenu.UnShow();
             if (eventData.button == PointerEventData.InputButton.Left)
@@ -77,27 +76,31 @@ public class ItemEventSystem : MonoBehaviour, IPointerClickHandler, IPointerDown
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        GetComponent<Icon>().transform.SetParent(GameObject.Find("Canvas").transform);
-        if (inventory.GetComponent<Inventory>().isInventOpen)
+        if (!fm.startTempChecking)
         {
-            ContextMenu.UnShow();
+            transform.SetParent(GameObject.Find("Canvas").transform);
+            if (inventory.isInventOpen)
+            {
+                ContextMenu.UnShow();
+            }
         }
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        if (inventory.GetComponent<Inventory>().isInventOpen)
+        if (!fm.startTempChecking && inventory.isInventOpen)
         {
-            foreach (Cell cellinv in inventory.GetComponent<Inventory>().cells)
+            foreach (Cell cellinv in inventory.cells)
             {
                 if (cellinv.GetComponent<Collider2D>().Distance(GetComponent<Collider2D>()).distance < cellinv.GetComponent<RectTransform>().sizeDelta.x / 4)
                 {
-                    transform.GetComponent<Icon>().ChangeItemCell(cellinv);
-                    ContextMenu.Show(transform.GetComponent<Icon>().name, transform.GetComponent<Icon>().itemType, transform.GetComponent<Icon>().description, transform.position);
+                    GetComponent<Icon>().ChangeItemCell(cellinv);
+                    ContextMenu.Show(GetComponent<Icon>().name, GetComponent<Icon>().rarity, GetComponent<Icon>().description, transform.position);
                 }
                 else
                 {
-                    transform.position = transform.GetComponent<Icon>().cell.transform.position;
+                    transform.position = GetComponent<Icon>().cell.transform.position;
+                    transform.SetParent(GetComponent<Icon>().cell.transform.parent);
                 }
             }
         }

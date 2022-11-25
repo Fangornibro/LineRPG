@@ -53,10 +53,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea63e90ffbe352645940d4c17bdcabec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iconPrefab: {fileID: 7324666136692259521, guid: 9db3d5454b9b4cb48870b7771c7204c2, type: 3}
+  iconPrefab: {fileID: 2721988790157410024, guid: 9db3d5454b9b4cb48870b7771c7204c2, type: 3}
   icon: {fileID: 0}
   Name: Regular Block
-  usableType: 2
 --- !u!114 &3184083609400944719
 MonoBehaviour:
   m_ObjectHideFlags: 0

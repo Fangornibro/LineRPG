@@ -124,19 +124,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 624567c39adacf44685e3494439c11aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HP: 30
+  HP: 20
   armor: 0
+  plusDamage: 0
   attacks:
   - {fileID: -8549199934320519844, guid: bd73aee2864b92e44a2f129f2f06aa0c, type: 3}
   - {fileID: -8549199934320519844, guid: bd73aee2864b92e44a2f129f2f06aa0c, type: 3}
   - {fileID: -8549199934320519844, guid: bd73aee2864b92e44a2f129f2f06aa0c, type: 3}
   - {fileID: -8549199934320519844, guid: 53fd22d8c4b433f4f92466dc7e78e786, type: 3}
-  nextAttack: 0
+  nextAttack: {fileID: 0}
   deathMat: {fileID: 2100000, guid: b531947e80bc95c4f90c93a6db1e394d, type: 2}
   death: 0
   outlinePrefab: {fileID: 214563111168147069, guid: a32e08bba28b2084b8a78cc91f480db1, type: 3}
   particleSystem: {fileID: 835498447766092628, guid: a055f418262d05b48973497971557ab3, type: 3}
   textPrefab: {fileID: 6529684988628247528, guid: 98c11c0b15cac1543b1bf5849510a349, type: 3}
+  minNumberOfEnemies: 3
+  maxNumberOfEnemies: 3
+  chanceToLeave: 4
+  Name: Bloodhound
 --- !u!61 &214563111168147070
 BoxCollider2D:
   m_ObjectHideFlags: 0

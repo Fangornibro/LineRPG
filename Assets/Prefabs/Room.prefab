@@ -274,14 +274,13 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 32e59d3fa70a1584382e7b688418b4af, type: 3}
   - {fileID: 21300000, guid: 11c4defdb94a27b49a8851b8a6ad22b4, type: 3}
   - {fileID: 21300000, guid: 40070cd0dc825ef49a4a772412b7c4d9, type: 3}
+  - {fileID: 21300000, guid: 6d75ab6219ca0ff48859ad04dbeb39d2, type: 3}
   - {fileID: 21300000, guid: 8bc8c4ccf0522e74ea353b35ac0ecda0, type: 3}
   - {fileID: 21300000, guid: 8bc8c4ccf0522e74ea353b35ac0ecda0, type: 3}
   - {fileID: 21300000, guid: 8bc8c4ccf0522e74ea353b35ac0ecda0, type: 3}
   - {fileID: 21300000, guid: 8bc8c4ccf0522e74ea353b35ac0ecda0, type: 3}
-  - {fileID: 21300000, guid: 6d75ab6219ca0ff48859ad04dbeb39d2, type: 3}
-  - {fileID: 21300000, guid: 6d75ab6219ca0ff48859ad04dbeb39d2, type: 3}
-  - {fileID: 21300000, guid: 6d75ab6219ca0ff48859ad04dbeb39d2, type: 3}
-  - {fileID: 21300000, guid: 6d75ab6219ca0ff48859ad04dbeb39d2, type: 3}
+  - {fileID: 21300000, guid: 8bc8c4ccf0522e74ea353b35ac0ecda0, type: 3}
+  - {fileID: 21300000, guid: 8bc8c4ccf0522e74ea353b35ac0ecda0, type: 3}
   LocationSprites:
   - {fileID: 21300000, guid: fdb4a38d419eb764f937a5ba89487c0f, type: 3}
   - {fileID: 21300000, guid: 322681004a9a72549a3be3510a6945da, type: 3}

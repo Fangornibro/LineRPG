@@ -53,7 +53,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea63e90ffbe352645940d4c17bdcabec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iconPrefab: {fileID: 7324666136692259521, guid: c0814fe3227648e4792ec987e8f1b4f4, type: 3}
+  iconPrefab: {fileID: 2721988790157410024, guid: c0814fe3227648e4792ec987e8f1b4f4, type: 3}
   icon: {fileID: 0}
   Name: Blood Sucking
 --- !u!114 &3184083609400944719

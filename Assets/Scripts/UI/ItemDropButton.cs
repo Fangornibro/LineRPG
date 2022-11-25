@@ -4,9 +4,8 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ItemDropButton : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
+public class ItemDropButton : MonoBehaviour, IPointerClickHandler
 {
-    public static bool canPlayerShoot = true;
     public Transform Icon;
 
     public void OnPointerClick(PointerEventData eventData)
@@ -19,15 +18,5 @@ public class ItemDropButton : MonoBehaviour, IPointerClickHandler, IPointerEnter
             }
             SelectionContextMenu.UnShow();
         }
-    }
-
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        canPlayerShoot = false;
-    }
-
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        canPlayerShoot = true;
     }
 }

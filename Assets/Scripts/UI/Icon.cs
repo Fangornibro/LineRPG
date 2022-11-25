@@ -11,7 +11,7 @@ public class Icon : MonoBehaviour
 {
     public Item item;
     public Cell cell;
-    public string name, itemType ,description;
+    public string name, rarity ,description;
     private GameObject inventory;
     public int damageOrArmour, cost;
     public Texture2D cursorTexture;
@@ -21,16 +21,38 @@ public class Icon : MonoBehaviour
     //Sounds
     public AudioSource abilitySound;
     //Effect
-    public enum Effect { none, HPSteal }
+    public enum Effect { none, HPSteal, AOE, passivePlusMana, passiveArmorEveryRound, passiveSharpenedWeapon, disarm }
     public Effect effect;
+    //Attack, Block or passive
+    public string AttackBlockOrPassive;
+    //Player
+    private Player player;
     private void Start()
     {
+        //Player
+        player = GameObject.Find("Player").GetComponent<Player>();
         abilityOnCursor = GameObject.Find("AbilityOnCursor").GetComponent<AbilityOnCursor>();
         inventory = GameObject.FindGameObjectWithTag("Inventory");
         ld = GameObject.Find("LevelDialogue").GetComponent<FightManager>();
         damageOrArmourText.SetText(damageOrArmour.ToString());
         manaCostText.SetText(cost.ToString());
     }
+    public void UpdatePassiveItem()
+    {
+        if (effect == Effect.passivePlusMana)
+        {
+            player.passiveMana++;
+        }
+        else if (effect == Effect.passiveArmorEveryRound)
+        {
+            player.passiveArmor += 2;
+        }
+        else if (effect == Effect.passiveSharpenedWeapon)
+        {
+            player.maxPassiveDamage += 2;
+        }
+    }
+    
 
     public void DropOneItem()
     {
@@ -39,20 +61,9 @@ public class Icon : MonoBehaviour
 
     public void Use()
     {
-        if (!ld.isEnemiesStillHit)
+        if (!ld.isEnemiesStillHit && AttackBlockOrPassive != "passive")
         {
-            if (item.Name == "Regular Punch")
-            {
-                abilityOnCursor.newCursor(damageOrArmour, cost, cursorTexture, "attack", abilitySound, effect);
-            }
-            else if (item.Name == "Regular Block")
-            {
-                abilityOnCursor.newCursor(damageOrArmour, cost, cursorTexture, "block", abilitySound, effect);
-            }
-            else if (item.Name == "Blood Sucking")
-            {
-                abilityOnCursor.newCursor(damageOrArmour, cost, cursorTexture, "attack", abilitySound, effect);
-            }
+            abilityOnCursor.newCursor(damageOrArmour, cost, cursorTexture, AttackBlockOrPassive, abilitySound, effect);
         }
     }
 

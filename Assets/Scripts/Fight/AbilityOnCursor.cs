@@ -24,7 +24,7 @@ public class AbilityOnCursor : MonoBehaviour
             this.effect = effect;
             isCursorDeafult = 0.1f;
             Cursor.SetCursor(cursorTexture, Vector2.zero, CursorMode.Auto);
-            curDamageOrArmour = damageOrArmour;
+            curDamageOrArmour = damageOrArmour + player.passiveDamage;
             curCost = cost;
             isOnCursor = true;
         } 
