@@ -571,8 +571,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item: {fileID: 3184083609400944715, guid: ab9707ddeb741c44e9f8b08b341c760c, type: 3}
   cell: {fileID: 0}
-  name: Armor blessing
-  itemType: epic (passive)
+  Name: Armor blessing
+  rarity: Epic
   description: Gain two armor at the start of the round.
   damageOrArmour: 0
   cost: 0
@@ -594,7 +594,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b51596ab162e70546972db2368229b6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iconPrefab: {fileID: 7324666136692259521}
 --- !u!61 &-7760014983223456309
 BoxCollider2D:
   m_ObjectHideFlags: 0

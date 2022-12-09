@@ -443,11 +443,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item: {fileID: 3184083609400944715, guid: 3183eb4d22ab1a4409b147f8dd749dde, type: 3}
   cell: {fileID: 0}
-  name: Blood Sucking
-  itemType: rare
+  Name: Blood Sucking
+  rarity: Epic
   description: Steals life energy from enemies. Heals the character for 1/3 of the
     damage dealt.
-  damageOrArmour: 9
+  damageOrArmour: 8
   cost: 2
   cursorTexture: {fileID: 2800000, guid: 90523504c0a01b844852df73693faa41, type: 3}
   damageOrArmourText: {fileID: 4435790871952098337}
@@ -467,7 +467,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b51596ab162e70546972db2368229b6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iconPrefab: {fileID: 7324666136692259521}
 --- !u!61 &-7760014983223456309
 BoxCollider2D:
   m_ObjectHideFlags: 0

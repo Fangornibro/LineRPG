@@ -571,8 +571,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item: {fileID: 3184083609400944715, guid: 7c12f2decca95b040a75cfa3683061e0, type: 3}
   cell: {fileID: 0}
-  name: Slash
-  itemType: epic
+  Name: Slash
+  rarity: Epic
   description: Powerful attack that deals damage to all enemies.
   damageOrArmour: 8
   cost: 3
@@ -594,7 +594,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b51596ab162e70546972db2368229b6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iconPrefab: {fileID: 7324666136692259521}
 --- !u!61 &-7760014983223456309
 BoxCollider2D:
   m_ObjectHideFlags: 0

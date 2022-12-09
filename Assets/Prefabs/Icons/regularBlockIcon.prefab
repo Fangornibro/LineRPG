@@ -443,9 +443,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item: {fileID: 3184083609400944715, guid: 3fed6c560fabe9d4bb42a083442757f2, type: 3}
   cell: {fileID: 0}
-  name: Regular Punch
-  itemType: common
-  description: Just a regular punch... Are you waiting for something?
+  Name: Regular block
+  rarity: Common
+  description: Just a regular block... Are you waiting for something?
   damageOrArmour: 4
   cost: 1
   cursorTexture: {fileID: 2800000, guid: 90523504c0a01b844852df73693faa41, type: 3}
@@ -466,7 +466,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b51596ab162e70546972db2368229b6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iconPrefab: {fileID: 7324666136692259521}
 --- !u!61 &-7760014983223456309
 BoxCollider2D:
   m_ObjectHideFlags: 0

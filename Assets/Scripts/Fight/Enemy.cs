@@ -23,8 +23,6 @@ public class Enemy : MonoBehaviour
     private float deathTime = 0;
     [HideInInspector]
     public bool death = false;
-    //Hit
-    AbilityOnCursor abilityOnCursor;
     private Animator anim;
     private float hitDuration = 0.7f, attackDuration = 0.5f;
     private bool gotHit = false, attack = false;
@@ -40,19 +38,22 @@ public class Enemy : MonoBehaviour
     //StartFight
     public DialogueBranch dialoguebranch1, dialoguebranch2;
     //Patricles
-    public ParticleSystem particleSystem;
+    public ParticleSystem particleSystemPrefab;
     //Damage popup
     [SerializeField]
     private DamagePopup textPrefab;
     private DamagePopup damagePopup;
     //Armor
     TextMeshPro armorText;
+    SpriteRenderer armorGO;
     //Number of enemies, chance to leave
     public int minNumberOfEnemies, maxNumberOfEnemies, chanceToLeave;
     //Name
     public string Name;
     //Temp
     private Transform temp;
+    //Have skin?
+    public bool isAnySkins;
     public void Create(float damage)
     {
         damagePopup = GameObject.Instantiate(textPrefab, new Vector2(transform.position.x + Random.Range(0, transform.localScale.x), transform.position.y + transform.localScale.y), Quaternion.identity);
@@ -67,16 +68,27 @@ public class Enemy : MonoBehaviour
     }
     void Start()
     {
+        //Random include second number
+        maxNumberOfEnemies++; chanceToLeave++;
         //Temp
         temp = GameObject.Find("Temp").transform;
         //Armor
         armorText = transform.Find("ArmorText").GetComponent<TextMeshPro>();
+        armorGO = transform.Find("Armor").GetComponent<SpriteRenderer>();
+        if (armor <= 0)
+        {
+            armorText.text = "";
+            armorGO.color = new Color(1f, 1f, 1f, 0f);
+        }
+        else
+        {
+            armorText.text = armor.ToString();
+        }
         //HP bar
         hpBar = transform.Find("HpBarFront");
         HPSizeMultiple = hpBar.localScale.x / HP;
         //Player
         player = GameObject.Find("Player").GetComponent<Player>();
-        abilityOnCursor = GameObject.Find("AbilityOnCursor").GetComponent<AbilityOnCursor>();
         sr = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
         defaultPos = transform.position;
@@ -88,7 +100,11 @@ public class Enemy : MonoBehaviour
         outlineList.Add(GameObject.Instantiate(outlinePrefab, new Vector3(transform.position.x, transform.position.y - 0.62f, 0), new Quaternion(0, 0, 0, 0).normalized, transform));
         foreach (SpriteRenderer s in outlineList)
         {
-            s.gameObject.active = false;
+            s.gameObject.SetActive(false);
+        }
+        if (isAnySkins)
+        {
+            anim.SetInteger("Type", Random.Range(1, 5));
         }
     }
 
@@ -96,7 +112,7 @@ public class Enemy : MonoBehaviour
     {
         foreach (SpriteRenderer s in outlineList)
         {
-            s.gameObject.active = true;
+            s.gameObject.SetActive(true);
             s.flipX = sr.flipX;
         }
     }
@@ -104,7 +120,7 @@ public class Enemy : MonoBehaviour
     {
         foreach (SpriteRenderer s in outlineList)
         {
-            s.gameObject.active = false;
+            s.gameObject.SetActive(false);
         }
     }
 
@@ -112,12 +128,26 @@ public class Enemy : MonoBehaviour
     {
         armor += Armor;
         armorText.SetText(armor.ToString());
+        armorGO.color = new Color(1f, 1f, 1f, 1f);
+    }
+
+    private void RunningAway()
+    {
+        death = true;
     }
     public void Hit()
     {
         if (nextAttack.effect == EnemyAttack.Effect.armorUp)
         {
             GetArmor(nextAttack.damage);
+        }
+        else if (nextAttack.effect == EnemyAttack.Effect.runningAway)
+        {
+            RunningAway();
+        }
+        else if (nextAttack.effect == EnemyAttack.Effect.weakness)
+        {
+            player.weakness++;
         }
         else if (nextAttack.effect == EnemyAttack.Effect.flock)
         {
@@ -136,38 +166,21 @@ public class Enemy : MonoBehaviour
     //Get hit
     private void OnMouseDown()
     {
-        if (abilityOnCursor.isOnCursor && abilityOnCursor.abilityType == "attack" && !death)
+        if (!death)
         {
-            if (player.curMana >= abilityOnCursor.curCost)
-            {
-                if (abilityOnCursor.effect == Icon.Effect.AOE)
-                {
-                    for (int j = 0; j < temp.childCount; j++)
-                    {
-                        Enemy curEnemyForFlock = temp.GetChild(j).GetComponent<Enemy>();
-                        curEnemyForFlock.GetHit();
-                    }
-                }
-                else
-                {
-                    GetHit();
-                }
-            } 
+            player.Hit(this);
         }
     }
-    public void GetHit()
+    public void GetHit(int damage)
     {
         //Player set passive damage to 0
         player.passiveDamage = 0;
         //Particles
-        Instantiate(particleSystem, new Vector2(transform.position.x, transform.position.y + transform.localScale.y / 2), Quaternion.Euler(0, 0, 0));
-        //Sounds
-        abilityOnCursor.abilitySound.Play();
-        player.MinusMana(abilityOnCursor.curCost);
+        Instantiate(particleSystemPrefab, new Vector2(transform.position.x, transform.position.y + transform.localScale.y / 2), Quaternion.Euler(0, 0, 0));
         //Popup
-        Create(abilityOnCursor.curDamageOrArmour);
+        Create(damage);
         //Minus armor and HP
-        armor -= abilityOnCursor.curDamageOrArmour;
+        armor -= damage;
         if (armor < 0)
         {
             HP += armor;
@@ -178,23 +191,21 @@ public class Enemy : MonoBehaviour
             HP = 0;
             death = true;
         }
-        armorText.SetText(armor.ToString());
+        if (armor <= 0)
+        {
+            armorText.text = "";
+            armorGO.color = new Color(1f, 1f, 1f, 0f);
+        }
+        else
+        {
+            armorGO.color = new Color(1f, 1f, 1f, 1f);
+            armorText.text = armor.ToString();
+        }
         hpBar.localScale = new Vector2(HPSizeMultiple * HP, hpBar.localScale.y);
         //Enemy animation
         anim.SetBool("GotHit", true);
         sr.color = new Color(0.75f, 0.25f, 0.25f);
         gotHit = true;
-        //Lifesteal effect
-        if (abilityOnCursor.effect == Icon.Effect.HPSteal)
-        {
-            player.GetHeal(Mathf.RoundToInt(abilityOnCursor.curDamageOrArmour / 3));
-        }
-        if (abilityOnCursor.effect == Icon.Effect.disarm)
-        {
-            nextAttack = null;
-        }
-        //Player animation 
-        player.StartAttackAnimation();
     }
     public void StartAttackAnimation()
     {
@@ -233,8 +244,8 @@ public class Enemy : MonoBehaviour
                 hitDuration -= Time.deltaTime;
                 if (timeBtwShaking <= 0)
                 {
-                    Shakingx = Random.RandomRange(-1f, 1f);
-                    Shakingy = Random.RandomRange(-1f, 1f);
+                    Shakingx = Random.Range(-1f, 1f);
+                    Shakingy = Random.Range(-1f, 1f);
                     timeBtwShaking = 0.1f;
                 }
                 else

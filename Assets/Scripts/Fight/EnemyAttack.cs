@@ -11,7 +11,7 @@ public class EnemyAttack : MonoBehaviour
     //Player
     private Player player;
     //Effect
-    public enum Effect { none, minusMana, throughArmor, armorUp, flock }
+    public enum Effect { none, minusMana, throughArmor, armorUp, flock, runningAway, weakness }
     public Effect effect;
     //Attack icon
     public Sprite attackIcon;

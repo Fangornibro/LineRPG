@@ -53,7 +53,7 @@ public class ItemEventSystem : MonoBehaviour, IPointerClickHandler, IPointerDown
     public void OnPointerEnter(PointerEventData eventData)
     {
         transform.GetComponent<Image>().color = Color.white;
-        ContextMenu.Show(transform.GetComponent<Icon>().name, transform.GetComponent<Icon>().rarity, transform.GetComponent<Icon>().description, transform.position);
+        ContextMenu.Show(transform.GetComponent<Icon>().Name, transform.GetComponent<Icon>().rarity, transform.GetComponent<Icon>().description, transform.position);
     }
 
     public void OnPointerExit(PointerEventData eventData)
@@ -95,7 +95,7 @@ public class ItemEventSystem : MonoBehaviour, IPointerClickHandler, IPointerDown
                 if (cellinv.GetComponent<Collider2D>().Distance(GetComponent<Collider2D>()).distance < cellinv.GetComponent<RectTransform>().sizeDelta.x / 4)
                 {
                     GetComponent<Icon>().ChangeItemCell(cellinv);
-                    ContextMenu.Show(GetComponent<Icon>().name, GetComponent<Icon>().rarity, GetComponent<Icon>().description, transform.position);
+                    ContextMenu.Show(GetComponent<Icon>().Name, GetComponent<Icon>().rarity, GetComponent<Icon>().description, transform.position);
                 }
                 else
                 {

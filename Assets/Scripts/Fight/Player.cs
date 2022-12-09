@@ -12,7 +12,7 @@ public class Player : MonoBehaviour
     [HideInInspector]
     public float passiveArmor = 0;
     [HideInInspector]
-    public int maxPassiveDamage = 0, passiveDamage = 0, passiveMana = 0;
+    public int maxPassiveDamage = 0, passiveDamage = 0, passiveMana = 0, weakness = 0;
     public int gold;
     private bool gotHit, attack;
     private SpriteRenderer sr;
@@ -32,8 +32,10 @@ public class Player : MonoBehaviour
     private List<SpriteRenderer> outlineList;
     //Event hud
     EventHud eh;
-
+    //Ability on cursor
     AbilityOnCursor abilityOnCursor;
+    //Temp
+    private Transform temp;
     public void Create(float damage, bool isHeal)
     {
         damagePopup = GameObject.Instantiate(textPrefab, new Vector2(transform.position.x + Random.Range(0, transform.localScale.x), transform.position.y + transform.localScale.y), Quaternion.identity);
@@ -55,6 +57,8 @@ public class Player : MonoBehaviour
     }
     private void Start()
     {
+        //Temp
+        temp = GameObject.Find("Temp").transform;
         //Event hud
         eh = GameObject.Find("EventHud").GetComponent<EventHud>();
         sr = GetComponent<SpriteRenderer>();
@@ -78,11 +82,12 @@ public class Player : MonoBehaviour
         outlineList.Add(GameObject.Instantiate(outlinePrefab, new Vector3(transform.position.x, transform.position.y - 0.62f, 0), new Quaternion(0, 0, 0, 0).normalized, transform));
         foreach (SpriteRenderer s in outlineList)
         {
-            s.gameObject.active = false;
+            s.gameObject.SetActive(false);
         }
     }
     public void NewTurn()
     {
+        weakness = 0;
         hpBarHeight = defaultHpBarHeight / maxHP;
         curMana = maxMana + passiveMana;
         armor += passiveArmor;
@@ -90,6 +95,48 @@ public class Player : MonoBehaviour
         armourText.SetText(armor.ToString());
         fightActivation.UpdateMana((maxMana + passiveMana), curMana);
     }
+
+
+    public void Hit(Enemy enemy)
+    {
+        if (abilityOnCursor.isOnCursor && abilityOnCursor.abilityType == "attack")
+        {
+            if (curMana >= abilityOnCursor.curCost)
+            {
+                //Sounds
+                abilityOnCursor.abilitySound.Play();
+                //Player animation 
+                StartAttackAnimation();
+                //Minus mana
+                MinusMana(abilityOnCursor.curCost);
+                //Lifesteal effect
+                if (abilityOnCursor.effect == Icon.Effect.HPSteal)
+                {
+                    GetHeal(Mathf.RoundToInt((abilityOnCursor.curDamageOrArmour - weakness) / 4));
+                }
+                //Disarm effect
+                if (abilityOnCursor.effect == Icon.Effect.disarm)
+                {
+                    enemy.nextAttack = null;
+                }
+                //AOE effect
+                if (abilityOnCursor.effect == Icon.Effect.AOE)
+                {
+                    for (int j = 0; j < temp.childCount; j++)
+                    {
+                        Enemy curEnemyForAOE = temp.GetChild(j).GetComponent<Enemy>();
+                        curEnemyForAOE.GetHit(abilityOnCursor.curDamageOrArmour - weakness);
+                    }
+                }
+                else
+                {
+                    enemy.GetHit(abilityOnCursor.curDamageOrArmour - weakness);
+                }
+            }
+        }
+    }
+
+
     public void GetHit(int damage, Effect effect, string enemyName)
     {
         int damageRand;
@@ -149,6 +196,7 @@ public class Player : MonoBehaviour
         {
             HP = maxHP;
         }
+        hpBarHeight = defaultHpBarHeight / maxHP;
         hpBar.sizeDelta = new Vector2(hpBar.sizeDelta.x, HP * hpBarHeight);
         HPText.SetText(HP.ToString());
     }
@@ -206,7 +254,7 @@ public class Player : MonoBehaviour
     {
         foreach (SpriteRenderer s in outlineList)
         {
-            s.gameObject.active = true;
+            s.gameObject.SetActive(true);
             s.flipX = sr.flipX;
         }
     }
@@ -214,7 +262,7 @@ public class Player : MonoBehaviour
     {
         foreach (SpriteRenderer s in outlineList)
         {
-            s.gameObject.active = false;
+            s.gameObject.SetActive(false);
         }
     }
     private void OnMouseDown()

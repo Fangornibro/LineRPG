@@ -571,8 +571,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item: {fileID: 3184083609400944715, guid: 5e759415bd2224b4b877419b56103f46, type: 3}
   cell: {fileID: 0}
-  name: Backstab
-  itemType: common
+  Name: Backstab
+  rarity: Common
   description: A backstab requires a lot of strength for a stealthy strike, but inflicts
     huge damage on the enemy... kinda.
   damageOrArmour: 9
@@ -595,7 +595,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b51596ab162e70546972db2368229b6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iconPrefab: {fileID: 7324666136692259521}
 --- !u!61 &-7760014983223456309
 BoxCollider2D:
   m_ObjectHideFlags: 0

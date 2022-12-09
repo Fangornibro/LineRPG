@@ -11,7 +11,7 @@ public class Icon : MonoBehaviour
 {
     public Item item;
     public Cell cell;
-    public string name, rarity ,description;
+    public string Name, rarity ,description;
     private GameObject inventory;
     public int damageOrArmour, cost;
     public Texture2D cursorTexture;
