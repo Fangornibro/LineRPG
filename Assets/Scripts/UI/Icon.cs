@@ -9,11 +9,11 @@ using UnityEngine.EventSystems;
 
 public class Icon : MonoBehaviour
 {
-    public Item item;
     public Cell cell;
     public string Name, rarity ,description;
     private GameObject inventory;
     public int damageOrArmour, cost;
+    public float criticalChance, criticalDamage;
     public Texture2D cursorTexture;
     private FightManager ld;
     public TextMeshProUGUI damageOrArmourText, manaCostText;
@@ -21,12 +21,14 @@ public class Icon : MonoBehaviour
     //Sounds
     public AudioSource abilitySound;
     //Effect
-    public enum Effect { none, HPSteal, AOE, passivePlusMana, passiveArmorEveryRound, passiveSharpenedWeapon, disarm }
+    public enum Effect { none, HPSteal, AOE, passivePlusMana, passiveArmorEveryRound, passiveSharpenedWeapon, disarm, armorDestruction, poison }
     public Effect effect;
     //Attack, Block or passive
     public string AttackBlockOrPassive;
     //Player
     private Player player;
+    [HideInInspector]
+    public bool isTakeable = true;
     private void Start()
     {
         //Player
@@ -63,7 +65,7 @@ public class Icon : MonoBehaviour
     {
         if (!ld.isEnemiesStillHit && AttackBlockOrPassive != "passive")
         {
-            abilityOnCursor.newCursor(damageOrArmour, cost, cursorTexture, AttackBlockOrPassive, abilitySound, effect);
+            abilityOnCursor.newCursor(damageOrArmour, criticalChance, criticalDamage, cost, cursorTexture, AttackBlockOrPassive, abilitySound, effect);
         }
     }
 
@@ -71,7 +73,7 @@ public class Icon : MonoBehaviour
     {
         if (cellToChange.icon == null)
         {
-            if (cellToChange.GetComponent<CellType>().cellType == item.GetComponent<CellType>().cellType || cellToChange.GetComponent<CellType>().cellType == CellType.Type.Everything)
+            if (cellToChange.GetComponent<CellType>().cellType == GetComponent<CellType>().cellType || cellToChange.GetComponent<CellType>().cellType == CellType.Type.Everything)
             {
                 cellToChange.icon = transform.GetComponent<Icon>().cell.icon;
                 foreach (Cell cellinv in inventory.GetComponent<Inventory>().cells)
@@ -96,7 +98,7 @@ public class Icon : MonoBehaviour
         }
         else
         {
-            if ((cellToChange.GetComponent<CellType>().cellType == item.GetComponent<CellType>().cellType || cellToChange.GetComponent<CellType>().cellType == CellType.Type.Everything) && (cell.GetComponent<CellType>().cellType == cellToChange.icon.item.GetComponent<CellType>().cellType || cell.GetComponent<CellType>().cellType == CellType.Type.Everything))
+            if ((cellToChange.GetComponent<CellType>().cellType == GetComponent<CellType>().cellType || cellToChange.GetComponent<CellType>().cellType == CellType.Type.Everything) && (cell.GetComponent<CellType>().cellType == cellToChange.icon.GetComponent<CellType>().cellType || cell.GetComponent<CellType>().cellType == CellType.Type.Everything))
             {
                 if (cell.GetComponent<CellType>().cellType == CellType.Type.Usable)
                 {

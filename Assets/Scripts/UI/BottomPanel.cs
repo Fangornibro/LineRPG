@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Numerics;
 using UnityEngine;
 using static UnityEditor.Experimental.GraphView.GraphView;
 
@@ -27,11 +28,11 @@ public class BottomPanel : MonoBehaviour
 
         if (DialogueStructure.isDialogueOpen || (!fm.startTempChecking && !inv.isInventOpen))
         {
-            GetComponent<RectTransform>().anchoredPosition = new Vector2(-3000, -3000);
+            GetComponent<RectTransform>().anchoredPosition = new UnityEngine.Vector2(-3000, -3000);
         }
         else
         {
-            GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
+            GetComponent<RectTransform>().anchoredPosition = UnityEngine.Vector2.zero;
         }
     }
 
@@ -39,6 +40,7 @@ public class BottomPanel : MonoBehaviour
     {
         player.passiveMana = 0;
         player.passiveDamage = 0;
+        player.maxPassiveDamage = 0;
         player.passiveArmor = 0;
         foreach (Cell c in cells)
         {

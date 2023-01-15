@@ -6,9 +6,9 @@ using UnityEngine.UI;
 
 public class ItemEventSystem : MonoBehaviour, IPointerClickHandler, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler, IPointerUpHandler, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
-    private ItemDropButton DropButtonGO;
     private Inventory inventory;
     private FightManager fm;
+
     private void Start()
     {
         fm = GameObject.Find("LevelDialogue").GetComponent<FightManager>();
@@ -16,18 +16,27 @@ public class ItemEventSystem : MonoBehaviour, IPointerClickHandler, IPointerDown
     }
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (GetComponent<Icon>().cell.GetComponent<CellType>().cellType != CellType.Type.Usable && inventory.isInventOpen)
+        if (GetComponent<Icon>().isTakeable)
         {
-            if (eventData.button == PointerEventData.InputButton.Right)
+            foreach (Cell cell in inventory.GetComponent<Inventory>().cells)
             {
-                SelectionContextMenu.Show();
-                DropButtonGO = GameObject.Find("DropButton").GetComponent<ItemDropButton>();
-                DropButtonGO.Icon = transform;
+                if (cell.icon == null)
+                {
+                    Icon icon = GetComponent<Icon>();
+
+                    icon.cell = cell;
+                    icon.transform.SetParent(icon.cell.transform.parent);
+                    icon.GetComponent<RectTransform>().anchoredPosition = cell.GetComponent<RectTransform>().anchoredPosition + new Vector2(-4.5f, 4.5f);
+                    cell.icon = icon;
+                    icon.transform.localScale = Vector3.one;
+                    icon.isTakeable = false;
+                    break;
+                }
             }
         }
         else
         {
-            if (eventData.button == PointerEventData.InputButton.Left && GetComponent<Icon>().cell.GetComponent<CellType>().cellType == CellType.Type.Usable)
+            if (eventData.button == PointerEventData.InputButton.Left && GetComponent<Icon>().cell.GetComponent<CellType>().cellType == CellType.Type.Usable && !inventory.isInventOpen)
             {
                 GetComponent<Icon>().Use();
             }

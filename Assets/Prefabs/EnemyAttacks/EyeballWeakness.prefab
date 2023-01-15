@@ -45,6 +45,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 0
-  attackSound: EyeballWeaknessSound
-  effect: 6
+  criticalChance: 0
+  criticalDamage: 0
+  attackSound: {fileID: 4153501721860171176, guid: 8a5360e9189be464bacee3f978632fb6, type: 3}
+  effect: 7
   attackIcon: {fileID: 21300000, guid: 09eb7750bfcd05c4bb6846136fca865f, type: 3}

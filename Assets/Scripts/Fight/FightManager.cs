@@ -12,7 +12,7 @@ public class FightManager : MonoBehaviour
     public List<GameObject> events;
     public GameObject oldMan, baker, chest;
     //Reward list
-    public List<Item> rewardItems;
+    public List<Icon> rewardItems;
     [HideInInspector]
     public bool start = false, startTempChecking = false;
     public static DialogueStructure ds;
@@ -228,14 +228,13 @@ public class FightManager : MonoBehaviour
     {
         if (start)
         {
+            bp.checkPassive();
+            player.FightStart();
             if (curEventString == "FightIcon")
             {
                 int st = ds.Interaction();
                 if (st == 1)
                 {
-                    player.SetArmour(0);
-                    bp.checkPassive();
-                    player.NewTurn();
                     curTurn = 1;
                     turnText.text = "Turn " + curTurn.ToString();
                     AllEnemiesPrepareHit();
@@ -248,10 +247,7 @@ public class FightManager : MonoBehaviour
                 }
                 else if (st == 3)
                 {
-                    player.SetArmour(0);
-                    player.GetHit(5, EnemyAttack.Effect.none, "Middle Demon");
-                    bp.checkPassive();
-                    player.NewTurn();
+                    player.GetHit(5, false, EnemyAttack.Effect.none, "Middle Demon");
                     curTurn = 1;
                     turnText.text = "Turn " + curTurn.ToString();
                     AllEnemiesPrepareHit();
@@ -274,14 +270,12 @@ public class FightManager : MonoBehaviour
                     }
                     else if (st == 3)
                     {
-                        player.GetHit(Mathf.RoundToInt(player.maxHP / 4), EnemyAttack.Effect.none, "Vampire");
-                        player.NewTurn();
+                        player.GetHit(Mathf.RoundToInt(player.maxHP / 4), false, EnemyAttack.Effect.none, "Vampire");
                         eh.Activation("Running away");
                     }
                     else if (st == 4)
                     {
-                        player.GetHit(Mathf.RoundToInt(player.maxHP / 4), EnemyAttack.Effect.none, "Vampire");
-                        player.NewTurn();
+                        player.GetHit(Mathf.RoundToInt(player.maxHP / 4), false, EnemyAttack.Effect.none, "Vampire");
                         eh.rewardItems.Add(rewardItems[2]);
                         eh.Activation("Victory");
                     }
@@ -307,14 +301,12 @@ public class FightManager : MonoBehaviour
                 else if (st == 2)
                 {
                     player.GetHeal(5);
-                    player.NewTurn();
                     eh.Activation("Victory");
                 }
                 else if (st == 3)
                 {
                     //Minus money
                     player.GetHeal(10);
-                    player.NewTurn();
                     eh.Activation("Victory");
                 }
                 else if (st == 4)
@@ -369,8 +361,6 @@ public class FightManager : MonoBehaviour
             if (!curEnemy.death && curEnemy.nextAttack != null)
             {
                 yield return new WaitForSeconds(0.6f);
-                curEnemy.StartAttackAnimation();
-                GameObject.Find(curEnemy.nextAttack.attackSound).GetComponent<AudioSource>().Play();
                 curEnemy.Hit();
             }
         }
@@ -385,8 +375,17 @@ public class FightManager : MonoBehaviour
             Enemy curEnemy = temp.GetChild(i).GetComponent<Enemy>();
             if (!curEnemy.death)
             {
+                if (curEnemy.poison > 0)
+                {
+                    curEnemy.GetHit(3, false);
+                    curEnemy.poison--;
+                }
+            }
+            if (!curEnemy.death)
+            {
                 curEnemy.nextAttack = curEnemy.attacks[Random.Range(0, curEnemy.attacks.Count)];
                 curEnemy.transform.Find("AttackIcon").GetComponent<SpriteRenderer>().sprite = curEnemy.nextAttack.attackIcon;
+                curEnemy.EffectUpdate();
             }
         }
     }

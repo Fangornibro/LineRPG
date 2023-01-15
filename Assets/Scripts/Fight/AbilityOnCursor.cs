@@ -7,6 +7,7 @@ public class AbilityOnCursor : MonoBehaviour
     private float isCursorDeafult = 0.1f;
     public bool isOnCursor = false;
     public int curDamageOrArmour = 0, curCost = 0;
+    public float curCriticalChance = 0, curCriticalDamage = 0;
     private Player player;
     public string abilityType;
     public AudioSource abilitySound;
@@ -15,7 +16,7 @@ public class AbilityOnCursor : MonoBehaviour
     {
         player = GameObject.Find("Player").GetComponent<Player>();
     }
-    public void newCursor(int damageOrArmour, int cost, Texture2D cursorTexture, string abilityType, AudioSource abilitySound, Icon.Effect effect)
+    public void newCursor(int damageOrArmour, float criticalChance, float criticalDamage, int cost, Texture2D cursorTexture, string abilityType, AudioSource abilitySound, Icon.Effect effect)
     {
         if (player.curMana >= cost)
         {
@@ -25,6 +26,8 @@ public class AbilityOnCursor : MonoBehaviour
             isCursorDeafult = 0.1f;
             Cursor.SetCursor(cursorTexture, Vector2.zero, CursorMode.Auto);
             curDamageOrArmour = damageOrArmour + player.passiveDamage;
+            curCriticalChance = criticalChance;
+            curCriticalDamage = criticalDamage;
             curCost = cost;
             isOnCursor = true;
         } 

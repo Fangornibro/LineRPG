@@ -1,14 +1,16 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using static EnemyAttack;
+using static Icon;
 using static UnityEditorInternal.ReorderableList;
 
 public class Player : MonoBehaviour
 {
     public int curMana, maxMana;
-    public float HP, maxHP, armor;
+    public float HP, maxHP, armor, passiveCriticalChance, passiveCriticalDamage;
     [HideInInspector]
     public float passiveArmor = 0;
     [HideInInspector]
@@ -36,12 +38,21 @@ public class Player : MonoBehaviour
     AbilityOnCursor abilityOnCursor;
     //Temp
     private Transform temp;
-    public void Create(float damage, bool isHeal)
+    //Crit sound
+    private AudioSource critSound;
+    //Effects
+    public List<GameObject> effectIconPrefabs = new List<GameObject>();
+    [HideInInspector]
+    public List<GameObject> curEffectIcons = new List<GameObject>();
+    [HideInInspector]
+    public int poison = 0;
+    private int minusManaEffect = 0;
+    public void Create(float damage, bool isHeal, bool isCrit)
     {
-        damagePopup = GameObject.Instantiate(textPrefab, new Vector2(transform.position.x + Random.Range(0, transform.localScale.x), transform.position.y + transform.localScale.y), Quaternion.identity);
+        damagePopup = GameObject.Instantiate(textPrefab, new Vector2(transform.position.x + UnityEngine.Random.Range(0, transform.localScale.x), transform.position.y + transform.localScale.y), Quaternion.identity);
         TextMeshPro text = damagePopup.GetComponent<TextMeshPro>();
         text.SetText(damage.ToString());
-        damagePopup.transform.localScale = new Vector2(damagePopup.transform.localScale.x + damage / 100, damagePopup.transform.localScale.y + damage / 100);
+        damagePopup.transform.localScale = new Vector2(damagePopup.transform.localScale.x + (damage / 100) * (isCrit ? 1.5f : 1), damagePopup.transform.localScale.y + damage / 100);
         if (damagePopup.transform.localScale.x >= 2)
         {
             damagePopup.transform.localScale = new Vector2(2, 2);
@@ -52,11 +63,13 @@ public class Player : MonoBehaviour
         }
         else
         {
-            damagePopup.textColor = new Color(0.682353f, 0.1215686f + damage / 122, 0.2078431f, 1f);
+            damagePopup.textColor = new Color(0.682353f, (0.1215686f + damage / 122) + (isCrit ? 0.2f : 0f), 0.2078431f, 1f);
         }
     }
     private void Start()
     {
+        //Crit sound
+        critSound = GameObject.Find("CritSound").GetComponent<AudioSource>();
         //Temp
         temp = GameObject.Find("Temp").transform;
         //Event hud
@@ -85,24 +98,117 @@ public class Player : MonoBehaviour
             s.gameObject.SetActive(false);
         }
     }
+    public void EffectUpdate()
+    {
+        foreach (GameObject gm in curEffectIcons)
+        {
+            GameObject.Destroy(gm.gameObject);
+        }
+        curEffectIcons.Clear();
+
+        if (passiveMana > 0)
+        {
+            GameObject effectIcon = Instantiate(effectIconPrefabs[0], transform.position, Quaternion.Euler(0, 0, 0), transform);
+            effectIcon.transform.GetChild(0).GetComponent<TextMeshPro>().SetText(passiveMana.ToString());
+            curEffectIcons.Add(effectIcon);
+        }
+        if (passiveArmor > 0)
+        {
+            GameObject effectIcon = Instantiate(effectIconPrefabs[1], transform.position, Quaternion.Euler(0, 0, 0), transform);
+            effectIcon.transform.GetChild(0).GetComponent<TextMeshPro>().SetText(passiveArmor.ToString());
+            curEffectIcons.Add(effectIcon);
+        }
+        if (passiveDamage > 0)
+        {
+            GameObject effectIcon = Instantiate(effectIconPrefabs[2], transform.position, Quaternion.Euler(0, 0, 0), transform);
+            effectIcon.transform.GetChild(0).GetComponent<TextMeshPro>().SetText(passiveDamage.ToString());
+            curEffectIcons.Add(effectIcon);
+        }
+        if (poison > 0)
+        {
+            GameObject effectIcon = Instantiate(effectIconPrefabs[6], transform.position, Quaternion.Euler(0, 0, 0), transform);
+            effectIcon.transform.GetChild(0).GetComponent<TextMeshPro>().SetText(poison.ToString() + "t");
+            curEffectIcons.Add(effectIcon);
+        }
+        if (minusManaEffect > 0)
+        {
+            GameObject effectIcon = Instantiate(effectIconPrefabs[3], transform.position, Quaternion.Euler(0, 0, 0), transform);
+            effectIcon.transform.GetChild(0).GetComponent<TextMeshPro>().SetText(minusManaEffect.ToString());
+            curEffectIcons.Add(effectIcon);
+        }
+        if (weakness > 0)
+        {
+            GameObject effectIcon = Instantiate(effectIconPrefabs[5], transform.position, Quaternion.Euler(0, 0, 0), transform);
+            effectIcon.transform.GetChild(0).GetComponent<TextMeshPro>().SetText(weakness.ToString());
+            curEffectIcons.Add(effectIcon);
+        }
+        for (int i = 0; i < curEffectIcons.Count; i++)
+        {
+            if ((i + 4) % 3 == 1)
+            {
+                curEffectIcons[i].transform.position = transform.position + new Vector3(-3, (i - 1), 0);
+            }
+            else if ((i + 4) % 3 == 2)
+            {
+                curEffectIcons[i].transform.position = transform.position + new Vector3(0, (i - 2), 0);
+            }
+            else if((i + 4) % 3 == 0)
+            {
+                curEffectIcons[i].transform.position = transform.position + new Vector3(3, (i - 3), 0);
+            }
+        }
+    }
     public void NewTurn()
     {
+        minusManaEffect = 0;
         weakness = 0;
-        hpBarHeight = defaultHpBarHeight / maxHP;
+        if (poison > 0)
+        {
+            GetHit(Convert.ToInt32(Math.Round(maxHP /10)), false, EnemyAttack.Effect.throughArmor, "poison");
+            poison--;
+        }
         curMana = maxMana + passiveMana;
         armor += passiveArmor;
         passiveDamage = maxPassiveDamage;
+        BarsUpdate();
+        EffectUpdate();
+    }
+    public void FightStart()
+    {
+        weakness = 0;
+        poison = 0;
+        minusManaEffect = 0;
+        curMana = maxMana + passiveMana;
+        armor = 0;
+        passiveDamage = maxPassiveDamage;
+        BarsUpdate();
+        EffectUpdate();
+    }
+    public void BarsUpdate()
+    {
+        hpBarHeight = defaultHpBarHeight / maxHP;
         armourText.SetText(armor.ToString());
         fightActivation.UpdateMana((maxMana + passiveMana), curMana);
     }
-
-
     public void Hit(Enemy enemy)
     {
         if (abilityOnCursor.isOnCursor && abilityOnCursor.abilityType == "attack")
         {
             if (curMana >= abilityOnCursor.curCost)
             {
+                int damage;
+                bool isCrit;
+                if (UnityEngine.Random.Range(0, 100) >= passiveCriticalChance + abilityOnCursor.curCriticalChance)
+                {
+                    damage = abilityOnCursor.curDamageOrArmour - weakness;
+                    isCrit = false;
+                }
+                else
+                {
+                    damage = Convert.ToInt32(Math.Round((abilityOnCursor.curDamageOrArmour - weakness) * (passiveCriticalDamage + abilityOnCursor.curCriticalDamage), MidpointRounding.AwayFromZero));
+                    isCrit = true;
+                    critSound.Play();
+                }
                 //Sounds
                 abilityOnCursor.abilitySound.Play();
                 //Player animation 
@@ -112,12 +218,20 @@ public class Player : MonoBehaviour
                 //Lifesteal effect
                 if (abilityOnCursor.effect == Icon.Effect.HPSteal)
                 {
-                    GetHeal(Mathf.RoundToInt((abilityOnCursor.curDamageOrArmour - weakness) / 4));
+                    GetHeal(Mathf.RoundToInt((damage) / 4));
+                }
+                //Poison effect
+                if (abilityOnCursor.effect == Icon.Effect.poison)
+                {
+                    enemy.poison++;
+                    enemy.EffectUpdate();
                 }
                 //Disarm effect
-                if (abilityOnCursor.effect == Icon.Effect.disarm)
+                if (abilityOnCursor.effect == Icon.Effect.disarm && enemy.nextAttack.effect == EnemyAttack.Effect.defaultAttack)
                 {
-                    enemy.nextAttack = null;
+                    enemy.nextAttack = enemy.noneAttack;
+                    enemy.transform.Find("AttackIcon").GetComponent<SpriteRenderer>().sprite = enemy.noneAttack.attackIcon;
+                    enemy.EffectUpdate();
                 }
                 //AOE effect
                 if (abilityOnCursor.effect == Icon.Effect.AOE)
@@ -125,42 +239,57 @@ public class Player : MonoBehaviour
                     for (int j = 0; j < temp.childCount; j++)
                     {
                         Enemy curEnemyForAOE = temp.GetChild(j).GetComponent<Enemy>();
-                        curEnemyForAOE.GetHit(abilityOnCursor.curDamageOrArmour - weakness);
+                        curEnemyForAOE.GetHit(damage, isCrit);
                     }
                 }
                 else
                 {
-                    enemy.GetHit(abilityOnCursor.curDamageOrArmour - weakness);
+                    if (abilityOnCursor.effect == Icon.Effect.armorDestruction && enemy.armor > 0)
+                    {
+                        enemy.GetHit(damage * 2, isCrit);
+                    }
+                    else
+                    {
+                        enemy.GetHit(damage, isCrit);
+                    }
                 }
+                EffectUpdate();
             }
         }
     }
 
 
-    public void GetHit(int damage, Effect effect, string enemyName)
+    public void GetHit(int damage, bool isCrit, EnemyAttack.Effect effect, string enemyName)
     {
         int damageRand;
         if (damage / 10 == 0)
         {
-            damageRand = Random.Range(-1, 2);
+            damageRand = UnityEngine.Random.Range(-1, 2);
         }
         else
         {
-            damageRand = Random.Range(-damage / 10, (damage / 10) + 1);
+            damageRand = UnityEngine.Random.Range(-damage / 10, (damage / 10) + 1);
         }
         damage += damageRand;
         //Popup
-        Create(damage, false);
-        if (effect == Effect.minusMana)
+        Create(damage, false, isCrit);
+        if (effect == EnemyAttack.Effect.minusMana)
         {
-            curMana--;
-            if (curMana <= 0)
-            {
-                curMana = 0;
-            }
-            fightActivation.UpdateMana((maxMana + passiveMana), curMana);
+            minusManaEffect++;
+            MinusMana(1);
+            EffectUpdate();
         }
-        if (effect == Effect.throughArmor)
+        if (effect == EnemyAttack.Effect.poison)
+        {
+            poison++;
+            EffectUpdate();
+        }
+        if (effect == EnemyAttack.Effect.weakness)
+        {
+            weakness++;
+            EffectUpdate();
+        }
+        if (effect == EnemyAttack.Effect.throughArmor)
         {
             HP -= damage;
         }
@@ -177,8 +306,8 @@ public class Player : MonoBehaviour
         {
             HP = 0;
             //Back to map
-            eh.Activation("Loose");
-            eh.LooseText.SetText("You have been killed by " + enemyName + ".");
+            eh.Activation("Defeat");
+            eh.DefeatText.SetText("You have been killed by " + enemyName + ".");
         }
         hpBar.sizeDelta = new Vector2(hpBar.sizeDelta.x, HP * hpBarHeight);
         HPText.SetText(HP.ToString());
@@ -190,7 +319,7 @@ public class Player : MonoBehaviour
     public void GetHeal(int heal)
     {
         //Popup
-        Create(heal, true);
+        Create(heal, true, false);
         HP += heal;
         if (HP >= maxHP)
         {
@@ -243,9 +372,13 @@ public class Player : MonoBehaviour
     public void MinusMana(int cost)
     {
         curMana -= cost;
+        if (curMana < 0)
+        {
+            curMana = 0;
+        }
         fightActivation.UpdateMana((maxMana + passiveMana), curMana);
     }
-    public void SetArmour(int armour)
+    public void SetArmor(int armour)
     {
         this.armor = armour;
         armourText.SetText(armour.ToString());
