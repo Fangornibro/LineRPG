@@ -4,36 +4,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class NextTurnButton : MonoBehaviour, IPointerClickHandler, IPointerDownHandler, IPointerUpHandler
+public class NextTurnButton : MonoBehaviour
 {
     private FightManager fm;
-    private RectTransform rt;
-    [SerializeField]
-    private Sprite down, up;
+    private AudioSource nextTurnSound;
     private void Start()
     {
-        fm = GameObject.Find("LevelDialogue").GetComponent<FightManager>();
-        rt = GetComponent<RectTransform>();
+        fm = GameObject.Find("FightManager").GetComponent<FightManager>();
+        nextTurnSound = GameObject.Find("NextTurnSound").GetComponent<AudioSource>();
     }
-    public void OnPointerClick(PointerEventData eventData)
+    public void OnPointerClick()
     {
         if (!fm.isEnemiesStillHit && !fm.IsAllEnemiesStillInHit())
         {
+            nextTurnSound.Play();
             fm.NextTurn();
         }
-    }
-
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        rt.sizeDelta = new Vector2(376, 162);
-        GetComponent<UnityEngine.UI.Image>().sprite = down;
-        transform.GetChild(0).GetComponent<RectTransform>().anchoredPosition = new Vector3(0, 0, 0);
-    }
-
-    public void OnPointerUp(PointerEventData eventData)
-    {
-        rt.sizeDelta = new Vector2(376, 189);
-        GetComponent<UnityEngine.UI.Image>().sprite = up;
-        transform.GetChild(0).GetComponent<RectTransform>().anchoredPosition = new Vector3(0, 18, 0);
     }
 }

@@ -1,48 +1,19 @@
 using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
-
+[System.Serializable]
 public class DialogueBranch
 {
-    public string text, person;
-
+    [Multiline(5)]
+    public string text;
+    public string person;
     public string choice1text, choice2text, choice3text, choice4text;
-    public DialogueBranch choice1dialoguebranch, choice2dialoguebranch, choice3dialoguebranch, choice4dialoguebranch;
-    public int nextStatement, fontSize = 30;
+    [HideInInspector]
+    public bool button1active = true, button2active = true, button3active = true, button4active = true;
+    public List<int> choice1dialoguebranch, choice2dialoguebranch, choice3dialoguebranch, choice4dialoguebranch;
+    public int eventNumber;
     public Sprite icon;
-
-    public DialogueBranch(string Person, string Text, Sprite Icon, string Choice1text, string Choice2text, string Choice3text, string Choice4text, DialogueBranch Choice1dialoguebranch, DialogueBranch Choice2dialoguebranch, DialogueBranch Choice3dialoguebranch, DialogueBranch Choice4dialoguebranch, int NextStatement)
-    {
-        person = Person;
-        text = Text;
-        icon = Icon;
-        choice1text = Choice1text;  
-        choice2text = Choice2text;
-        choice3text = Choice3text;
-        choice4text = Choice4text;
-        choice1dialoguebranch = Choice1dialoguebranch;
-        choice2dialoguebranch = Choice2dialoguebranch;
-        choice3dialoguebranch = Choice3dialoguebranch;
-        choice4dialoguebranch = Choice4dialoguebranch;
-        nextStatement = NextStatement;
-    }
-
-    public DialogueBranch(string Person, string Text, Sprite Icon, string Choice1text, string Choice2text, string Choice3text, string Choice4text, DialogueBranch Choice1dialoguebranch, DialogueBranch Choice2dialoguebranch, DialogueBranch Choice3dialoguebranch, DialogueBranch Choice4dialoguebranch, int NextStatement, int FontSize)
-    {
-        person = Person;
-        text = Text;
-        icon = Icon;
-        choice1text = Choice1text;
-        choice2text = Choice2text;
-        choice3text = Choice3text;
-        choice4text = Choice4text;
-        choice1dialoguebranch = Choice1dialoguebranch;
-        choice2dialoguebranch = Choice2dialoguebranch;
-        choice3dialoguebranch = Choice3dialoguebranch;
-        choice4dialoguebranch = Choice4dialoguebranch;
-        nextStatement = NextStatement;
-        fontSize = FontSize;
-    }
 
     public List<string> textToChars()
     {

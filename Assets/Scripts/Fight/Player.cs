@@ -9,12 +9,10 @@ using static UnityEditorInternal.ReorderableList;
 
 public class Player : MonoBehaviour
 {
-    public int curMana, maxMana;
-    public float HP, maxHP, armor, passiveCriticalChance, passiveCriticalDamage;
+    public int curMana, maxMana, HP, maxHP, armor;
+    public float passiveCriticalChance, passiveCriticalDamage;
     [HideInInspector]
-    public float passiveArmor = 0;
-    [HideInInspector]
-    public int maxPassiveDamage = 0, passiveDamage = 0, passiveMana = 0, weakness = 0;
+    public int maxPassiveDamage = 0, passiveDamage = 0, passiveMana = 0, weakness = 0, passiveArmor = 0;
     public int gold;
     private bool gotHit, attack;
     private SpriteRenderer sr;
@@ -164,7 +162,7 @@ public class Player : MonoBehaviour
         weakness = 0;
         if (poison > 0)
         {
-            GetHit(Convert.ToInt32(Math.Round(maxHP /10)), false, EnemyAttack.Effect.throughArmor, "poison");
+            GetHit(maxHP / 10, false, EnemyAttack.Effect.throughArmor, "poison");
             poison--;
         }
         curMana = maxMana + passiveMana;
@@ -218,7 +216,7 @@ public class Player : MonoBehaviour
                 //Lifesteal effect
                 if (abilityOnCursor.effect == Icon.Effect.HPSteal)
                 {
-                    GetHeal(Mathf.RoundToInt((damage) / 4));
+                    GetHeal(damage / 4);
                 }
                 //Poison effect
                 if (abilityOnCursor.effect == Icon.Effect.poison)
@@ -229,9 +227,13 @@ public class Player : MonoBehaviour
                 //Disarm effect
                 if (abilityOnCursor.effect == Icon.Effect.disarm && enemy.nextAttack.effect == EnemyAttack.Effect.defaultAttack)
                 {
-                    enemy.nextAttack = enemy.noneAttack;
-                    enemy.transform.Find("AttackIcon").GetComponent<SpriteRenderer>().sprite = enemy.noneAttack.attackIcon;
-                    enemy.EffectUpdate();
+                    int rand = UnityEngine.Random.Range(0, 2);
+                    if (rand == 0)
+                    {
+                        enemy.nextAttack = enemy.noneAttack;
+                        enemy.transform.Find("AttackIcon").GetComponent<SpriteRenderer>().sprite = enemy.noneAttack.attackIcon;
+                        enemy.EffectUpdate();
+                    }
                 }
                 //AOE effect
                 if (abilityOnCursor.effect == Icon.Effect.AOE)
@@ -307,7 +309,7 @@ public class Player : MonoBehaviour
             HP = 0;
             //Back to map
             eh.Activation("Defeat");
-            eh.DefeatText.SetText("You have been killed by " + enemyName + ".");
+            eh.eventHudText.SetText("You have been killed by " + enemyName + ".");
         }
         hpBar.sizeDelta = new Vector2(hpBar.sizeDelta.x, HP * hpBarHeight);
         HPText.SetText(HP.ToString());

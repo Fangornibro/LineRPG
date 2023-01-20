@@ -455,12 +455,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b649657a87ff3847b7576b9a5b02169, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item: {fileID: 3184083609400944715, guid: 3183eb4d22ab1a4409b147f8dd749dde, type: 3}
   cell: {fileID: 0}
   Name: Blood Sucking
   rarity: Epic
-  description: Steals life energy from enemies. Heals the character for 1/3 of the
-    damage dealt.
+  description: "Steals life energy from enemies. \nHeals the character based on the
+    damage dealt."
   damageOrArmour: 8
   cost: 2
   criticalChance: 0

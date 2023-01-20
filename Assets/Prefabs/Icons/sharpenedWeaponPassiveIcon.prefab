@@ -583,7 +583,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b649657a87ff3847b7576b9a5b02169, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item: {fileID: 3184083609400944715, guid: 3a8f4f2339631b94a82b0fe51054c662, type: 3}
   cell: {fileID: 0}
   Name: Sharpened weapon
   rarity: Rare

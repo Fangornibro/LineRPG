@@ -5,12 +5,12 @@ using UnityEngine;
 
 public class EventHud : MonoBehaviour
 {
-    private GameObject childHud, RunningAwayText, Reward;
+    private GameObject childHud, reward;
     [HideInInspector]
-    public TextMeshProUGUI DefeatText, WarningText;
-    private TextMeshProUGUI EventText;
+    public TextMeshProUGUI eventHudText, warningText;
+    private TextMeshProUGUI eventText;
     [HideInInspector]
-    public string EventString;
+    public string eventString;
     [HideInInspector]
     public List<Icon> rewardItems = new List<Icon>();
     [HideInInspector]
@@ -18,46 +18,49 @@ public class EventHud : MonoBehaviour
     void Start()
     {
         childHud = transform.Find("EventHudChild").gameObject;
-        RunningAwayText = childHud.transform.Find("RunningAwayText").gameObject;
-        Reward = childHud.transform.Find("Reward").gameObject;
-        DefeatText = childHud.transform.Find("DefeatText").GetComponent<TextMeshProUGUI>();
-        EventText = childHud.transform.Find("EventText").GetComponent<TextMeshProUGUI>();
-        WarningText = Reward.transform.Find("WarningText").GetComponent<TextMeshProUGUI>();
+        reward = childHud.transform.Find("Reward").gameObject;
+        eventHudText = childHud.transform.Find("EventHudText").GetComponent<TextMeshProUGUI>();
+        warningText = reward.transform.Find("WarningText").GetComponent<TextMeshProUGUI>();
+        eventText = childHud.transform.Find("EventText").GetComponent<TextMeshProUGUI>();
         DeActivation();
     }
 
     public void Activation(string eventString)
     {
-        EventString = eventString;
+        this.eventString = eventString;
         childHud.SetActive(true);
-        EventText.SetText(EventString);
-        if (EventString == "Victory")
+        eventText.SetText(this.eventString);
+        eventHudText.text = "";
+        warningText.gameObject.SetActive(false);
+        if (this.eventString == "Victory")
         {
-            Reward.SetActive(true);
-            RunningAwayText.SetActive(false);
-            DefeatText.gameObject.SetActive(false);
-            WarningText.gameObject.SetActive(false);
+            reward.SetActive(true);
+            eventHudText.text = "Reward:";
             for (int i = 0; i < rewardItems.Count; i++)
             {
-                Icon curItem = Instantiate(rewardItems[i], Vector3.zero, Quaternion.Euler(0, 0, 0), Reward.transform);
+                Icon curItem = Instantiate(rewardItems[i], Vector3.zero, Quaternion.Euler(0, 0, 0), reward.transform);
+                if (curItem.GetComponent<CellType>().cellType == CellType.Type.CoinBag)
+                {
+                    curItem.damageOrArmourText.text = curItem.damageOrArmour.ToString();
+                }
                 curRewardItems.Add(curItem);
-                curItem.GetComponent<RectTransform>().localPosition = Reward.transform.GetChild(i).GetComponent<RectTransform>().localPosition + new Vector3(-4.5f, 4.5f);
+                curItem.GetComponent<RectTransform>().localPosition = reward.transform.GetChild(i).GetComponent<RectTransform>().localPosition + new Vector3(-4.5f, 4.5f);
             }
             rewardItems.Clear();
         }
-        else if (EventString == "Defeat")
+        else if (this.eventString == "Running away")
         {
-            Reward.SetActive(false);
-            RunningAwayText.SetActive(false);
-            DefeatText.gameObject.SetActive(true);
-            WarningText.gameObject.SetActive(false);
+            reward.SetActive(false);
+            eventHudText.text = "You ran away, so you didn't get any reward.";
         }
-        else if (EventString == "Running away")
+        else if (this.eventString == "Leaving")
         {
-            Reward.SetActive(false);
-            RunningAwayText.SetActive(true);
-            DefeatText.gameObject.SetActive(false);
-            WarningText.gameObject.SetActive(false);
+            reward.SetActive(false);
+            eventHudText.text = "You just left.";
+        }
+        else if (this.eventString == "Defeat")
+        {
+            reward.SetActive(false);
         }
     }
 

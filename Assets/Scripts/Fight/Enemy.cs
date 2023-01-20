@@ -11,7 +11,7 @@ public class Enemy : MonoBehaviour
 {
     private SpriteRenderer sr;
     //Stats
-    public float HP, armor;
+    public int HP, armor, gold;
     public int plusDamage = 0;
     private float HPSizeMultiple;
     //AllAttacks
@@ -38,8 +38,6 @@ public class Enemy : MonoBehaviour
     private List<SpriteRenderer> outlineList;
     //Player
     private Player player;
-    //StartFight
-    public DialogueBranch dialoguebranch1, dialoguebranch2;
     //Patricles
     public ParticleSystem particleSystemPrefab;
     //Damage popup
@@ -49,8 +47,6 @@ public class Enemy : MonoBehaviour
     //Armor
     TextMeshPro armorText;
     SpriteRenderer armorGO;
-    //Number of enemies, chance to leave
-    public int minNumberOfEnemies, maxNumberOfEnemies, chanceToLeave;
     //Name
     public string Name;
     //Temp
@@ -65,6 +61,8 @@ public class Enemy : MonoBehaviour
     public List<GameObject> curEffectIcons = new List<GameObject>();
     [HideInInspector]
     public int poison = 0;
+    //Fight manager
+    private FightManager fm;
     public void Create(float damage, bool isCrit)
     {
         damagePopup = GameObject.Instantiate(textPrefab, new Vector2(transform.position.x + UnityEngine.Random.Range(0, transform.localScale.x), transform.position.y + transform.localScale.y), Quaternion.identity);
@@ -81,8 +79,6 @@ public class Enemy : MonoBehaviour
     {
         //Crit sound
         critSound = GameObject.Find("CritSound").GetComponent<AudioSource>();
-        //Random include second number
-        maxNumberOfEnemies++; chanceToLeave++;
         //Temp
         temp = GameObject.Find("Temp").transform;
         //Armor
@@ -119,6 +115,8 @@ public class Enemy : MonoBehaviour
         {
             anim.SetInteger("Type", UnityEngine.Random.Range(1, 5));
         }
+        //Fight manager
+        fm = GameObject.Find("FightManager").GetComponent<FightManager>();
     }
 
     private void OnMouseEnter()
@@ -301,6 +299,7 @@ public class Enemy : MonoBehaviour
             sr.material.SetFloat("_OutlineWidth", deathTime);
             if (deathTime >= 1)
             {
+                fm.AddGold(gold);
                 GameObject.Destroy(gameObject);
             }
         }

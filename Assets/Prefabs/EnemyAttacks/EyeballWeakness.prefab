@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a646131022fe9d643b822bd2116bac20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 0
+  damage: 1
   criticalChance: 0
   criticalDamage: 0
   attackSound: {fileID: 4153501721860171176, guid: 8a5360e9189be464bacee3f978632fb6, type: 3}

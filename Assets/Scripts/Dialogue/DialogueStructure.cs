@@ -8,34 +8,35 @@ using UnityEngine.EventSystems;
 public class DialogueStructure
 {
     public TextMeshProUGUI text = GameObject.Find("Text").GetComponent<TextMeshProUGUI>(), person = GameObject.Find("Person").GetComponent<TextMeshProUGUI>();
-    public GameObject faceIcon = GameObject.Find("DialogueHudFaceIcon"), button1 = GameObject.Find("DialogueButton1"), button2 = GameObject.Find("DialogueButton2"), button3 = GameObject.Find("DialogueButton3"), button4 = GameObject.Find("DialogueButton4");
+    public GameObject faceIcon = GameObject.Find("DialogueHudFaceIcon"), button1 = GameObject.Find("DialogueButton1").transform.GetChild(0).gameObject, button2 = GameObject.Find("DialogueButton2").transform.GetChild(0).gameObject, button3 = GameObject.Find("DialogueButton3").transform.GetChild(0).gameObject, button4 = GameObject.Find("DialogueButton4").transform.GetChild(0).gameObject;
     public static bool isDialogueOpen = false;
     int ichar = 0;
     public bool epressed = false, stringEnded = false, initialization = true;
     string Text = "";
     float delayBetweenLetters = 0.1f, startdelayBetweenLetters = 0.1f;
     public AudioSource textSound = GameObject.Find("textSound").GetComponent<AudioSource>();
-    public DialogueBranch dialogue, curDialogueBranch;
+    public List<DialogueBranch> dialogues;
+    public DialogueBranch curDialogueBranch;
     public int Statement = 0;
-    private FightManager ld = GameObject.Find("LevelDialogue").GetComponent<FightManager>();
+    private FightManager ld = GameObject.Find("FightManager").GetComponent<FightManager>();
     //For double click
     private float clicked = 0;
     private float clicktime = 0;
     private float clickdelay = 1f;
-    public DialogueStructure(DialogueBranch Dialogue)
+    public DialogueStructure(List<DialogueBranch> Dialogues)
     {
-        dialogue = Dialogue;
+        dialogues = Dialogues;
     }
 
     public int Interaction()
     {
         if (initialization)
         {
-            button1.GetComponent<RectTransform>().anchoredPosition = new Vector3(-1000, -1000, 0);
-            button2.GetComponent<RectTransform>().anchoredPosition = new Vector3(-1000, -1000, 0);
-            button3.GetComponent<RectTransform>().anchoredPosition = new Vector3(-1000, -1000, 0);
-            button4.GetComponent<RectTransform>().anchoredPosition = new Vector3(-1000, -1000, 0);
-            curDialogueBranch = dialogue;
+            button1.transform.parent.GetComponent<RectTransform>().anchoredPosition = new Vector3(-1000, -1000, 0);
+            button2.transform.parent.GetComponent<RectTransform>().anchoredPosition = new Vector3(-1000, -1000, 0);
+            button3.transform.parent.GetComponent<RectTransform>().anchoredPosition = new Vector3(-1000, -1000, 0);
+            button4.transform.parent.GetComponent<RectTransform>().anchoredPosition = new Vector3(-1000, -1000, 0);
+            curDialogueBranch = dialogues[0];
             initialization = false;
             epressed = true;
         }
@@ -71,25 +72,57 @@ public class DialogueStructure
         if (stringEnded)
         {
             DialogueButton.curInteractableItem = this;
-            if (curDialogueBranch.choice1text != null)
+            if (curDialogueBranch.choice1text != "")
             {
-                button1.GetComponent<RectTransform>().anchoredPosition = new Vector3(-12, 290, 0);
+                button1.transform.parent.GetComponent<RectTransform>().anchoredPosition = button1.GetComponent<DialogueButton>().defpos;
                 button1.GetComponentInChildren<TextMeshProUGUI>().text = curDialogueBranch.choice1text;
+                if (curDialogueBranch.button1active)
+                {
+                    button1.transform.parent.GetComponent<ButtonScript>().activation();
+                }
+                else
+                {
+                    button1.transform.parent.GetComponent<ButtonScript>().deactivation();
+                }
             }
-            if (curDialogueBranch.choice2text != null)
+            if (curDialogueBranch.choice2text != "")
             {
-                button2.GetComponent<RectTransform>().anchoredPosition = new Vector3(-12, 200, 0);
+                button2.transform.parent.GetComponent<RectTransform>().anchoredPosition = button2.GetComponent<DialogueButton>().defpos;
                 button2.GetComponentInChildren<TextMeshProUGUI>().text = curDialogueBranch.choice2text;
+                if (curDialogueBranch.button2active)
+                {
+                    button2.transform.parent.GetComponent<ButtonScript>().activation();
+                }
+                else
+                {
+                    button2.transform.parent.GetComponent<ButtonScript>().deactivation();
+                }
             }
-            if (curDialogueBranch.choice3text != null)
+            if (curDialogueBranch.choice3text != "")
             {
-                button3.GetComponent<RectTransform>().anchoredPosition = new Vector3(-12, 110, 0);
+                button3.transform.parent.GetComponent<RectTransform>().anchoredPosition = button3.GetComponent<DialogueButton>().defpos;
                 button3.GetComponentInChildren<TextMeshProUGUI>().text = curDialogueBranch.choice3text;
+                if (curDialogueBranch.button3active)
+                {
+                    button3.transform.parent.GetComponent<ButtonScript>().activation();
+                }
+                else
+                {
+                    button3.transform.parent.GetComponent<ButtonScript>().deactivation();
+                }
             }
-            if (curDialogueBranch.choice4text != null)
+            if (curDialogueBranch.choice4text != "")
             {
-                button4.GetComponent<RectTransform>().anchoredPosition = new Vector3(-12, 20, 0);
+                button4.transform.parent.GetComponent<RectTransform>().anchoredPosition = button4.GetComponent<DialogueButton>().defpos;
                 button4.GetComponentInChildren<TextMeshProUGUI>().text = curDialogueBranch.choice4text;
+                if (curDialogueBranch.button4active)
+                {
+                    button4.transform.parent.GetComponent<ButtonScript>().activation();
+                }
+                else
+                {
+                    button4.transform.parent.GetComponent<ButtonScript>().deactivation();
+                }
             }
         }
         if (epressed)
@@ -137,7 +170,6 @@ public class DialogueStructure
                     epressed = false;
                     stringEnded = true;
                 }
-                text.fontSize = curDialogueBranch.fontSize;
                 text.SetText(Text);
             }
         }
@@ -147,12 +179,12 @@ public class DialogueStructure
     {
         if (stringEnded)
         {
-            Statement = curDialogueBranch.nextStatement;
-            button1.GetComponent<RectTransform>().anchoredPosition = new Vector3(-1000, -1000, 0);
-            button2.GetComponent<RectTransform>().anchoredPosition = new Vector3(-1000, -1000, 0);
-            button3.GetComponent<RectTransform>().anchoredPosition = new Vector3(-1000, -1000, 0);
-            button4.GetComponent<RectTransform>().anchoredPosition = new Vector3(-1000, -1000, 0);
-            faceIcon.GetComponent<RectTransform>().sizeDelta = new Vector2(360, 360);
+            Statement = curDialogueBranch.eventNumber;
+            button1.transform.parent.GetComponent<RectTransform>().anchoredPosition = new Vector3(-1000, -1000, 0);
+            button2.transform.parent.GetComponent<RectTransform>().anchoredPosition = new Vector3(-1000, -1000, 0);
+            button3.transform.parent.GetComponent<RectTransform>().anchoredPosition = new Vector3(-1000, -1000, 0);
+            button4.transform.parent.GetComponent<RectTransform>().anchoredPosition = new Vector3(-1000, -1000, 0);
+            faceIcon.GetComponent<RectTransform>().sizeDelta = new Vector2(380, 380);
             curDialogueBranch = nextDialogueBranch;
             text.SetText("");
             person.SetText("");

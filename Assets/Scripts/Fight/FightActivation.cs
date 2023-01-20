@@ -13,7 +13,7 @@ public class FightActivation : MonoBehaviour
     public Sprite fullMana;
     private void Start()
     {
-        fm = GameObject.Find("LevelDialogue").GetComponent<FightManager>();
+        fm = GameObject.Find("FightManager").GetComponent<FightManager>();
         manaList = GameObject.Find("ManaList").GetComponent<Transform>();
     }
     void Update()

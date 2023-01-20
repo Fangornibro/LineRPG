@@ -583,12 +583,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b649657a87ff3847b7576b9a5b02169, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item: {fileID: 3184083609400944715, guid: 52bda0ba145e22a42b993b1ccf2d2d92, type: 3}
   cell: {fileID: 0}
   Name: Disarm
   rarity: Rare
-  description: Prevents the enemy from being hit on their next turn.
-  damageOrArmour: 1
+  description: There is a chance to prevent the enemy from hitting you on your next
+    turn. (Only works on default attack)
+  damageOrArmour: 3
   cost: 1
   criticalChance: 0
   criticalDamage: 0

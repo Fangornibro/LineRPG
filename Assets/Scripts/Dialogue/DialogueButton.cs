@@ -1,36 +1,68 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class DialogueButton : MonoBehaviour, IPointerClickHandler
+public class DialogueButton : MonoBehaviour
 {
     public static DialogueStructure curInteractableItem;
-    public void OnPointerClick(PointerEventData eventData)
+    [HideInInspector]
+    public Vector2 defpos;
+    void Start()
     {
-        if (eventData.button == PointerEventData.InputButton.Left)
+        defpos = transform.parent.GetComponent<RectTransform>().anchoredPosition;
+    }
+    public void OnPointerClick()
+    {
+        if (curInteractableItem != null)
         {
-            if (curInteractableItem != null)
+            if (transform.name == "DialogueButton1")
             {
-                if (transform.name == "DialogueButton1")
+                if (curInteractableItem.curDialogueBranch.choice1dialoguebranch.Count != 0)
                 {
-                    curInteractableItem.DialogueSelection(curInteractableItem.curDialogueBranch.choice1dialoguebranch);
+                    curInteractableItem.DialogueSelection(curInteractableItem.dialogues[curInteractableItem.curDialogueBranch.choice1dialoguebranch[Random.Range(0, curInteractableItem.curDialogueBranch.choice1dialoguebranch.Count)]]);
                 }
-                if (transform.name == "DialogueButton2")
+                else
                 {
-                    curInteractableItem.DialogueSelection(curInteractableItem.curDialogueBranch.choice2dialoguebranch);
-                }
-                if (transform.name == "DialogueButton3")
-                {
-                    curInteractableItem.DialogueSelection(curInteractableItem.curDialogueBranch.choice3dialoguebranch);
-                }
-                if (transform.name == "DialogueButton4")
-                {
-                    curInteractableItem.DialogueSelection(curInteractableItem.curDialogueBranch.choice4dialoguebranch);
+                    curInteractableItem.DialogueSelection(null);
                 }
             }
-            curInteractableItem = null;
+            if (transform.name == "DialogueButton2")
+            {
+                if (curInteractableItem.curDialogueBranch.choice2dialoguebranch.Count != 0)
+                {
+                    curInteractableItem.DialogueSelection(curInteractableItem.dialogues[curInteractableItem.curDialogueBranch.choice2dialoguebranch[Random.Range(0, curInteractableItem.curDialogueBranch.choice2dialoguebranch.Count)]]);
+                }
+                else
+                {
+                    curInteractableItem.DialogueSelection(null);
+                }
+            }
+            if (transform.name == "DialogueButton3")
+            {
+                if (curInteractableItem.curDialogueBranch.choice3dialoguebranch.Count != 0)
+                {
+                    curInteractableItem.DialogueSelection(curInteractableItem.dialogues[curInteractableItem.curDialogueBranch.choice3dialoguebranch[Random.Range(0, curInteractableItem.curDialogueBranch.choice3dialoguebranch.Count)]]);
+                }
+                else
+                {
+                    curInteractableItem.DialogueSelection(null);
+                }
+            }
+            if (transform.name == "DialogueButton4")
+            {
+                if (curInteractableItem.curDialogueBranch.choice4dialoguebranch.Count != 0)
+                {
+                    curInteractableItem.DialogueSelection(curInteractableItem.dialogues[curInteractableItem.curDialogueBranch.choice4dialoguebranch[Random.Range(0, curInteractableItem.curDialogueBranch.choice4dialoguebranch.Count)]]);
+                }
+                else
+                {
+                    curInteractableItem.DialogueSelection(null);
+                }
+            }
         }
+        curInteractableItem = null;
     }
 }
