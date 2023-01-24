@@ -2,45 +2,70 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
+
 public class AbilityOnCursor : MonoBehaviour
 {
     private float isCursorDeafult = 0.1f;
+    [HideInInspector]
     public bool isOnCursor = false;
+    [HideInInspector]
     public int curDamageOrArmour = 0, curCost = 0;
+    [HideInInspector]
     public float curCriticalChance = 0, curCriticalDamage = 0;
     private Player player;
+    [HideInInspector]
     public string abilityType;
+    [HideInInspector]
     public AudioSource abilitySound;
+    [HideInInspector]
     public Icon.Effect effect;
+    [HideInInspector]
+    public Icon ability;
+    [SerializeField]
+    private Sprite cellDefault, cellSelected;
     private void Start()
     {
         player = GameObject.Find("Player").GetComponent<Player>();
     }
-    public void newCursor(int damageOrArmour, float criticalChance, float criticalDamage, int cost, Texture2D cursorTexture, string abilityType, AudioSource abilitySound, Icon.Effect effect)
+    public void newCursor(Icon ability)
     {
-        if (player.curMana >= cost)
+        if (player.curMana >= ability.cost)
         {
-            this.abilityType = abilityType;
-            this.abilitySound = abilitySound;
-            this.effect = effect;
+            this.ability = ability;
+            abilityType = ability.AttackBlockOrPassive;
+            abilitySound = ability.abilitySound;
+            effect = ability.effect;
             isCursorDeafult = 0.1f;
-            Cursor.SetCursor(cursorTexture, Vector2.zero, CursorMode.Auto);
+            Cursor.SetCursor(ability.cursorTexture, Vector2.zero, CursorMode.Auto);
             if (abilityType == "attack")
             {
-                curDamageOrArmour = damageOrArmour + player.passiveDamage;
+                curDamageOrArmour = ability.damageOrArmour + player.passiveDamage;
             }
             else
             {
-                curDamageOrArmour = damageOrArmour;
+                curDamageOrArmour = ability.damageOrArmour;
             }
-            curCriticalChance = criticalChance;
-            curCriticalDamage = criticalDamage;
-            curCost = cost;
+            curCriticalChance = ability.criticalChance;
+            curCriticalDamage = ability.criticalDamage;
+            curCost = ability.cost;
             isOnCursor = true;
         } 
     }
     void Update()
     {
+        if (ability != null)
+        {
+            if (isOnCursor)
+            {
+                ability.cell.GetComponent<Image>().sprite = cellSelected;
+            }
+            else
+            {
+                ability.cell.GetComponent<Image>().sprite = cellDefault;
+            }
+        }
+        
         if (isCursorDeafult >= 0)
         {
             isCursorDeafult -= Time.deltaTime;
@@ -50,6 +75,7 @@ public class AbilityOnCursor : MonoBehaviour
             Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
             curDamageOrArmour = 0;
             curCost = 0;
+            ability = null;
             isOnCursor = false;
         }   
     }

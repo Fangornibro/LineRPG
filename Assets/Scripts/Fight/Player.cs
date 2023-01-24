@@ -27,9 +27,6 @@ public class Player : MonoBehaviour
     [SerializeField]
     private DamagePopup textPrefab;
     private DamagePopup damagePopup;
-    //Outline
-    public SpriteRenderer outlinePrefab;
-    private List<SpriteRenderer> outlineList;
     //Event hud
     EventHud eh;
     //Ability on cursor
@@ -45,6 +42,9 @@ public class Player : MonoBehaviour
     [HideInInspector]
     public int poison = 0;
     private int minusManaEffect = 0;
+    [SerializeField]
+    private AudioSource ArmorUpSound;
+    private AudioSource poisonSound;
     public void Create(float damage, bool isHeal, bool isCrit)
     {
         damagePopup = GameObject.Instantiate(textPrefab, new Vector2(transform.position.x + UnityEngine.Random.Range(0, transform.localScale.x), transform.position.y + transform.localScale.y), Quaternion.identity);
@@ -66,8 +66,6 @@ public class Player : MonoBehaviour
     }
     private void Start()
     {
-        //Crit sound
-        critSound = GameObject.Find("CritSound").GetComponent<AudioSource>();
         //Temp
         temp = GameObject.Find("Temp").transform;
         //Event hud
@@ -84,17 +82,10 @@ public class Player : MonoBehaviour
         defaultHpBarHeight = hpBar.sizeDelta.y;
 
         abilityOnCursor = GameObject.Find("AbilityOnCursor").GetComponent<AbilityOnCursor>();
-
-        //Outline
-        outlineList = new List<SpriteRenderer>();
-        outlineList.Add(GameObject.Instantiate(outlinePrefab, new Vector3(transform.position.x + 0.62f, transform.position.y, 0), new Quaternion(0, 0, 0, 0).normalized, transform));
-        outlineList.Add(GameObject.Instantiate(outlinePrefab, new Vector3(transform.position.x - 0.62f, transform.position.y, 0), new Quaternion(0, 0, 0, 0).normalized, transform));
-        outlineList.Add(GameObject.Instantiate(outlinePrefab, new Vector3(transform.position.x, transform.position.y + 0.62f, 0), new Quaternion(0, 0, 0, 0).normalized, transform));
-        outlineList.Add(GameObject.Instantiate(outlinePrefab, new Vector3(transform.position.x, transform.position.y - 0.62f, 0), new Quaternion(0, 0, 0, 0).normalized, transform));
-        foreach (SpriteRenderer s in outlineList)
-        {
-            s.gameObject.SetActive(false);
-        }
+        //Poison sound
+        poisonSound = GameObject.Find("poisonSound").GetComponent<AudioSource>();
+        //Crit sound
+        critSound = GameObject.Find("CritSound").GetComponent<AudioSource>();
     }
     public void EffectUpdate()
     {
@@ -162,11 +153,16 @@ public class Player : MonoBehaviour
         weakness = 0;
         if (poison > 0)
         {
+            poisonSound.Play();
             GetHit(maxHP / 10, false, EnemyAttack.Effect.throughArmor, "poison");
             poison--;
         }
         curMana = maxMana + passiveMana;
-        armor += passiveArmor;
+        if (passiveArmor > 0)
+        {
+            armor += passiveArmor;
+            ArmorUpSound.Play();
+        }
         passiveDamage = maxPassiveDamage;
         BarsUpdate();
         EffectUpdate();
@@ -347,10 +343,6 @@ public class Player : MonoBehaviour
             gotHit = false;
             hitDuration = 0.4f;
         }
-        foreach (SpriteRenderer s in outlineList)
-        {
-            s.sprite = sr.sprite;
-        }
         if (attack)
         {
             attackDuration -= Time.deltaTime;
@@ -385,21 +377,7 @@ public class Player : MonoBehaviour
         this.armor = armour;
         armourText.SetText(armour.ToString());
     }
-    private void OnMouseEnter()
-    {
-        foreach (SpriteRenderer s in outlineList)
-        {
-            s.gameObject.SetActive(true);
-            s.flipX = sr.flipX;
-        }
-    }
-    private void OnMouseExit()
-    {
-        foreach (SpriteRenderer s in outlineList)
-        {
-            s.gameObject.SetActive(false);
-        }
-    }
+
     private void OnMouseDown()
     {
         if (abilityOnCursor.isOnCursor && abilityOnCursor.abilityType == "block")

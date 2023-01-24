@@ -45,8 +45,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 1
-  criticalChance: 0
-  criticalDamage: 0
+  criticalChance: 35
+  criticalDamage: 1.5
   attackSound: {fileID: 5206831722585826940, guid: b6a44406e46d000469358b2920439d8a, type: 3}
   effect: 1
   attackIcon: {fileID: 21300000, guid: 4e777b38856d57742bb94666343e8a8a, type: 3}

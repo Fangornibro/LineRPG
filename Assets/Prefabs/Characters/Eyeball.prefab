@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 214563111168147068}
   - component: {fileID: 214563111168147071}
   - component: {fileID: 214563111168147070}
+  - component: {fileID: -6897211752427707829}
   m_Layer: 0
   m_Name: Eyeball
   m_TagString: Untagged
@@ -125,10 +126,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HP: 30
+  maxHP: 30
   armor: 0
   gold: 8
   plusDamage: 0
   attacks:
+  - {fileID: -8549199934320519844, guid: dc455cd52d008a04cb311dac62b3bdd9, type: 3}
   - {fileID: -8549199934320519844, guid: 1d7a637b408a16f4f832f8d15ec88745, type: 3}
   - {fileID: -8549199934320519844, guid: 1d7a637b408a16f4f832f8d15ec88745, type: 3}
   - {fileID: -8549199934320519844, guid: 1d7a637b408a16f4f832f8d15ec88745, type: 3}
@@ -138,7 +141,6 @@ MonoBehaviour:
   noneAttack: {fileID: -8549199934320519844, guid: 6de3467a2fb68d14caef295b623c4e07, type: 3}
   deathMat: {fileID: 2100000, guid: b531947e80bc95c4f90c93a6db1e394d, type: 2}
   death: 0
-  outlinePrefab: {fileID: 214563111168147069, guid: a32e08bba28b2084b8a78cc91f480db1, type: 3}
   particleSystemPrefab: {fileID: 835498447766092628, guid: a055f418262d05b48973497971557ab3, type: 3}
   textPrefab: {fileID: 6529684988628247528, guid: 98c11c0b15cac1543b1bf5849510a349, type: 3}
   Name: Eyeball
@@ -175,6 +177,20 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.6345111, y: 1.49455}
   m_EdgeRadius: 0
+--- !u!114 &-6897211752427707829
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 214563111168147064}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ea36e51e3b6c6047a938a090668ee19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlinePrefab: {fileID: 214563111168147069, guid: a32e08bba28b2084b8a78cc91f480db1, type: 3}
+  character: 0
 --- !u!1 &1650621427757463624
 GameObject:
   m_ObjectHideFlags: 0

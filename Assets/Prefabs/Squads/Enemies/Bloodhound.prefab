@@ -117,7 +117,7 @@ MonoBehaviour:
     button3active: 1
     button4active: 1
     choice1dialoguebranch: 01000000
-    choice2dialoguebranch: 0200000003000000030000000300000003000000
+    choice2dialoguebranch: 020000000300000003000000
     choice3dialoguebranch: 
     choice4dialoguebranch: 
     eventNumber: 0

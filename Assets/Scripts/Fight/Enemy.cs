@@ -11,7 +11,7 @@ public class Enemy : MonoBehaviour
 {
     private SpriteRenderer sr;
     //Stats
-    public int HP, armor, gold;
+    public int HP, maxHP, armor, gold;
     public int plusDamage = 0;
     private float HPSizeMultiple;
     //AllAttacks
@@ -33,9 +33,6 @@ public class Enemy : MonoBehaviour
     private Vector3 defaultPos;
     private float Shakingx, Shakingy;
     private float timeBtwShaking = 0.1f;
-    //Outline
-    public SpriteRenderer outlinePrefab;
-    private List<SpriteRenderer> outlineList;
     //Player
     private Player player;
     //Patricles
@@ -101,38 +98,12 @@ public class Enemy : MonoBehaviour
         sr = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
         defaultPos = transform.position;
-        //Outline
-        outlineList = new List<SpriteRenderer>();
-        outlineList.Add(GameObject.Instantiate(outlinePrefab, new Vector3(transform.position.x + 0.62f, transform.position.y, 0), new Quaternion(0, 0, 0, 0).normalized, transform));
-        outlineList.Add(GameObject.Instantiate(outlinePrefab, new Vector3(transform.position.x - 0.62f, transform.position.y, 0), new Quaternion(0, 0, 0, 0).normalized, transform));
-        outlineList.Add(GameObject.Instantiate(outlinePrefab, new Vector3(transform.position.x, transform.position.y + 0.62f, 0), new Quaternion(0, 0, 0, 0).normalized, transform));
-        outlineList.Add(GameObject.Instantiate(outlinePrefab, new Vector3(transform.position.x, transform.position.y - 0.62f, 0), new Quaternion(0, 0, 0, 0).normalized, transform));
-        foreach (SpriteRenderer s in outlineList)
-        {
-            s.gameObject.SetActive(false);
-        }
         if (isAnySkins)
         {
             anim.SetInteger("Type", UnityEngine.Random.Range(1, 5));
         }
         //Fight manager
         fm = GameObject.Find("FightManager").GetComponent<FightManager>();
-    }
-
-    private void OnMouseEnter()
-    {
-        foreach (SpriteRenderer s in outlineList)
-        {
-            s.gameObject.SetActive(true);
-            s.flipX = sr.flipX;
-        }
-    }
-    private void OnMouseExit()
-    {
-        foreach (SpriteRenderer s in outlineList)
-        {
-            s.gameObject.SetActive(false);
-        }
     }
 
     private void GetArmor(int Armor)
@@ -159,6 +130,7 @@ public class Enemy : MonoBehaviour
             }
             else if (nextAttack.effect == EnemyAttack.Effect.runningAway)
             {
+                gold = 0;
                 RunningAway();
             }
             else if (nextAttack.effect == EnemyAttack.Effect.flock)
@@ -286,14 +258,6 @@ public class Enemy : MonoBehaviour
     {
         if (death)
         {
-            if (outlineList != null)
-            {
-                foreach (SpriteRenderer s in outlineList)
-                {
-                    GameObject.Destroy(s.gameObject);
-                }
-                outlineList.Clear();
-            }
             deathTime += Time.deltaTime;
             sr.material = deathMat;
             sr.material.SetFloat("_OutlineWidth", deathTime);
@@ -305,10 +269,6 @@ public class Enemy : MonoBehaviour
         }
         else
         {
-            foreach (SpriteRenderer s in outlineList)
-            {
-                s.sprite = sr.sprite;
-            }
             if (gotHit)
             {
                 hitDuration -= Time.deltaTime;

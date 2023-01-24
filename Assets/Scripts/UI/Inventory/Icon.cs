@@ -66,7 +66,7 @@ public class Icon : MonoBehaviour
     {
         if (!fm.isEnemiesStillHit && AttackBlockOrPassive != "passive")
         {
-            abilityOnCursor.newCursor(damageOrArmour, criticalChance, criticalDamage, cost, cursorTexture, AttackBlockOrPassive, abilitySound, effect);
+            abilityOnCursor.newCursor(this);
         }
     }
 

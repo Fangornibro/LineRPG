@@ -77,6 +77,7 @@
     <Compile Include="Assets\Scripts\Dialogue\DialogueActivation.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\EnvMapAnimator.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_UiFrameRateCounter.cs" />
+    <Compile Include="Assets\Scripts\OutlineScript.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\CameraController.cs" />
     <Compile Include="Assets\Scripts\UI\Inventory\Cell.cs" />
     <Compile Include="Assets\Scripts\Fight\Squad.cs" />

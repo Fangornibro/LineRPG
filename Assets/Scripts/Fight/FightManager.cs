@@ -36,6 +36,7 @@ public class FightManager : MonoBehaviour
     public int startPositionx, startPositiony;
     //Gold sum
     private int Gold = 0;
+    private AudioSource poisonSound;
     public void Start()
     {
         //Player
@@ -48,6 +49,8 @@ public class FightManager : MonoBehaviour
         eh = GameObject.Find("EventHud").GetComponent<EventHud>();
         //Bottom panel
         bp = GameObject.Find("VisibleInventory").GetComponent<BottomPanel>();
+        //Poison sound
+        poisonSound = GameObject.Find("poisonSound").GetComponent<AudioSource>();
     }
     public void RoomStart()
     {
@@ -258,13 +261,27 @@ public class FightManager : MonoBehaviour
             {
                 if (curEnemy.poison > 0)
                 {
+                    poisonSound.Play();
                     curEnemy.GetHit(3, false);
                     curEnemy.poison--;
                 }
             }
             if (!curEnemy.death)
             {
-                curEnemy.nextAttack = curEnemy.attacks[Random.Range(0, curEnemy.attacks.Count)];
+                curEnemy.nextAttack = curEnemy.attacks[Random.Range(1, curEnemy.attacks.Count)];
+                double thirtyProcent = curEnemy.maxHP * 0.3;
+                if (thirtyProcent > 15)
+                {
+                    thirtyProcent = 15;
+                }
+                if (curEnemy.HP <= thirtyProcent)
+                {
+                    if (Random.Range(0, 10) < 3)
+                    {
+                        curEnemy.nextAttack = curEnemy.attacks[0];
+                    }
+                }
+               
                 curEnemy.transform.Find("AttackIcon").GetComponent<SpriteRenderer>().sprite = curEnemy.nextAttack.attackIcon;
                 curEnemy.EffectUpdate();
             }
