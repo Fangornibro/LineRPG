@@ -595,7 +595,7 @@ MonoBehaviour:
   damageOrArmourText: {fileID: 4435790871952098337}
   manaCostText: {fileID: 754964261692986345}
   abilitySound: {fileID: 8682277175668144625}
-  effect: 0
+  effect: 7
   AttackBlockOrPassive: attack
   isTakeable: 1
 --- !u!114 &4535222284307143344

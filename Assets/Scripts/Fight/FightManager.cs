@@ -17,27 +17,35 @@ public class FightManager : MonoBehaviour
     public string curEventString, curLocationString;
     [HideInInspector]
     public Squad curSquad;
+    //Room position(for camera)
     [HideInInspector]
     public Vector2 roomPos;
-    //Temp
-    private Transform temp;
-    //Player
-    private Player player;
     //Current turn
     private int curTurn = 1;
-    //Turn text
-    private TextMeshProUGUI turnText;
     //Is enemy still hit/in hit
     [HideInInspector]
     public bool isEnemiesStillHit = false;
-    //Event hud
-    private EventHud eh;
-    //Bottom panel
-    private BottomPanel bp;
     //Start position
     public int startPositionx, startPositiony;
     //Gold sum
     private int Gold = 0;
+
+
+
+
+    //Temp
+    private Transform temp;
+    //Player
+    private Player player;
+    //Turn text
+    private TextMeshProUGUI turnText;
+    //Event hud
+    private EventHud eh;
+    //Bottom panel
+    private BottomPanel bp;
+    //FightHUD
+    private FightHUD fh;
+    //Poison sound
     private AudioSource poisonSound;
     public void Start()
     {
@@ -51,6 +59,8 @@ public class FightManager : MonoBehaviour
         eh = GameObject.Find("EventHud").GetComponent<EventHud>();
         //Bottom panel
         bp = GameObject.Find("VisibleInventory").GetComponent<BottomPanel>();
+        //FightHUD
+        fh = GameObject.Find("FightHUD").GetComponent<FightHUD>();
         //Poison sound
         poisonSound = GameObject.Find("poisonSound").GetComponent<AudioSource>();
     }
@@ -188,6 +198,7 @@ public class FightManager : MonoBehaviour
             }
             else if (st == 1)
             {
+                fh.VisibilityChange(true);
                 curTurn = 1;
                 turnText.text = "Turn " + curTurn.ToString();
                 AllEnemiesPrepareHit();
@@ -306,7 +317,8 @@ public class FightManager : MonoBehaviour
 
     public void BackToMap()
     {
-        for(int i = 0; i < temp.childCount; i++)
+        fh.VisibilityChange(false);
+        for (int i = 0; i < temp.childCount; i++)
         {
             Destroy(temp.GetChild(i).gameObject);
         }

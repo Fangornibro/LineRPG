@@ -17,12 +17,10 @@ public class Player : MonoBehaviour
     private bool gotHit, attack;
     private SpriteRenderer sr;
     private Animator anim;
-    private float hitDuration = 0.4f, attackDuration = 0.5f, hpBarHeight, defaultHpBarHeight;
-    //Hp visualisation
-    private RectTransform hpBar;
-    private TextMeshProUGUI HPText, armourText, goldText;
+    private float hitDuration = 0.4f, attackDuration = 0.5f;
+    private TextMeshProUGUI armourText, goldText;
 
-    private FightActivation fightActivation;
+    private TopPanels fightHUD;
     //Damage popup
     [SerializeField]
     private DamagePopup textPrefab;
@@ -72,20 +70,18 @@ public class Player : MonoBehaviour
         eh = GameObject.Find("EventHud").GetComponent<EventHud>();
         sr = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
-        fightActivation = GameObject.Find("Fight").GetComponent<FightActivation>();
-        hpBar = GameObject.Find("HPBarFront").GetComponent<RectTransform>();
-        HPText = GameObject.Find("HPText").GetComponent<TextMeshProUGUI>();
+        fightHUD = GameObject.Find("TopPanels").GetComponent<TopPanels>();
         armourText = GameObject.Find("ArmorText").GetComponent<TextMeshProUGUI>();
         goldText = GameObject.Find("GoldText").GetComponent<TextMeshProUGUI>();
         HP = maxHP;
-        HPText.SetText(HP.ToString());
-        defaultHpBarHeight = hpBar.sizeDelta.y;
 
         abilityOnCursor = GameObject.Find("AbilityOnCursor").GetComponent<AbilityOnCursor>();
         //Poison sound
         poisonSound = GameObject.Find("poisonSound").GetComponent<AudioSource>();
         //Crit sound
         critSound = GameObject.Find("CritSound").GetComponent<AudioSource>();
+
+        BarsUpdate();
     }
     public void EffectUpdate()
     {
@@ -180,9 +176,9 @@ public class Player : MonoBehaviour
     }
     public void BarsUpdate()
     {
-        hpBarHeight = defaultHpBarHeight / maxHP;
         armourText.SetText(armor.ToString());
-        fightActivation.UpdateMana((maxMana + passiveMana), curMana);
+        fightHUD.UpdateMana((maxMana + passiveMana), curMana);
+        fightHUD.UpdateHP(maxHP, 20, HP);
     }
     public void Hit(Enemy enemy)
     {
@@ -307,9 +303,7 @@ public class Player : MonoBehaviour
             eh.Activation("Defeat");
             eh.eventHudText.SetText("You have been killed by " + enemyName + ".");
         }
-        hpBar.sizeDelta = new Vector2(hpBar.sizeDelta.x, HP * hpBarHeight);
-        HPText.SetText(HP.ToString());
-        armourText.SetText(armor.ToString());
+        BarsUpdate();
         anim.SetBool("GotHit", true);
         sr.color = new Color(0.75f, 0.25f, 0.25f, 1f);
         gotHit = true;
@@ -323,9 +317,7 @@ public class Player : MonoBehaviour
         {
             HP = maxHP;
         }
-        hpBarHeight = defaultHpBarHeight / maxHP;
-        hpBar.sizeDelta = new Vector2(hpBar.sizeDelta.x, HP * hpBarHeight);
-        HPText.SetText(HP.ToString());
+        BarsUpdate();
     }
     private void Update()
     {
@@ -370,7 +362,7 @@ public class Player : MonoBehaviour
         {
             curMana = 0;
         }
-        fightActivation.UpdateMana((maxMana + passiveMana), curMana);
+        BarsUpdate();
     }
     public void SetArmor(int armour)
     {
@@ -389,9 +381,7 @@ public class Player : MonoBehaviour
                 MinusMana(abilityOnCursor.curCost);
 
                 armor += abilityOnCursor.curDamageOrArmour;
-                armourText.SetText(armor.ToString());
-                hpBar.sizeDelta = new Vector2(hpBar.sizeDelta.x, HP * hpBarHeight);
-                HPText.SetText(HP.ToString());
+                BarsUpdate();
             }
         }
     }

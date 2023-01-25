@@ -15,7 +15,6 @@ public class Room : MonoBehaviour
     private SpriteRenderer EventSr, LocationSr;
     private FightManager fm;
     private SquadInfoPanel sip;
-    private Inventory inventory;
     private RoomSelector rs;
 
     public int width, height, x, y;
@@ -40,7 +39,6 @@ public class Room : MonoBehaviour
         lr = GetComponent<LineRenderer>();
         sip = GameObject.Find("SquadInfoPanel").GetComponent<SquadInfoPanel>();
         fm = GameObject.Find("FightManager").GetComponent<FightManager>();
-        inventory = GameObject.Find("Inventory").GetComponent<Inventory>();
         rs = GameObject.Find("AbilityOnCursor").GetComponent<RoomSelector>();
 
         buttonDownSound = GameObject.Find("buttonDownSound").GetComponent<AudioSource>();
@@ -100,9 +98,7 @@ public class Room : MonoBehaviour
         buttonDownSound.Play();
         if (state == Statement.next)
         {
-            sip.isOpened = true;
             sip.RoomInfoReceiving(this, EventSr.sprite.name, LocationSr.sprite.name, squad);
-            inventory.isInventOpen = true;
         }
     }
 

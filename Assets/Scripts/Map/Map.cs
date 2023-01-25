@@ -51,7 +51,7 @@ public class Map : MonoBehaviour
                     {
                         Room newRoom = Instantiate(roomPrefab, rooms[i].transform.position, Quaternion.Euler(Vector3.zero), transform);
                         newRoom.transform.position = newRoom.transform.position + new Vector3(0, 5);
-                        int randAngel = UnityEngine.Random.Range(0, 359);
+                        int randAngel = Random.Range(0, 359);
                         newRoom.transform.RotateAround(rooms[i].transform.position, Vector3.forward, randAngel);
                         newRoom.transform.rotation = Quaternion.Euler(Vector3.zero);
                         newRoom.j = j;
