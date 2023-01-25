@@ -122,6 +122,7 @@
     <Compile Include="Assets\Scripts\UI\EventHudOkButton.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\Scripts\UI\ButtonScript.cs" />
+    <Compile Include="Assets\Scripts\Map\RoomSelector.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

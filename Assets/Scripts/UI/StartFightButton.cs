@@ -11,7 +11,7 @@ public class StartFightButton : MonoBehaviour
     private Inventory inventory;
     private Map map;
 
-    private int id;
+    private Room room;
     private Squad squad;
     private string eventName, locationName;
     private void Start()
@@ -24,12 +24,12 @@ public class StartFightButton : MonoBehaviour
     {
         sip.isOpened= false;
         inventory.isInventOpen= false;
-        map.NextRoom(id, eventName, locationName, squad);
+        map.NextRoom(room, eventName, locationName, squad);
     }
 
-    public void RoomInfoReceiving(int Id, string EventName, string LocationName, Squad Squad)
+    public void RoomInfoReceiving(Room Room, string EventName, string LocationName, Squad Squad)
     {
-        id = Id;
+        room = Room;
         eventName= EventName;
         locationName = LocationName;
         squad = Squad;

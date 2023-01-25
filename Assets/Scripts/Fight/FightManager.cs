@@ -17,6 +17,8 @@ public class FightManager : MonoBehaviour
     public string curEventString, curLocationString;
     [HideInInspector]
     public Squad curSquad;
+    [HideInInspector]
+    public Vector2 roomPos;
     //Temp
     private Transform temp;
     //Player
@@ -310,7 +312,7 @@ public class FightManager : MonoBehaviour
         }
         
         start = false;
-        Camera.main.transform.position = new Vector3(13.5f, 0, -15);
+        Camera.main.transform.position = new Vector3(roomPos.x, roomPos.y, -15);
     }
 
     public void AddGold(int gold)

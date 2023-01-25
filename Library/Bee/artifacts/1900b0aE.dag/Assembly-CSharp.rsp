@@ -400,6 +400,7 @@
 "Assets/Scripts/Fight/Squad.cs"
 "Assets/Scripts/Map/Map.cs"
 "Assets/Scripts/Map/Room.cs"
+"Assets/Scripts/Map/RoomSelector.cs"
 "Assets/Scripts/OutlineScript.cs"
 "Assets/Scripts/UI/ButtonScript.cs"
 "Assets/Scripts/UI/EventHud.cs"

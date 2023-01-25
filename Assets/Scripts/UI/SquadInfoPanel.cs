@@ -40,7 +40,7 @@ public class SquadInfoPanel : MonoBehaviour
         }
     }
 
-    public void RoomInfoReceiving(int Id, string EventName, string LocationName, Squad Squad)
+    public void RoomInfoReceiving(Room room, string EventName, string LocationName, Squad Squad)
     {
         
         eventName.text = "";
@@ -89,6 +89,6 @@ public class SquadInfoPanel : MonoBehaviour
         {
             transform.Find("LocationName").GetComponent<TextMeshProUGUI>().text = "";
         }
-        transform.Find("StartFightButton").GetChild(0).GetComponent<StartFightButton>().RoomInfoReceiving(Id, EventName, LocationName, Squad);
+        transform.Find("StartFightButton").GetChild(0).GetComponent<StartFightButton>().RoomInfoReceiving(room, EventName, LocationName, Squad);
     }
 }
