@@ -10,7 +10,7 @@ public class EnemyAttack : MonoBehaviour
     //Sound
     public AudioSource attackSound;
     //Effect
-    public enum Effect { none, defaultAttack, minusMana, throughArmor, armorUp, flock, runningAway, weakness, poison }
+    public enum Effect { none, defaultAttack, minusMana, throughArmor, armorUp, flock, runningAway, weakness, poison, segmentation }
     public Effect effect;
     //Attack icon
     public Sprite attackIcon;

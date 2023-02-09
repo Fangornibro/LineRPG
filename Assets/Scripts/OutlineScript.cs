@@ -36,7 +36,7 @@ public class OutlineScript : MonoBehaviour
 
     private void OnMouseOver()
     {
-        if (character == Character.enemy && abilityOnCursor.abilityType == "attack" && abilityOnCursor.isOnCursor)
+        if (character == Character.enemy && abilityOnCursor.abilityType == Icon.Type.attack && abilityOnCursor.isOnCursor)
         {
             foreach (SpriteRenderer s in outlineList)
             {
@@ -44,7 +44,7 @@ public class OutlineScript : MonoBehaviour
                 s.flipX = sr.flipX;
             }
         }
-        else if (character == Character.player && abilityOnCursor.abilityType == "block" && abilityOnCursor.isOnCursor)
+        else if (character == Character.player && abilityOnCursor.abilityType == Icon.Type.block && abilityOnCursor.isOnCursor)
         {
             foreach (SpriteRenderer s in outlineList)
             {

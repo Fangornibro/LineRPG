@@ -11,8 +11,9 @@ public class SquadInfoPanel : MonoBehaviour
     public bool isOpened = false;
     private Vector2 defaultPos;
     private Image faceIcon;
-    public List<Sprite> icons; 
-    public List<Image> difficults;
+    public List<Sprite> icons;
+    [SerializeField]
+    private Transform difficults;
     public Sprite difficultEmpty, difficultFull;
 
     private TextMeshProUGUI eventName, personName, description;
@@ -42,13 +43,12 @@ public class SquadInfoPanel : MonoBehaviour
 
     public void RoomInfoReceiving(Room room, string EventName, string LocationName, Squad Squad)
     {
-        
         eventName.text = "";
         personName.text = "";
         description.text = "";
-        for (int i = 0; i < difficults.Count; i++)
+        for (int i = 0; i < difficults.childCount; i++)
         {
-            difficults[i].sprite = difficultEmpty;
+            difficults.GetChild(i).gameObject.SetActive(false);
         }
         faceIcon.GetComponent<RectTransform>().sizeDelta = new Vector2(300, 300);
         if (EventName == "QuestionIcon")
@@ -70,6 +70,18 @@ public class SquadInfoPanel : MonoBehaviour
         else if (EventName == "FightIcon")
         {
             eventName.text = "Fight";
+            for (int i = 0; i < difficults.childCount; i++)
+            {
+                difficults.GetChild(i).gameObject.SetActive(true);
+                if (i < Squad.difficult)
+                {
+                    difficults.GetChild(i).GetComponent<Image>().sprite = difficultFull;
+                }
+                else
+                {
+                    difficults.GetChild(i).GetComponent<Image>().sprite = difficultEmpty;
+                }
+            }
         }
         personName.text = Squad.squadName;
         description.text = Squad.description;
@@ -77,10 +89,6 @@ public class SquadInfoPanel : MonoBehaviour
         float iconWidth = faceIcon.GetComponent<RectTransform>().sizeDelta.x / Squad.GetComponent<SpriteRenderer>().sprite.rect.width;
         float iconHeight = faceIcon.GetComponent<RectTransform>().sizeDelta.y / Squad.GetComponent<SpriteRenderer>().sprite.rect.height;
         faceIcon.GetComponent<RectTransform>().sizeDelta = new Vector2(Squad.GetComponent<SpriteRenderer>().sprite.rect.width * Mathf.Min(iconWidth, iconHeight), Squad.GetComponent<SpriteRenderer>().sprite.rect.height * Mathf.Min(iconWidth, iconHeight));
-        for (int i = 0; i < Squad.difficult; i++)
-        {
-            difficults[i].sprite = difficultFull;
-        }
         if (LocationName != "None")
         {
             transform.Find("LocationName").GetComponent<TextMeshProUGUI>().text = LocationName.Replace("Icon", "");
@@ -89,6 +97,7 @@ public class SquadInfoPanel : MonoBehaviour
         {
             transform.Find("LocationName").GetComponent<TextMeshProUGUI>().text = "";
         }
-        transform.Find("StartFightButton").GetChild(0).GetComponent<StartFightButton>().RoomInfoReceiving(room, EventName, LocationName, Squad);
+        GameObject.Find("Map").GetComponent<Map>().RoomInfoReceiving(room, EventName, LocationName, Squad);
+        transform.Find("StartFightButton").GetChild(0).GetComponent<StartFightButton>().roomPos = room.transform.position;
     }
 }

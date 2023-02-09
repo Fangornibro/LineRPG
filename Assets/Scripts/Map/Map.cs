@@ -1,21 +1,47 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
-using UnityEditor.PackageManager;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.Windows;
-using static Room;
-using static UnityEditor.FilePathAttribute;
+using UnityEngine.UIElements;
 
 public class Map : MonoBehaviour
 {
     public Room roomPrefab;
     [HideInInspector]
-    public List<Room> rooms, newrooms = new List<Room>();
+    public List<Room> rooms;
     private FightManager fm;
     public int numOfRooms, maxConnections, numberOfBosses;
     private RoomSelector rs;
+
+    //Camera
+    private Vector3 targetPos;
+    private CameraScript cam;
+    private bool isStartedAnim = false;
+    //Room info
+    private Room room;
+    private string eventName, locationName;
+    private Squad squad;
+
+    void Start()
+    {
+        cam = GameObject.Find("Main Camera").GetComponent<CameraScript>();
+        rs = GameObject.Find("AbilityOnCursor").GetComponent<RoomSelector>();
+        fm = GameObject.Find("FightManager").GetComponent<FightManager>();
+        //Rooms spawn
+        cam.isKinematic = true;
+        rooms.Add(Instantiate(roomPrefab, transform.position, Quaternion.Euler(Vector3.zero), transform));
+        rooms[0].SetStart();
+        targetPos = rooms[0].transform.position;
+        StartCoroutine(RoomsSpawn());
+    }
+
+    private void Update()
+    {
+        if (isStartedAnim)
+        {
+            isStartedAnim = cam.Approximation(targetPos, 15, false);
+        }
+    }
     private IEnumerator RoomsSpawn()
     {
         for (int j = 0; j < 100; j++)
@@ -54,9 +80,7 @@ public class Map : MonoBehaviour
                         int randAngel = Random.Range(0, 359);
                         newRoom.transform.RotateAround(rooms[i].transform.position, Vector3.forward, randAngel);
                         newRoom.transform.rotation = Quaternion.Euler(Vector3.zero);
-                        newRoom.j = j;
-                        newRoom.i = i;
-                        newRoom.k = k;
+                        newRoom.CanBePlaced(rooms);
                         rooms.Add(newRoom);
                         newRoom.connectedRooms.Add(rooms[i]);
                         rooms[i].connectedRooms.Add(newRoom);
@@ -71,7 +95,7 @@ public class Map : MonoBehaviour
                                 }
                             }
                         }
-                        yield return new WaitForSeconds(0.025f);
+                        yield return new WaitForEndOfFrame();
                     }
                 }
             }
@@ -88,17 +112,34 @@ public class Map : MonoBehaviour
         }
         else
         {
+            float maxPosX = 0, minPosX = 0, maxPosY = 0, minPosY = 0;
             List<Room> mayBosses = new List<Room>();
             foreach (Room r in rooms)
             {
+                if (r.transform.position.x > maxPosX)
+                {
+                    maxPosX = r.transform.position.x;
+                }
+                if (r.transform.position.x < minPosX)
+                {
+                    minPosX = r.transform.position.x;
+                }
+                if (r.transform.position.y > maxPosY)
+                {
+                    maxPosY = r.transform.position.y;
+                }
+                if (r.transform.position.y < minPosY)
+                {
+                    minPosY = r.transform.position.y;
+                }
                 r.UpdateAllLines();
-                Destroy(r.transform.Find("Area").gameObject);
                 r.SetColorsToDefault();
                 if (r.connectedRooms.Count == 1)
                 {
                     mayBosses.Add(r);
                 }
             }
+            cam.coordinatesReceived(maxPosX, minPosX, maxPosY, minPosY);
             if (numberOfBosses > mayBosses.Count)
             {
                 numberOfBosses = mayBosses.Count;
@@ -109,14 +150,25 @@ public class Map : MonoBehaviour
                 mayBosses[rand].isBoss= true;
                 mayBosses.RemoveAt(rand);
             }
+            //Effect
+            isStartedAnim = true;
         }
     }
-    public void NextRoom(Room room, string curEventString, string curLocationString , Squad squad)
+
+    public void RoomInfoReceiving(Room Room, string EventName, string LocationName, Squad Squad)
+    {
+        room = Room;
+        eventName = EventName;
+        locationName = LocationName;
+        squad = Squad;
+    }
+
+    public void NextRoom()
     {
         room.state = Room.Statement.completed;
         Camera.main.transform.position = new Vector3(150, 0, -15);
-        fm.curEventString = curEventString;
-        fm.curLocationString = curLocationString;
+        fm.curEventString = eventName;
+        fm.curLocationString = locationName;
         fm.curSquad = squad;
         fm.roomPos = room.transform.position;
         fm.RoomStart();
@@ -131,15 +183,4 @@ public class Map : MonoBehaviour
         }
         rs.ChangeSelection(null);
     }
-    void Start()
-    {
-        rs = GameObject.Find("AbilityOnCursor").GetComponent<RoomSelector>();
-        fm = GameObject.Find("FightManager").GetComponent<FightManager>();
-        //Rooms spawn
-        rooms.Add(Instantiate(roomPrefab, transform.position, Quaternion.Euler(Vector3.zero), transform));
-        rooms[0].isStart = true;
-        rooms[0].state = Room.Statement.next;
-        StartCoroutine(RoomsSpawn());
-    }
-    
 }

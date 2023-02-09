@@ -46,7 +46,7 @@ public class BottomPanel : MonoBehaviour
         {
             if (c.icon != null)
             {
-                if (c.icon.AttackBlockOrPassive == "passive")
+                if (c.icon.type == Icon.Type.passive)
                 {
                     c.icon.UpdatePassiveItem();
                 }

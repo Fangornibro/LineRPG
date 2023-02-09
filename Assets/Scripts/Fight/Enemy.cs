@@ -12,13 +12,11 @@ public class Enemy : MonoBehaviour
     private SpriteRenderer sr;
     //Stats
     public int HP, maxHP, armor, gold;
-    public int plusDamage = 0;
     private float HPSizeMultiple;
     //AllAttacks
     public List<EnemyAttack> attacks;
     [HideInInspector]
     public EnemyAttack nextAttack;
-    public EnemyAttack noneAttack;
     //Hp bar
     private SpriteRenderer hpBar;
     //Death
@@ -52,19 +50,27 @@ public class Enemy : MonoBehaviour
     public bool isAnySkins;
     //Crit sound
     private AudioSource critSound;
+    //Fight manager
+    private FightManager fm;
+
+
+
     //Effects
     public List<GameObject> effectIconPrefabs = new List<GameObject>();
     [HideInInspector]
     public List<GameObject> curEffectIcons = new List<GameObject>();
     [HideInInspector]
     public int poison = 0;
-    //Fight manager
-    private FightManager fm;
+    [HideInInspector]
+    public int plusDamage = 0;
+    public EnemyAttack noneAttack;
+    [SerializeField]
+    private List<Enemy> segmentationEnemies;
     public void Create(float damage, bool isCrit)
     {
         damagePopup = GameObject.Instantiate(textPrefab, new Vector2(transform.position.x + UnityEngine.Random.Range(0, transform.localScale.x), transform.position.y + transform.localScale.y), Quaternion.identity);
         TextMeshPro text = damagePopup.GetComponent<TextMeshPro>();
-        text.SetText(damage.ToString());
+        text.SetText(damage + (isCrit ? " crit" : ""));
         damagePopup.transform.localScale = new Vector2(damagePopup.transform.localScale.x + (damage / 100) * (isCrit ? 1.5f : 1), damagePopup.transform.localScale.y + damage / 100);
         if (damagePopup.transform.localScale.x >= 2)
         {
@@ -205,11 +211,26 @@ public class Enemy : MonoBehaviour
         sr.color = new Color(0.75f, 0.25f, 0.25f);
         gotHit = true;
     }
+
+    public void SetArmor(int arm)
+    {
+        armor = arm;
+        if (arm == 0)
+        {
+            armorText.text = "";
+            armorGO.color = new Color(1f, 1f, 1f, 0f);
+        }
+        else
+        {
+            armorGO.color = new Color(1f, 1f, 1f, 1f);
+            armorText.text = armor.ToString();
+        }
+    }
     public void EffectUpdate()
     {
         foreach (GameObject gm in curEffectIcons)
         {
-            GameObject.Destroy(gm.gameObject);
+            Destroy(gm.gameObject);
         }
         curEffectIcons.Clear();
 
@@ -228,6 +249,12 @@ public class Enemy : MonoBehaviour
         if (nextAttack == noneAttack)
         {
             GameObject effectIcon = Instantiate(effectIconPrefabs[2], transform.position, Quaternion.Euler(0, 0, 0), transform);
+            effectIcon.transform.GetChild(0).GetComponent<TextMeshPro>().SetText("");
+            curEffectIcons.Add(effectIcon);
+        }
+        if (segmentationEnemies.Count != 0)
+        {
+            GameObject effectIcon = Instantiate(effectIconPrefabs[3], transform.position, Quaternion.Euler(0, 0, 0), transform);
             effectIcon.transform.GetChild(0).GetComponent<TextMeshPro>().SetText("");
             curEffectIcons.Add(effectIcon);
         }
@@ -264,7 +291,11 @@ public class Enemy : MonoBehaviour
             if (deathTime >= 1)
             {
                 fm.AddGold(gold);
-                GameObject.Destroy(gameObject);
+                if (segmentationEnemies != null)
+                {
+                    fm.AddEnemies(segmentationEnemies);
+                }
+                Destroy(gameObject);
             }
         }
         else

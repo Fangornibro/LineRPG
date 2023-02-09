@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using System;
 
 public class AbilityOnCursor : MonoBehaviour
 {
@@ -15,7 +16,7 @@ public class AbilityOnCursor : MonoBehaviour
     public float curCriticalChance = 0, curCriticalDamage = 0;
     private Player player;
     [HideInInspector]
-    public string abilityType;
+    public Icon.Type abilityType;
     [HideInInspector]
     public AudioSource abilitySound;
     [HideInInspector]
@@ -33,12 +34,12 @@ public class AbilityOnCursor : MonoBehaviour
         if (player.curMana >= ability.cost)
         {
             this.ability = ability;
-            abilityType = ability.AttackBlockOrPassive;
+            abilityType = ability.type;
             abilitySound = ability.abilitySound;
             effect = ability.effect;
             isCursorDeafult = 0.1f;
             Cursor.SetCursor(ability.cursorTexture, Vector2.zero, CursorMode.Auto);
-            if (abilityType == "attack")
+            if (abilityType == Icon.Type.attack)
             {
                 curDamageOrArmour = ability.damageOrArmour + player.passiveDamage;
             }

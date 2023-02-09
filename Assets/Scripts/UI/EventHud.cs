@@ -28,7 +28,7 @@ public class EventHud : MonoBehaviour
     public void Activation(string eventString)
     {
         this.eventString = eventString;
-        childHud.SetActive(true);
+        childHud.GetComponent<RectTransform>().anchoredPosition = Vector3.zero;
         eventText.SetText(this.eventString);
         eventHudText.text = "";
         warningText.gameObject.SetActive(false);
@@ -66,6 +66,6 @@ public class EventHud : MonoBehaviour
 
     public void DeActivation()
     {
-        childHud.SetActive(false);
+        childHud.GetComponent<RectTransform>().anchoredPosition = new Vector3(-2000, -2000, 0);
     }
 }

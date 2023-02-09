@@ -10,7 +10,8 @@ public class ContextMenu : MonoBehaviour
     private Image rarityIcon;
     private TextMeshProUGUI nameGO, RarityGO, descriptionGO;
     [SerializeField]
-    private Sprite commonIcon, rareIcon, epicIcon, legendaryIcon;
+    private Sprite commonIcon, rareIcon, epicIcon, legendaryIcon, defaultAbilityTypeIcon;
+    public List<Image> abilityTypeIcons;
     private void Start()
     {
         contextMenuHudGO = transform.Find("ContextMenuHud").gameObject;
@@ -21,33 +22,48 @@ public class ContextMenu : MonoBehaviour
 
         rarityIcon = contextMenuHudGO.transform.Find("RarityIcon").gameObject.GetComponent<Image>();
     }
-    public void Show(string Name, string Rarity, string Description, Vector3 Position)
+    public void Show(string Name, Icon.Rarity Rarity, string Description, Vector3 Position, List<Sprite> abilityTypeSprites)
     {
         contextMenuHudGO.SetActive(true);
         nameGO.SetText(Name);
-        RarityGO.SetText(Rarity);
-        if (Rarity == "Common")
+        for(int i = 0; i < abilityTypeIcons.Count; i++)
         {
+            if (i < abilityTypeSprites.Count && abilityTypeSprites[i] != null)
+            {
+                abilityTypeIcons[i].sprite = abilityTypeSprites[i];
+            }
+            else
+            {
+                abilityTypeIcons[i].sprite = defaultAbilityTypeIcon;
+            }
+        }
+        if (Rarity == Icon.Rarity.common)
+        {
+            RarityGO.SetText("Common");
             RarityGO.color = new Color(0.4666667f, 0.4666667f, 0.4666667f, 1f);
             rarityIcon.sprite = commonIcon;
         }
-        else if (Rarity == "Rare")
+        else if (Rarity == Icon.Rarity.rare)
         {
+            RarityGO.SetText("Rare");
             RarityGO.color = new Color(0.2392157f, 0.3803922f, 0.7333333f, 1f);
             rarityIcon.sprite = rareIcon;
         }
-        else if (Rarity == "Epic")
+        else if (Rarity == Icon.Rarity.epic)
         {
+            RarityGO.SetText("Epic");
             RarityGO.color = new Color(0.5137255f, 0.2431373f, 0.5803922f, 1f);
             rarityIcon.sprite = epicIcon;
         }
-        else if (Rarity == "Legendary")
+        else if (Rarity == Icon.Rarity.legendary)
         {
+            RarityGO.SetText("Legendary");
             RarityGO.color = new Color(0.7803922f, 0.4509804f, 0.1215686f, 1f);
             rarityIcon.sprite = legendaryIcon;
         }
-        else if (Rarity == "Gold")
+        else if (Rarity == Icon.Rarity.gold)
         {
+            RarityGO.SetText("Gold");
             RarityGO.color = new Color(1f, 0.881f, 0f, 1f);
             rarityIcon.sprite = commonIcon;
         }

@@ -129,14 +129,13 @@ MonoBehaviour:
   maxHP: 50
   armor: 0
   gold: 17
-  plusDamage: 0
   attacks:
   - {fileID: -8549199934320519844, guid: dc455cd52d008a04cb311dac62b3bdd9, type: 3}
+  - {fileID: -8549199934320519844, guid: 8b982ed45c1c189418b5fb3c6a00c828, type: 3}
   - {fileID: -8549199934320519844, guid: da23244c47f68f7438837b987753e864, type: 3}
   - {fileID: -8549199934320519844, guid: 182ef10d16b09c140b405a0317ef17c9, type: 3}
   - {fileID: -8549199934320519844, guid: 182ef10d16b09c140b405a0317ef17c9, type: 3}
   nextAttack: {fileID: 0}
-  noneAttack: {fileID: -8549199934320519844, guid: 6de3467a2fb68d14caef295b623c4e07, type: 3}
   deathMat: {fileID: 2100000, guid: b531947e80bc95c4f90c93a6db1e394d, type: 2}
   death: 0
   particleSystemPrefab: {fileID: 835498447766092628, guid: a055f418262d05b48973497971557ab3, type: 3}
@@ -147,8 +146,12 @@ MonoBehaviour:
   - {fileID: 3033617658492919308, guid: 6f0014470649a4b409a922cc18f81654, type: 3}
   - {fileID: 3033617658492919308, guid: fd5af67621b807346a463ed9a7961d48, type: 3}
   - {fileID: 3033617658492919308, guid: 2b9c8c0f4a7438d4ab26255dfb0cd4ab, type: 3}
+  - {fileID: 3033617658492919308, guid: b0e3756aa30b94d488c3da17a34c4e3a, type: 3}
   curEffectIcons: []
   poison: 0
+  plusDamage: 0
+  noneAttack: {fileID: -8549199934320519844, guid: 6de3467a2fb68d14caef295b623c4e07, type: 3}
+  segmentationEnemies: []
 --- !u!61 &214563111168147070
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -162,7 +165,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.09646058, y: 0.700929}
+  m_Offset: {x: 0.105393246, y: 0.6741312}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5714286, y: 0}
@@ -173,7 +176,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.0162971, y: 1.3332769}
+  m_Size: {x: 1.1651736, y: 1.3868724}
   m_EdgeRadius: 0
 --- !u!114 &9151852007776203581
 MonoBehaviour:
@@ -214,7 +217,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 253027496304864838}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.77570003, y: 1.3875699, z: 0}
+  m_LocalPosition: {x: -0.77570003, y: 1.81757, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -298,7 +301,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1359054469734000811}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.221, y: 1.387, z: 0}
+  m_LocalPosition: {x: 1.221, y: 1.817, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -382,7 +385,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2133185353573197460}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.0885, y: 1.387, z: 0}
+  m_LocalPosition: {x: -1.0885, y: 1.817, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -466,7 +469,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4008417002459554226}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.06649991, y: 1.388, z: 0}
+  m_LocalPosition: {x: 0.06649991, y: 1.818, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -560,7 +563,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1.2209998, y: 1.3870003}
+  m_AnchoredPosition: {x: 1.2209998, y: 1.8170004}
   m_SizeDelta: {x: 1.8851, y: 1.8894}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &4129239027075356090

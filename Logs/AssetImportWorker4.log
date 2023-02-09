@@ -1,0 +1,583 @@
+Using pre-set license
+Built from '2021.3/staging' branch; Version is '2021.3.10f1 (1c7d0df0160b) revision 1867021'; Using compiler version '192829333'; Build Type 'Release'
+OS: 'Windows 11  (10.0.22621) 64bit Professional' Language: 'ru' Physical Memory: 32649 MB
+BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 1
+
+COMMAND LINE ARGUMENTS:
+C:\Program Files\Unity\Hub\Editor\2021.3.10f1\Editor\Unity.exe
+-adb2
+-batchMode
+-noUpm
+-name
+AssetImportWorker4
+-projectPath
+C:/Users/kuzmi/Desktop/Диплом/LineRPG
+-logFile
+Logs/AssetImportWorker4.log
+-srvPort
+51101
+Successfully changed project path to: C:/Users/kuzmi/Desktop/Диплом/LineRPG
+C:/Users/kuzmi/Desktop/Диплом/LineRPG
+[UnityMemory] Configuration Parameters - Can be set up in boot.config
+    "memorysetup-bucket-allocator-granularity=16"
+    "memorysetup-bucket-allocator-bucket-count=8"
+    "memorysetup-bucket-allocator-block-size=33554432"
+    "memorysetup-bucket-allocator-block-count=8"
+    "memorysetup-main-allocator-block-size=16777216"
+    "memorysetup-thread-allocator-block-size=16777216"
+    "memorysetup-gfx-main-allocator-block-size=16777216"
+    "memorysetup-gfx-thread-allocator-block-size=16777216"
+    "memorysetup-cache-allocator-block-size=4194304"
+    "memorysetup-typetree-allocator-block-size=2097152"
+    "memorysetup-profiler-bucket-allocator-granularity=16"
+    "memorysetup-profiler-bucket-allocator-bucket-count=8"
+    "memorysetup-profiler-bucket-allocator-block-size=33554432"
+    "memorysetup-profiler-bucket-allocator-block-count=8"
+    "memorysetup-profiler-allocator-block-size=16777216"
+    "memorysetup-profiler-editor-allocator-block-size=1048576"
+    "memorysetup-temp-allocator-size-main=16777216"
+    "memorysetup-job-temp-allocator-block-size=2097152"
+    "memorysetup-job-temp-allocator-block-size-background=1048576"
+    "memorysetup-job-temp-allocator-reduction-small-platforms=262144"
+    "memorysetup-temp-allocator-size-background-worker=32768"
+    "memorysetup-temp-allocator-size-job-worker=262144"
+    "memorysetup-temp-allocator-size-preload-manager=33554432"
+    "memorysetup-temp-allocator-size-nav-mesh-worker=65536"
+    "memorysetup-temp-allocator-size-audio-worker=65536"
+    "memorysetup-temp-allocator-size-cloud-worker=32768"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gfx=262144"
+Refreshing native plugins compatible for Editor in 137.85 ms, found 4 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Initialize engine version: 2021.3.10f1 (1c7d0df0160b)
+[Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2021.3.10f1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path C:/Users/kuzmi/Desktop/Диплом/LineRPG/Assets
+GfxDevice: creating device client; threaded=0; jobified=0
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.1]
+    Renderer: NVIDIA GeForce RTX 3060 (ID=0x2503)
+    Vendor:   NVIDIA
+    VRAM:     12129 MB
+    Driver:   31.0.15.2849
+Initialize mono
+Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2021.3.10f1/Editor/Data/Managed'
+Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2021.3.10f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
+Mono config path = 'C:/Program Files/Unity/Hub/Editor/2021.3.10f1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56576
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: C:/Program Files/Unity/Hub/Editor/2021.3.10f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.005291 seconds.
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 110.82 ms, found 4 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.567 seconds
+Domain Reload Profiling:
+	ReloadAssembly (568ms)
+		BeginReloadAssembly (57ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (0ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (1ms)
+		EndReloadAssembly (412ms)
+			LoadAssemblies (55ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (83ms)
+			ReleaseScriptCaches (0ms)
+			RebuildScriptCaches (22ms)
+			SetupLoadedEditorAssemblies (266ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (5ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (111ms)
+				BeforeProcessingInitializeOnLoad (1ms)
+				ProcessInitializeOnLoadAttributes (112ms)
+				ProcessInitializeOnLoadMethodAttributes (36ms)
+				AfterProcessingInitializeOnLoad (0ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (0ms)
+Platform modules already initialized, skipping
+Registering precompiled user dll's ...
+Registered in 0.005115 seconds.
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory doesn't match image C:\Users\kuzmi\Desktop\Диплом\LineRPG\Library\PackageCache\com.unity.visualscripting@1.7.8\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
+Symbol file LoadedFromMemory doesn't match image C:\Users\kuzmi\Desktop\Диплом\LineRPG\Library\PackageCache\com.unity.visualscripting@1.7.8\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 112.54 ms, found 4 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.104 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1105ms)
+		BeginReloadAssembly (89ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (4ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (16ms)
+		EndReloadAssembly (921ms)
+			LoadAssemblies (72ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (226ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (56ms)
+			SetupLoadedEditorAssemblies (532ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (3ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (113ms)
+				BeforeProcessingInitializeOnLoad (107ms)
+				ProcessInitializeOnLoadAttributes (222ms)
+				ProcessInitializeOnLoadMethodAttributes (83ms)
+				AfterProcessingInitializeOnLoad (4ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (5ms)
+Platform modules already initialized, skipping
+========================================================================
+Worker process is ready to serve import requests
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.04 seconds
+Refreshing native plugins compatible for Editor in 1.15 ms, found 4 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 5612 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 46 unused Assets / (0.8 MB). Loaded Objects now: 6080.
+Memory consumption went from 231.5 MB to 230.8 MB.
+Total: 3.832800 ms (FindLiveObjects: 0.535600 ms CreateObjectMapping: 0.154500 ms MarkObjects: 2.807300 ms  DeleteObjects: 0.334600 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 6492.126132 seconds.
+  path: Assets/Sprites/Enemy/Eyeball/EyeballType1Attack.png
+  artifactKey: Guid(85aefad95746b464798e95fa24a04f6a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Enemy/Eyeball/EyeballType1Attack.png using Guid(85aefad95746b464798e95fa24a04f6a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1fdc958252c7f99c33df3dfb2506b6d6') in 0.092882 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 8.768750 seconds.
+  path: Assets/Sprites/Enemy/Eyeball/EyeballType1Hit.png
+  artifactKey: Guid(72dc2cbf94554f54d8294ea2858a9a26) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Enemy/Eyeball/EyeballType1Hit.png using Guid(72dc2cbf94554f54d8294ea2858a9a26) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3f75562f29fe668de4c8640ba25ebdf4') in 0.018710 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 8.860485 seconds.
+  path: Assets/Sprites/Enemy/Eyeball/EyeballType2Attack.png
+  artifactKey: Guid(e643e0905b4d08247971261728bdd044) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Enemy/Eyeball/EyeballType2Attack.png using Guid(e643e0905b4d08247971261728bdd044) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b95e6d2b68fd4c4cba46166baabd911f') in 0.073070 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 7.483245 seconds.
+  path: Assets/Sprites/Enemy/Eyeball/EyeballType2Hit.png
+  artifactKey: Guid(62487d4e706b7a140ab4320ecacdea88) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Enemy/Eyeball/EyeballType2Hit.png using Guid(62487d4e706b7a140ab4320ecacdea88) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '21328437b114dbba6c6f6c82ef644fbd') in 0.015393 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 10.195378 seconds.
+  path: Assets/Sprites/Enemy/Eyeball/EyeballType3Attack.png
+  artifactKey: Guid(7ca311303d0ef274db1ce198b14ee5ef) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Enemy/Eyeball/EyeballType3Attack.png using Guid(7ca311303d0ef274db1ce198b14ee5ef) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3dccf585b18926e449a54fc9dde4e19b') in 0.029028 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 6.154786 seconds.
+  path: Assets/Sprites/Enemy/Eyeball/EyeballType3Hit.png
+  artifactKey: Guid(1d3d5466ee5385a438312bf2054682a2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Enemy/Eyeball/EyeballType3Hit.png using Guid(1d3d5466ee5385a438312bf2054682a2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1cb70cdf8e238d2dd963cb674b70d709') in 0.013144 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 10.020849 seconds.
+  path: Assets/Sprites/Enemy/Eyeball/EyeballType4Attack.png
+  artifactKey: Guid(971c00b1a97695648b578e1cc9cadafd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Enemy/Eyeball/EyeballType4Attack.png using Guid(971c00b1a97695648b578e1cc9cadafd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a2c67af404dfde2fd9c3c6f39015bc99') in 0.011621 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 7.209242 seconds.
+  path: Assets/Sprites/Enemy/Eyeball/EyeballType4Hit.png
+  artifactKey: Guid(0afed69b35678a946a8fe5bcd6aea12c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Enemy/Eyeball/EyeballType4Hit.png using Guid(0afed69b35678a946a8fe5bcd6aea12c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4489a7a10da31c7133a16ca27e7c2c32') in 0.040973 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 12.528242 seconds.
+  path: Assets/Animations/Eyeball/Type1/EyeballType1Attack.anim
+  artifactKey: Guid(a080e46272e9bb44f89eac2bfec680c9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/Eyeball/Type1/EyeballType1Attack.anim using Guid(a080e46272e9bb44f89eac2bfec680c9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5b5e4bc53db9f5f19c5f6e545256e27a') in 0.005638 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 3.486309 seconds.
+  path: Assets/Animations/Eyeball/Eyeball.controller
+  artifactKey: Guid(6584e196bebed3e49bcbe820b1a5d75f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/Eyeball/Eyeball.controller using Guid(6584e196bebed3e49bcbe820b1a5d75f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c3139db3ae610c7b488bfd583c87249c') in 0.010069 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 81.365106 seconds.
+  path: Assets/Scripts/Fight/FightManager.cs
+  artifactKey: Guid(6fccd1c25f03a264a9b90f15301398cb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/Fight/FightManager.cs using Guid(6fccd1c25f03a264a9b90f15301398cb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4475db368b7961fc565cbe211a79c4a7') in 0.007484 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 386.338559 seconds.
+  path: Assets/Sounds/HitSounds/water_drop-6707.mp3
+  artifactKey: Guid(7730424429ae436498edd63beb88af14) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sounds/HitSounds/water_drop-6707.mp3 using Guid(7730424429ae436498edd63beb88af14) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2932aa972af4122adb9156497e21f33d') in 0.032976 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 27.963949 seconds.
+  path: Assets/Sounds/MagicSounds/sound_effect.mp3
+  artifactKey: Guid(535f632e429bcf5489c64ea39884f644) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sounds/MagicSounds/sound_effect.mp3 using Guid(535f632e429bcf5489c64ea39884f644) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2a2484dcb7640c0a251ffe3c2ecd11bb') in 0.011239 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 19.311157 seconds.
+  path: Assets/Sounds/MagicSounds/eyeballWeakness.mp3
+  artifactKey: Guid(7730424429ae436498edd63beb88af14) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sounds/MagicSounds/eyeballWeakness.mp3 using Guid(7730424429ae436498edd63beb88af14) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '83f307264edb0d1c5d5d9fb2335043cf') in 0.011729 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 51.987133 seconds.
+  path: Assets/Prefabs/Characters/Eyeball.prefab
+  artifactKey: Guid(37e391dcc939e9d48a19f39ba3389d7b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Characters/Eyeball.prefab using Guid(37e391dcc939e9d48a19f39ba3389d7b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8dcc3d94c08c4acc6007a93ff324bfc1') in 0.198859 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 27.141145 seconds.
+  path: Assets/Prefabs/EnemyAttacks/Eyeball/EyeballWeakness.prefab
+  artifactKey: Guid(7e468a5e752a5244c9641bd55c1dc74d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/EnemyAttacks/Eyeball/EyeballWeakness.prefab using Guid(7e468a5e752a5244c9641bd55c1dc74d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '32b4059310876a72470be62a341e7784') in 0.008791 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 27.483689 seconds.
+  path: Assets/Prefabs/EnemyAttacks/Eyeball/EyeballWeakness.prefab
+  artifactKey: Guid(7e468a5e752a5244c9641bd55c1dc74d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/EnemyAttacks/Eyeball/EyeballWeakness.prefab using Guid(7e468a5e752a5244c9641bd55c1dc74d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2eb493fc457ff815f986c15a359d1328') in 0.004734 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 2.639061 seconds.
+  path: Assets/Prefabs/Characters/Eyeball.prefab
+  artifactKey: Guid(37e391dcc939e9d48a19f39ba3389d7b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Characters/Eyeball.prefab using Guid(37e391dcc939e9d48a19f39ba3389d7b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '14016aab61d3db0c0d811ddda2da4780') in 0.028172 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 5.586117 seconds.
+  path: Assets/Prefabs/Characters/Eyeball.prefab
+  artifactKey: Guid(37e391dcc939e9d48a19f39ba3389d7b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Characters/Eyeball.prefab using Guid(37e391dcc939e9d48a19f39ba3389d7b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c9dfcc874d73092ae988aee90c1a9cf3') in 0.032362 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 8.192087 seconds.
+  path: Assets/Prefabs/Characters/Eyeball.prefab
+  artifactKey: Guid(37e391dcc939e9d48a19f39ba3389d7b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Characters/Eyeball.prefab using Guid(37e391dcc939e9d48a19f39ba3389d7b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4d76bac21337cc5f2f5a762c10945b02') in 0.036164 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 36.050791 seconds.
+  path: Assets/Prefabs/Squads/Enemies/Bloodhound 1.prefab
+  artifactKey: Guid(8e477af9e68da1e41b3e48245038aca1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Squads/Enemies/Bloodhound 1.prefab using Guid(8e477af9e68da1e41b3e48245038aca1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'effc1b2e478c5a9aee5823c95b2d4fcc') in 0.044083 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 6.784946 seconds.
+  path: Assets/Prefabs/Squads/Enemies/Eyeball.prefab
+  artifactKey: Guid(8e477af9e68da1e41b3e48245038aca1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Squads/Enemies/Eyeball.prefab using Guid(8e477af9e68da1e41b3e48245038aca1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '246401512816fee1b557bf892b5e5173') in 0.030878 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 4.878815 seconds.
+  path: Assets/Prefabs/Squads/Enemies/Eyeball.prefab
+  artifactKey: Guid(8e477af9e68da1e41b3e48245038aca1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Squads/Enemies/Eyeball.prefab using Guid(8e477af9e68da1e41b3e48245038aca1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '24527f67ad95dea66aee4df4e79969a0') in 0.024859 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.797979 seconds.
+  path: Assets/Prefabs/Squads/Enemies/Eyeball.prefab
+  artifactKey: Guid(8e477af9e68da1e41b3e48245038aca1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Squads/Enemies/Eyeball.prefab using Guid(8e477af9e68da1e41b3e48245038aca1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fcc1214332009e40acf3008d4bb5cf6e') in 0.023581 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 3.203473 seconds.
+  path: Assets/Prefabs/Squads/Enemies/Eyeball.prefab
+  artifactKey: Guid(8e477af9e68da1e41b3e48245038aca1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Squads/Enemies/Eyeball.prefab using Guid(8e477af9e68da1e41b3e48245038aca1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e74be53ca3ba2ed7bf78da5c970e1e0b') in 0.025589 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 1.798121 seconds.
+  path: Assets/Prefabs/Squads/Enemies/Eyeball.prefab
+  artifactKey: Guid(8e477af9e68da1e41b3e48245038aca1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Squads/Enemies/Eyeball.prefab using Guid(8e477af9e68da1e41b3e48245038aca1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6e414cae1b88a5bbd0b76914cf6b5cb5') in 0.025971 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 22.340518 seconds.
+  path: Assets/Prefabs/Squads/Enemies/Eyeball.prefab
+  artifactKey: Guid(8e477af9e68da1e41b3e48245038aca1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Squads/Enemies/Eyeball.prefab using Guid(8e477af9e68da1e41b3e48245038aca1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f8b9e56e8b30c15ec2f2768e01a9f106') in 0.030668 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 4.705558 seconds.
+  path: Assets/Prefabs/Squads/Enemies/Eyeball.prefab
+  artifactKey: Guid(8e477af9e68da1e41b3e48245038aca1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Squads/Enemies/Eyeball.prefab using Guid(8e477af9e68da1e41b3e48245038aca1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c2a14dbf60f8066efbddedc8468889cb') in 0.024392 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 2.261911 seconds.
+  path: Assets/Prefabs/Squads/Enemies/Eyeball.prefab
+  artifactKey: Guid(8e477af9e68da1e41b3e48245038aca1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Squads/Enemies/Eyeball.prefab using Guid(8e477af9e68da1e41b3e48245038aca1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f5ae4d0673585d03a215222f5bc38adc') in 0.029446 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 1.780596 seconds.
+  path: Assets/Prefabs/Squads/Enemies/Eyeball.prefab
+  artifactKey: Guid(8e477af9e68da1e41b3e48245038aca1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Squads/Enemies/Eyeball.prefab using Guid(8e477af9e68da1e41b3e48245038aca1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8c857de3036a075afa66e80ea63c77be') in 0.031581 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 18.545480 seconds.
+  path: Assets/Prefabs/Squads/Enemies/Eyeball.prefab
+  artifactKey: Guid(8e477af9e68da1e41b3e48245038aca1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Squads/Enemies/Eyeball.prefab using Guid(8e477af9e68da1e41b3e48245038aca1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e68d627a52f5578690ec02baf49d0df4') in 0.028373 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 1.993882 seconds.
+  path: Assets/Prefabs/Squads/Enemies/Eyeball.prefab
+  artifactKey: Guid(8e477af9e68da1e41b3e48245038aca1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Squads/Enemies/Eyeball.prefab using Guid(8e477af9e68da1e41b3e48245038aca1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ddd9d7cf1eb7e04fa685f05c83bcac65') in 0.030049 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 2.781186 seconds.
+  path: Assets/Prefabs/Characters/Eyeball.prefab
+  artifactKey: Guid(37e391dcc939e9d48a19f39ba3389d7b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Characters/Eyeball.prefab using Guid(37e391dcc939e9d48a19f39ba3389d7b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '27d3f2e22731444a59c7c74eb1148ab7') in 0.029337 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 1.804898 seconds.
+  path: Assets/Prefabs/Squads/Enemies/Eyeball.prefab
+  artifactKey: Guid(8e477af9e68da1e41b3e48245038aca1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Squads/Enemies/Eyeball.prefab using Guid(8e477af9e68da1e41b3e48245038aca1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '546b72c7914fe158f7917482e520954e') in 0.039153 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 1.447572 seconds.
+  path: Assets/Prefabs/Squads/Enemies/Eyeball.prefab
+  artifactKey: Guid(8e477af9e68da1e41b3e48245038aca1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Squads/Enemies/Eyeball.prefab using Guid(8e477af9e68da1e41b3e48245038aca1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8180a4776b519afadaa9e17cd77301fb') in 0.042978 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 37.379778 seconds.
+  path: Assets/Prefabs/Squads/Enemies/Eyeball.prefab
+  artifactKey: Guid(8e477af9e68da1e41b3e48245038aca1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Squads/Enemies/Eyeball.prefab using Guid(8e477af9e68da1e41b3e48245038aca1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '863aff9c2b47b5f77d03bd47ec845410') in 0.034324 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 10.225907 seconds.
+  path: Assets/Prefabs/Squads/Enemies/Eyeball.prefab
+  artifactKey: Guid(8e477af9e68da1e41b3e48245038aca1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Squads/Enemies/Eyeball.prefab using Guid(8e477af9e68da1e41b3e48245038aca1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '14ee40a0eb766bd9a674a72e6f92144f') in 0.032083 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 21.068022 seconds.
+  path: Assets/Prefabs/Squads/Enemies/Eyeball.prefab
+  artifactKey: Guid(8e477af9e68da1e41b3e48245038aca1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Squads/Enemies/Eyeball.prefab using Guid(8e477af9e68da1e41b3e48245038aca1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '289c5caa065224b0f6991fed4d12892a') in 0.031498 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 15.126412 seconds.
+  path: Assets/Prefabs/Squads/Enemies/Eyeball.prefab
+  artifactKey: Guid(8e477af9e68da1e41b3e48245038aca1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Squads/Enemies/Eyeball.prefab using Guid(8e477af9e68da1e41b3e48245038aca1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1cf3aaaa9613466e87f114b190debfed') in 0.037451 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 3.183426 seconds.
+  path: Assets/Prefabs/Squads/Enemies/Eyeball.prefab
+  artifactKey: Guid(8e477af9e68da1e41b3e48245038aca1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Squads/Enemies/Eyeball.prefab using Guid(8e477af9e68da1e41b3e48245038aca1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6ee25ec367dfff0346394a40a2c74777') in 0.039829 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 1.570154 seconds.
+  path: Assets/Prefabs/Squads/Enemies/Eyeball.prefab
+  artifactKey: Guid(8e477af9e68da1e41b3e48245038aca1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Squads/Enemies/Eyeball.prefab using Guid(8e477af9e68da1e41b3e48245038aca1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'dfaac7e9020c86eaafb3bf0a0398b37f') in 0.033580 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 20.915662 seconds.
+  path: Assets/Prefabs/Squads/Enemies/Eyeball.prefab
+  artifactKey: Guid(8e477af9e68da1e41b3e48245038aca1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Squads/Enemies/Eyeball.prefab using Guid(8e477af9e68da1e41b3e48245038aca1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'bff166225f62c41ae03b2655bc7ab646') in 0.031014 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 5.130715 seconds.
+  path: Assets/Prefabs/Squads/Enemies/Eyeball.prefab
+  artifactKey: Guid(8e477af9e68da1e41b3e48245038aca1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Squads/Enemies/Eyeball.prefab using Guid(8e477af9e68da1e41b3e48245038aca1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b472ab770b3c8bdbfd08585c3d8b0212') in 0.044173 seconds 
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.004721 seconds.
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory doesn't match image C:\Users\kuzmi\Desktop\Диплом\LineRPG\Library\PackageCache\com.unity.visualscripting@1.7.8\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
+Symbol file LoadedFromMemory doesn't match image C:\Users\kuzmi\Desktop\Диплом\LineRPG\Library\PackageCache\com.unity.visualscripting@1.7.8\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 1.07 ms, found 4 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.081 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1081ms)
+		BeginReloadAssembly (128ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (7ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (40ms)
+		EndReloadAssembly (869ms)
+			LoadAssemblies (84ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (240ms)
+			ReleaseScriptCaches (2ms)
+			RebuildScriptCaches (50ms)
+			SetupLoadedEditorAssemblies (399ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (9ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (1ms)
+				BeforeProcessingInitializeOnLoad (81ms)
+				ProcessInitializeOnLoadAttributes (221ms)
+				ProcessInitializeOnLoadMethodAttributes (81ms)
+				AfterProcessingInitializeOnLoad (5ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (12ms)
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 2.38 ms, found 4 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 5479 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 34 unused Assets / (0.8 MB). Loaded Objects now: 6143.
+Memory consumption went from 229.2 MB to 228.5 MB.
+Total: 4.450500 ms (FindLiveObjects: 0.523100 ms CreateObjectMapping: 0.161900 ms MarkObjects: 3.399500 ms  DeleteObjects: 0.364900 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 20.726627 seconds.
+  path: Assets/Prefabs/Squads/Enemies/Eyeball 1.prefab
+  artifactKey: Guid(6ce637e2c4f2a7544af31fe887fd7b7d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Squads/Enemies/Eyeball 1.prefab using Guid(6ce637e2c4f2a7544af31fe887fd7b7d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b90ed5113b6e46c17a0409fcf03e273a') in 0.219289 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 7.951087 seconds.
+  path: Assets/Prefabs/Squads/Enemies/Eyeball(Harder).prefab
+  artifactKey: Guid(6ce637e2c4f2a7544af31fe887fd7b7d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Squads/Enemies/Eyeball(Harder).prefab using Guid(6ce637e2c4f2a7544af31fe887fd7b7d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '78254d5dbcac02a7d8bdaa67382325b9') in 0.045833 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 2.458165 seconds.
+  path: Assets/Prefabs/Squads/Enemies/Eyeball(Harder).prefab
+  artifactKey: Guid(6ce637e2c4f2a7544af31fe887fd7b7d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Squads/Enemies/Eyeball(Harder).prefab using Guid(6ce637e2c4f2a7544af31fe887fd7b7d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'db8ba372a86aebac797f1fc7a20e7ecd') in 0.031788 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 1.161565 seconds.
+  path: Assets/Prefabs/Squads/Enemies/Eyeball(Harder).prefab
+  artifactKey: Guid(6ce637e2c4f2a7544af31fe887fd7b7d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Squads/Enemies/Eyeball(Harder).prefab using Guid(6ce637e2c4f2a7544af31fe887fd7b7d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '79b32de7812815368655c203eeefac40') in 0.033245 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.762133 seconds.
+  path: Assets/Prefabs/Squads/Enemies/Eyeball(Harder).prefab
+  artifactKey: Guid(6ce637e2c4f2a7544af31fe887fd7b7d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Squads/Enemies/Eyeball(Harder).prefab using Guid(6ce637e2c4f2a7544af31fe887fd7b7d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c0b564c9cfe5fb0a1415d47d600a3afc') in 0.033000 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 2.182308 seconds.
+  path: Assets/Prefabs/Squads/Enemies/Eyeball(Harder).prefab
+  artifactKey: Guid(6ce637e2c4f2a7544af31fe887fd7b7d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Squads/Enemies/Eyeball(Harder).prefab using Guid(6ce637e2c4f2a7544af31fe887fd7b7d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'cda43b339f78e25f363c299f8db39a70') in 0.036679 seconds 
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.005004 seconds.
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory doesn't match image C:\Users\kuzmi\Desktop\Диплом\LineRPG\Library\PackageCache\com.unity.visualscripting@1.7.8\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
+Symbol file LoadedFromMemory doesn't match image C:\Users\kuzmi\Desktop\Диплом\LineRPG\Library\PackageCache\com.unity.visualscripting@1.7.8\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 1.48 ms, found 4 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.093 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1093ms)
+		BeginReloadAssembly (117ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (7ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (37ms)
+		EndReloadAssembly (894ms)
+			LoadAssemblies (74ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (234ms)
+			ReleaseScriptCaches (2ms)
+			RebuildScriptCaches (55ms)
+			SetupLoadedEditorAssemblies (415ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (10ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (2ms)
+				BeforeProcessingInitializeOnLoad (97ms)
+				ProcessInitializeOnLoadAttributes (223ms)
+				ProcessInitializeOnLoadMethodAttributes (79ms)
+				AfterProcessingInitializeOnLoad (4ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (10ms)
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 3.05 ms, found 4 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 5479 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 34 unused Assets / (0.8 MB). Loaded Objects now: 6187.
+Memory consumption went from 229.1 MB to 228.3 MB.
+Total: 4.034500 ms (FindLiveObjects: 0.536500 ms CreateObjectMapping: 0.151700 ms MarkObjects: 2.971700 ms  DeleteObjects: 0.373700 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 104.665003 seconds.
+  path: Assets/Prefabs/EnemyAttacks/Eyeball/EyeballWeakness.prefab
+  artifactKey: Guid(7e468a5e752a5244c9641bd55c1dc74d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/EnemyAttacks/Eyeball/EyeballWeakness.prefab using Guid(7e468a5e752a5244c9641bd55c1dc74d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fafb6e5ead4a67f7e87472dcab3ab075') in 0.031239 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 9.386973 seconds.
+  path: Assets/Prefabs/EnemyAttacks/Eyeball/EyeballWeakness.prefab
+  artifactKey: Guid(7e468a5e752a5244c9641bd55c1dc74d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/EnemyAttacks/Eyeball/EyeballWeakness.prefab using Guid(7e468a5e752a5244c9641bd55c1dc74d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '90fb69f1e8d1e81d99bb7ac424c9eb19') in 0.005130 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 11.321829 seconds.
+  path: Assets/Prefabs/Squads/Enemies/Eyeball(Harder).prefab
+  artifactKey: Guid(6ce637e2c4f2a7544af31fe887fd7b7d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Squads/Enemies/Eyeball(Harder).prefab using Guid(6ce637e2c4f2a7544af31fe887fd7b7d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '68c51c675974846b042a629c86d64b74') in 0.192972 seconds 

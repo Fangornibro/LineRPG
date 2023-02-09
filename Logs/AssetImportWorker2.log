@@ -15,7 +15,7 @@ C:/Users/kuzmi/Desktop/Диплом/LineRPG
 -logFile
 Logs/AssetImportWorker2.log
 -srvPort
-64231
+51101
 Successfully changed project path to: C:/Users/kuzmi/Desktop/Диплом/LineRPG
 C:/Users/kuzmi/Desktop/Диплом/LineRPG
 [UnityMemory] Configuration Parameters - Can be set up in boot.config
@@ -47,7 +47,7 @@ C:/Users/kuzmi/Desktop/Диплом/LineRPG
     "memorysetup-temp-allocator-size-cloud-worker=32768"
     "memorysetup-temp-allocator-size-gi-baking-worker=262144"
     "memorysetup-temp-allocator-size-gfx=262144"
-Refreshing native plugins compatible for Editor in 132.86 ms, found 4 plugins.
+Refreshing native plugins compatible for Editor in 118.04 ms, found 4 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 2021.3.10f1 (1c7d0df0160b)
 [Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2021.3.10f1/Editor/Data/Resources/UnitySubsystems
@@ -58,42 +58,42 @@ Direct3D:
     Renderer: NVIDIA GeForce RTX 3060 (ID=0x2503)
     Vendor:   NVIDIA
     VRAM:     12129 MB
-    Driver:   31.0.15.2756
+    Driver:   31.0.15.2849
 Initialize mono
 Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2021.3.10f1/Editor/Data/Managed'
 Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2021.3.10f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
 Mono config path = 'C:/Program Files/Unity/Hub/Editor/2021.3.10f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56396
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56576
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
 Register platform support module: C:/Program Files/Unity/Hub/Editor/2021.3.10f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
-Registered in 0.003345 seconds.
+Registered in 0.003096 seconds.
 Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 116.40 ms, found 4 plugins.
+Refreshing native plugins compatible for Editor in 117.10 ms, found 4 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  0.583 seconds
+- Completed reload, in  0.561 seconds
 Domain Reload Profiling:
-	ReloadAssembly (583ms)
-		BeginReloadAssembly (57ms)
+	ReloadAssembly (562ms)
+		BeginReloadAssembly (61ms)
 			ExecutionOrderSort (0ms)
 			DisableScriptedObjects (0ms)
 			BackupInstance (0ms)
 			ReleaseScriptingObjects (0ms)
 			CreateAndSetChildDomain (1ms)
-		EndReloadAssembly (434ms)
-			LoadAssemblies (55ms)
+		EndReloadAssembly (418ms)
+			LoadAssemblies (59ms)
 			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (84ms)
+			SetupTypeCache (83ms)
 			ReleaseScriptCaches (0ms)
-			RebuildScriptCaches (24ms)
-			SetupLoadedEditorAssemblies (284ms)
+			RebuildScriptCaches (23ms)
+			SetupLoadedEditorAssemblies (272ms)
 				LogAssemblyErrors (0ms)
-				InitializePlatformSupportModulesInManaged (6ms)
+				InitializePlatformSupportModulesInManaged (5ms)
 				SetLoadedEditorAssemblies (0ms)
-				RefreshPlugins (116ms)
+				RefreshPlugins (117ms)
 				BeforeProcessingInitializeOnLoad (1ms)
-				ProcessInitializeOnLoadAttributes (124ms)
+				ProcessInitializeOnLoadAttributes (111ms)
 				ProcessInitializeOnLoadMethodAttributes (37ms)
 				AfterProcessingInitializeOnLoad (0ms)
 				EditorAssembliesLoaded (0ms)
@@ -101,38 +101,38 @@ Domain Reload Profiling:
 			AwakeInstancesAfterBackupRestoration (0ms)
 Platform modules already initialized, skipping
 Registering precompiled user dll's ...
-Registered in 0.005203 seconds.
+Registered in 0.006036 seconds.
 Begin MonoManager ReloadAssembly
 Symbol file LoadedFromMemory doesn't match image C:\Users\kuzmi\Desktop\Диплом\LineRPG\Library\PackageCache\com.unity.visualscripting@1.7.8\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
 Symbol file LoadedFromMemory doesn't match image C:\Users\kuzmi\Desktop\Диплом\LineRPG\Library\PackageCache\com.unity.visualscripting@1.7.8\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
 Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 120.82 ms, found 4 plugins.
+Refreshing native plugins compatible for Editor in 122.74 ms, found 4 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  1.120 seconds
+- Completed reload, in  1.159 seconds
 Domain Reload Profiling:
-	ReloadAssembly (1121ms)
-		BeginReloadAssembly (91ms)
+	ReloadAssembly (1160ms)
+		BeginReloadAssembly (100ms)
 			ExecutionOrderSort (0ms)
 			DisableScriptedObjects (5ms)
 			BackupInstance (0ms)
 			ReleaseScriptingObjects (0ms)
-			CreateAndSetChildDomain (18ms)
-		EndReloadAssembly (935ms)
-			LoadAssemblies (69ms)
+			CreateAndSetChildDomain (17ms)
+		EndReloadAssembly (966ms)
+			LoadAssemblies (79ms)
 			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (225ms)
+			SetupTypeCache (240ms)
 			ReleaseScriptCaches (1ms)
-			RebuildScriptCaches (59ms)
-			SetupLoadedEditorAssemblies (539ms)
+			RebuildScriptCaches (63ms)
+			SetupLoadedEditorAssemblies (547ms)
 				LogAssemblyErrors (0ms)
-				InitializePlatformSupportModulesInManaged (3ms)
+				InitializePlatformSupportModulesInManaged (4ms)
 				SetLoadedEditorAssemblies (0ms)
-				RefreshPlugins (121ms)
-				BeforeProcessingInitializeOnLoad (109ms)
-				ProcessInitializeOnLoadAttributes (221ms)
+				RefreshPlugins (123ms)
+				BeforeProcessingInitializeOnLoad (114ms)
+				ProcessInitializeOnLoadAttributes (222ms)
 				ProcessInitializeOnLoadMethodAttributes (80ms)
-				AfterProcessingInitializeOnLoad (5ms)
+				AfterProcessingInitializeOnLoad (4ms)
 				EditorAssembliesLoaded (0ms)
 			ExecutionOrderSort2 (0ms)
 			AwakeInstancesAfterBackupRestoration (5ms)
@@ -140,12 +140,12 @@ Platform modules already initialized, skipping
 ========================================================================
 Worker process is ready to serve import requests
 Launched and connected shader compiler UnityShaderCompiler.exe after 0.04 seconds
-Refreshing native plugins compatible for Editor in 1.19 ms, found 4 plugins.
+Refreshing native plugins compatible for Editor in 1.74 ms, found 4 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Unloading 5612 Unused Serialized files (Serialized files now loaded: 0)
 Unloading 46 unused Assets / (0.8 MB). Loaded Objects now: 6080.
-Memory consumption went from 231.8 MB to 231.1 MB.
-Total: 4.002800 ms (FindLiveObjects: 0.547900 ms CreateObjectMapping: 0.160000 ms MarkObjects: 2.949400 ms  DeleteObjects: 0.344600 ms)
+Memory consumption went from 231.5 MB to 230.8 MB.
+Total: 4.405400 ms (FindLiveObjects: 0.643800 ms CreateObjectMapping: 0.165300 ms MarkObjects: 3.226500 ms  DeleteObjects: 0.368400 ms)
 
 AssetImportParameters requested are different than current active one (requested -> active):
   custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
@@ -159,63 +159,107 @@ AssetImportParameters requested are different than current active one (requested
   custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
 ========================================================================
 Received Import Request.
-  Time since last request: 31474.503046 seconds.
-  path: Assets/Prefabs/EnemyAttacks/None.prefab
-  artifactKey: Guid(6de3467a2fb68d14caef295b623c4e07) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Prefabs/EnemyAttacks/None.prefab using Guid(6de3467a2fb68d14caef295b623c4e07) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd4b6925c45d2356e09757aa922558793') in 0.047193 seconds 
+  Time since last request: 6146.888101 seconds.
+  path: Assets/Sprites/Enemy/Eyeball/EyeballType3Hit.png
+  artifactKey: Guid(1d3d5466ee5385a438312bf2054682a2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Enemy/Eyeball/EyeballType3Hit.png using Guid(1d3d5466ee5385a438312bf2054682a2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3d1a8ee1b37f6d604c13aedd7ed03796') in 0.097915 seconds 
 ========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.005055 seconds.
-Begin MonoManager ReloadAssembly
-Symbol file LoadedFromMemory doesn't match image C:\Users\kuzmi\Desktop\Диплом\LineRPG\Library\PackageCache\com.unity.visualscripting@1.7.8\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
-Symbol file LoadedFromMemory doesn't match image C:\Users\kuzmi\Desktop\Диплом\LineRPG\Library\PackageCache\com.unity.visualscripting@1.7.8\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 1.17 ms, found 4 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.000 seconds
-Domain Reload Profiling:
-	ReloadAssembly (1000ms)
-		BeginReloadAssembly (115ms)
-			ExecutionOrderSort (0ms)
-			DisableScriptedObjects (5ms)
-			BackupInstance (0ms)
-			ReleaseScriptingObjects (0ms)
-			CreateAndSetChildDomain (36ms)
-		EndReloadAssembly (803ms)
-			LoadAssemblies (76ms)
-			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (233ms)
-			ReleaseScriptCaches (2ms)
-			RebuildScriptCaches (44ms)
-			SetupLoadedEditorAssemblies (406ms)
-				LogAssemblyErrors (0ms)
-				InitializePlatformSupportModulesInManaged (10ms)
-				SetLoadedEditorAssemblies (0ms)
-				RefreshPlugins (1ms)
-				BeforeProcessingInitializeOnLoad (88ms)
-				ProcessInitializeOnLoadAttributes (217ms)
-				ProcessInitializeOnLoadMethodAttributes (86ms)
-				AfterProcessingInitializeOnLoad (4ms)
-				EditorAssembliesLoaded (0ms)
-			ExecutionOrderSort2 (0ms)
-			AwakeInstancesAfterBackupRestoration (8ms)
-Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 3.89 ms, found 4 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 5470 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 34 unused Assets / (0.8 MB). Loaded Objects now: 6084.
-Memory consumption went from 221.9 MB to 221.2 MB.
-Total: 4.160500 ms (FindLiveObjects: 0.465100 ms CreateObjectMapping: 0.147100 ms MarkObjects: 3.180600 ms  DeleteObjects: 0.366600 ms)
-
-AssetImportParameters requested are different than current active one (requested -> active):
-  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
-  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
-  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
-  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
-  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
-  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
-  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
-  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+Received Import Request.
+  Time since last request: 0.000027 seconds.
+  path: Assets/Sprites/Enemy/Eyeball/EyeballType4Hit.png
+  artifactKey: Guid(0afed69b35678a946a8fe5bcd6aea12c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Enemy/Eyeball/EyeballType4Hit.png using Guid(0afed69b35678a946a8fe5bcd6aea12c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '311bf94cf67055dd733d0ce940bb8587') in 0.016450 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000025 seconds.
+  path: Assets/Sprites/Enemy/Eyeball/EyeballType2Attack.png
+  artifactKey: Guid(e643e0905b4d08247971261728bdd044) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Enemy/Eyeball/EyeballType2Attack.png using Guid(e643e0905b4d08247971261728bdd044) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8df3693b57a92f4d01880168a48955b1') in 0.017652 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000021 seconds.
+  path: Assets/Sprites/Enemy/Eyeball/EyeballType3Attack.png
+  artifactKey: Guid(7ca311303d0ef274db1ce198b14ee5ef) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Enemy/Eyeball/EyeballType3Attack.png using Guid(7ca311303d0ef274db1ce198b14ee5ef) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b1e995a1f628681b5e366d6d15f7d903') in 0.016530 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 6.154263 seconds.
+  path: Assets/Sprites/Enemy/Eyeball/EyeballType1Attack.png
+  artifactKey: Guid(85aefad95746b464798e95fa24a04f6a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Enemy/Eyeball/EyeballType1Attack.png using Guid(85aefad95746b464798e95fa24a04f6a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6403659d6c67ee72bc53dc48093b293b') in 0.010903 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.007709 seconds.
+  path: Assets/Sprites/Enemy/Eyeball/EyeballType1Hit.png
+  artifactKey: Guid(72dc2cbf94554f54d8294ea2858a9a26) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Enemy/Eyeball/EyeballType1Hit.png using Guid(72dc2cbf94554f54d8294ea2858a9a26) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '862236b2f460849f3e1f576ef2366110') in 0.023723 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000030 seconds.
+  path: Assets/Sprites/Enemy/Eyeball/EyeballType3Hit.png
+  artifactKey: Guid(1d3d5466ee5385a438312bf2054682a2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Enemy/Eyeball/EyeballType3Hit.png using Guid(1d3d5466ee5385a438312bf2054682a2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'cfc3286d44a54cfa3cac62c8d75d455a') in 0.014792 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 112.760474 seconds.
+  path: Assets/Sprites/Enemy/Eyeball/EyeballType4Attack.png
+  artifactKey: Guid(971c00b1a97695648b578e1cc9cadafd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Enemy/Eyeball/EyeballType4Attack.png using Guid(971c00b1a97695648b578e1cc9cadafd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1986ba6fad86c9d71966eafbe1659b95') in 0.022435 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 18.313872 seconds.
+  path: Assets/Sprites/Enemy/Eyeball/EyeballType2Hit.png
+  artifactKey: Guid(62487d4e706b7a140ab4320ecacdea88) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Enemy/Eyeball/EyeballType2Hit.png using Guid(62487d4e706b7a140ab4320ecacdea88) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '14f6781417fb722f236fae1a0a26c8a7') in 0.036368 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000038 seconds.
+  path: Assets/Sprites/Enemy/Eyeball/EyeballType3Idle3.png
+  artifactKey: Guid(e1c0845ba6411c144ba636199f493be8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Enemy/Eyeball/EyeballType3Idle3.png using Guid(e1c0845ba6411c144ba636199f493be8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '60d277c7b6beebcde2c6e0d28d3b3e71') in 0.034809 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000036 seconds.
+  path: Assets/Sprites/Enemy/Eyeball/EyeballType2Idle2.png
+  artifactKey: Guid(ace250c0babcdb549a0c26ae9d5f1d1d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Enemy/Eyeball/EyeballType2Idle2.png using Guid(ace250c0babcdb549a0c26ae9d5f1d1d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '906c576154586e24e69ce6e950e477fd') in 0.061207 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000030 seconds.
+  path: Assets/Sprites/Enemy/Eyeball/EyeballType4Idle3.png
+  artifactKey: Guid(1cb0b7bf7b6d7664983c919212f04b8a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Enemy/Eyeball/EyeballType4Idle3.png using Guid(1cb0b7bf7b6d7664983c919212f04b8a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '687d7c3b91945dd0dd43f6f919294309') in 0.030000 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000026 seconds.
+  path: Assets/Sprites/Enemy/Eyeball/EyeballType2Idle1.png
+  artifactKey: Guid(7256be4d9328ca448a3664f4ee04cf07) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Enemy/Eyeball/EyeballType2Idle1.png using Guid(7256be4d9328ca448a3664f4ee04cf07) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5f7fb080d0153b346ea8d46e6df046a2') in 0.021079 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000020 seconds.
+  path: Assets/Sprites/Enemy/Eyeball/EyeballType1Hit.png
+  artifactKey: Guid(72dc2cbf94554f54d8294ea2858a9a26) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Enemy/Eyeball/EyeballType1Hit.png using Guid(72dc2cbf94554f54d8294ea2858a9a26) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '147aa1b3ad33fad5cc8e51bc13b77cd0') in 0.038049 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000029 seconds.
+  path: Assets/Sprites/Enemy/Eyeball/EyeballType4Idle1.png
+  artifactKey: Guid(00f17d6ec5e5a8f41a4a52fcf003f271) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Enemy/Eyeball/EyeballType4Idle1.png using Guid(00f17d6ec5e5a8f41a4a52fcf003f271) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'cb52fbc8504e0cc84c404fc2ce04c9e9') in 0.015786 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000028 seconds.
+  path: Assets/Sprites/Enemy/Eyeball/EyeballType1Idle3.png
+  artifactKey: Guid(0ed80b55d4fdd1e4089f399a6a832377) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Enemy/Eyeball/EyeballType1Idle3.png using Guid(0ed80b55d4fdd1e4089f399a6a832377) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2e3e51430e291ebd21c633cc437a100d') in 0.017970 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000037 seconds.
+  path: Assets/Sprites/Enemy/Eyeball/EyeballType1Idle1.png
+  artifactKey: Guid(c96788bd83cee6d46b1977aefca97010) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Enemy/Eyeball/EyeballType1Idle1.png using Guid(c96788bd83cee6d46b1977aefca97010) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1b8048e25eb41c4314f90a6c6ac025ba') in 0.015448 seconds 
+Editor requested this worker to shutdown with reason: Scaling down because of idle timeout
+AssetImportWorker is now disconnected from the server
+Process exiting
+Exiting without the bug reporter. Application will terminate with return code 0

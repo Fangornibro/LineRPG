@@ -10,7 +10,7 @@ using UnityEngine.EventSystems;
 public class Icon : MonoBehaviour
 {
     public Cell cell;
-    public string Name, rarity;
+    public string Name;
     [TextArea(2, 4)]
     public string description;
     private GameObject inventory;
@@ -22,15 +22,20 @@ public class Icon : MonoBehaviour
     private AbilityOnCursor abilityOnCursor;
     //Sounds
     public AudioSource abilitySound;
+    //Rarity
+    public enum Rarity { gold, common, rare, epic, legendary }
+    public Rarity rarity;
     //Effect
     public enum Effect { none, HPSteal, AOE, passivePlusMana, passiveArmorEveryRound, passiveSharpenedWeapon, disarm, armorDestruction, poison }
     public Effect effect;
     //Attack, Block or passive
-    public string AttackBlockOrPassive;
+    public enum Type { none, attack, block, passive, magic }
+    public Type type;
     //Player
     private Player player;
     [HideInInspector]
     public bool isTakeable = true;
+    public List<Sprite> abilityTypeSprites;
     private void Start()
     {
         //Player
@@ -64,7 +69,7 @@ public class Icon : MonoBehaviour
 
     public void Use()
     {
-        if (!fm.isEnemiesStillHit && AttackBlockOrPassive != "passive")
+        if (!fm.isEnemiesStillHit && type != Type.passive)
         {
             abilityOnCursor.newCursor(this);
         }

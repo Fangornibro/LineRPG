@@ -47,7 +47,7 @@ public class Player : MonoBehaviour
     {
         damagePopup = GameObject.Instantiate(textPrefab, new Vector2(transform.position.x + UnityEngine.Random.Range(0, transform.localScale.x), transform.position.y + transform.localScale.y), Quaternion.identity);
         TextMeshPro text = damagePopup.GetComponent<TextMeshPro>();
-        text.SetText(damage.ToString());
+        text.SetText(damage + (isCrit ? " crit" : ""));
         damagePopup.transform.localScale = new Vector2(damagePopup.transform.localScale.x + (damage / 100) * (isCrit ? 1.5f : 1), damagePopup.transform.localScale.y + damage / 100);
         if (damagePopup.transform.localScale.x >= 2)
         {
@@ -182,7 +182,7 @@ public class Player : MonoBehaviour
     }
     public void Hit(Enemy enemy)
     {
-        if (abilityOnCursor.isOnCursor && abilityOnCursor.abilityType == "attack")
+        if (abilityOnCursor.isOnCursor && abilityOnCursor.abilityType == Icon.Type.attack)
         {
             if (curMana >= abilityOnCursor.curCost)
             {
@@ -372,7 +372,7 @@ public class Player : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (abilityOnCursor.isOnCursor && abilityOnCursor.abilityType == "block")
+        if (abilityOnCursor.isOnCursor && abilityOnCursor.abilityType == Icon.Type.block)
         {
             if (curMana >= abilityOnCursor.curCost)
             {

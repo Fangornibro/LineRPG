@@ -129,7 +129,6 @@ MonoBehaviour:
   maxHP: 25
   armor: 0
   gold: 15
-  plusDamage: 0
   attacks:
   - {fileID: -8549199934320519844, guid: dc455cd52d008a04cb311dac62b3bdd9, type: 3}
   - {fileID: -8549199934320519844, guid: bd73aee2864b92e44a2f129f2f06aa0c, type: 3}
@@ -137,7 +136,6 @@ MonoBehaviour:
   - {fileID: -8549199934320519844, guid: bd73aee2864b92e44a2f129f2f06aa0c, type: 3}
   - {fileID: -8549199934320519844, guid: 53fd22d8c4b433f4f92466dc7e78e786, type: 3}
   nextAttack: {fileID: 0}
-  noneAttack: {fileID: -8549199934320519844, guid: 6de3467a2fb68d14caef295b623c4e07, type: 3}
   deathMat: {fileID: 2100000, guid: b531947e80bc95c4f90c93a6db1e394d, type: 2}
   death: 0
   particleSystemPrefab: {fileID: 835498447766092628, guid: a055f418262d05b48973497971557ab3, type: 3}
@@ -148,8 +146,12 @@ MonoBehaviour:
   - {fileID: 3033617658492919308, guid: 6f0014470649a4b409a922cc18f81654, type: 3}
   - {fileID: 3033617658492919308, guid: fd5af67621b807346a463ed9a7961d48, type: 3}
   - {fileID: 3033617658492919308, guid: 2b9c8c0f4a7438d4ab26255dfb0cd4ab, type: 3}
+  - {fileID: 3033617658492919308, guid: b0e3756aa30b94d488c3da17a34c4e3a, type: 3}
   curEffectIcons: []
   poison: 0
+  plusDamage: 0
+  noneAttack: {fileID: -8549199934320519844, guid: 6de3467a2fb68d14caef295b623c4e07, type: 3}
+  segmentationEnemies: []
 --- !u!61 &214563111168147070
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -163,7 +165,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.09646058, y: 0.700929}
+  m_Offset: {x: -0.023806214, y: 0.6790623}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0}
@@ -174,7 +176,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.0162971, y: 1.3332769}
+  m_Size: {x: 1.2568307, y: 1.3770102}
   m_EdgeRadius: 0
 --- !u!114 &-8458821921886624022
 MonoBehaviour:
@@ -215,7 +217,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 336827870507305584}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.2045, y: 1.6, z: 0}
+  m_LocalPosition: {x: -1.2045, y: 1.7120001, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -309,7 +311,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1.1049999, y: 1.6000004}
+  m_AnchoredPosition: {x: 1.1049999, y: 1.7120005}
   m_SizeDelta: {x: 1.8851, y: 1.8894}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &6938915203245060574
@@ -471,7 +473,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4986861153428399373}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.04949999, y: 1.6010001, z: 0}
+  m_LocalPosition: {x: -0.04949999, y: 1.713, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -555,7 +557,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6386525096751100473}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.89169997, y: 1.60057, z: 0}
+  m_LocalPosition: {x: -0.89169997, y: 1.7125701, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -639,7 +641,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6552572506038264868}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.105, y: 1.6, z: 0}
+  m_LocalPosition: {x: 1.105, y: 1.7120001, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

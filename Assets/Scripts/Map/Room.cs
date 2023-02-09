@@ -9,26 +9,30 @@ public class Room : MonoBehaviour
 {
     public enum Statement { unable, completed, next }
     public Statement state;
-    public List<Sprite> EventSprites, LocationSprites;
-    [HideInInspector]
-    public SpriteRenderer sr;
-    private SpriteRenderer EventSr, LocationSr;
+    public List<Sprite> EventSprites;
+
+    [System.Serializable]
+    public class LocationSprites
+    {
+        public string name;
+        public List<Sprite> sprites;
+    }
+    public List<LocationSprites> locationSprites;
+    private string locationName;
+
+    private SpriteRenderer sr;
+    private SpriteRenderer EventSr;
     private FightManager fm;
     private SquadInfoPanel sip;
     private RoomSelector rs;
+    private CameraScript cam;
 
-    public int width, height, x, y;
     [HideInInspector]
     public Sprite defaultSprite;
     [HideInInspector]
     public bool isBoss = false, isStart = false;
     [HideInInspector]
     public Squad squad;
-
-
-    private int numbersOfAreas = 0;
-    [HideInInspector]
-    public int j, i, k;
 
     public List<Room> connectedRooms = new List<Room>();
     private LineRenderer lr;
@@ -40,13 +44,16 @@ public class Room : MonoBehaviour
         sip = GameObject.Find("SquadInfoPanel").GetComponent<SquadInfoPanel>();
         fm = GameObject.Find("FightManager").GetComponent<FightManager>();
         rs = GameObject.Find("AbilityOnCursor").GetComponent<RoomSelector>();
+        cam = GameObject.Find("Main Camera").GetComponent<CameraScript>();
 
         buttonDownSound = GameObject.Find("buttonDownSound").GetComponent<AudioSource>();
         buttonUpSound = GameObject.Find("buttonUpSound").GetComponent<AudioSource>();
 
         sr = GetComponent<SpriteRenderer>();
+        int randLoc = Random.Range(0, locationSprites.Count);
+        sr.sprite = locationSprites[randLoc].sprites[Random.Range(0, locationSprites[randLoc].sprites.Count)];
+        locationName = locationSprites[randLoc].name;
         EventSr = transform.Find("EventIcon").GetComponent<SpriteRenderer>();
-        LocationSr = transform.Find("LocationIcon").GetComponent<SpriteRenderer>();
         if (fm.events.Count != 0)
         {
             EventSr.sprite = EventSprites[Random.Range(2, EventSprites.Count)];
@@ -55,11 +62,19 @@ public class Room : MonoBehaviour
         {
             EventSr.sprite = EventSprites[Random.Range(3, EventSprites.Count)];
         }
-        LocationSr.sprite = LocationSprites[Random.Range(1, LocationSprites.Count)];
         if (EventSr.sprite.name == "FightIcon")
         {
+            int diff = Mathf.RoundToInt(Vector3.Distance(Vector3.zero, transform.position)/25);
+            List<Squad> possibleSquads = new List<Squad>();
+            for (int i = 0; i < fm.squads.Count; i++)
+            {
+                if (fm.squads[i].difficult == diff)
+                {
+                    possibleSquads.Add(fm.squads[i]);
+                }
+            }
             //Enemy type
-            squad = fm.squads[Random.Range(0, fm.squads.Count)];
+            squad = possibleSquads[Random.Range(0, possibleSquads.Count)];
         }
         else if (EventSr.sprite.name == "BreadIcon")
         {
@@ -68,6 +83,7 @@ public class Room : MonoBehaviour
         else if (EventSr.sprite.name == "ChestIcon")
         {
             squad = fm.chest;
+            squad.difficult = Mathf.RoundToInt(Vector3.Distance(Vector3.zero, transform.position) / 10) + Random.Range(1, 4);
         }
         else if (EventSr.sprite.name == "QuestionIcon")
         {
@@ -84,27 +100,35 @@ public class Room : MonoBehaviour
             squad = fm.bosses[Random.Range(0, fm.bosses.Count)];
             isBoss = false;
         }
-        else if (isStart)
-        {
-            EventSr.sprite = EventSprites[0];
-            LocationSr.sprite = LocationSprites[0];
-            squad = fm.elder;
-            isStart = false;
-        }
+    }
+
+    public void SetStart()
+    {
+        isStart = true;
+        state = Room.Statement.next;
+        EventSr.sprite = EventSprites[0];
+        squad = fm.elder;
     }
     void OnMouseDown()
     {
-        rs.ChangeSelection(this);
-        buttonDownSound.Play();
-        if (state == Statement.next)
+        if (!cam.isKinematic && !EventSystem.current.IsPointerOverGameObject())
         {
-            sip.RoomInfoReceiving(this, EventSr.sprite.name, LocationSr.sprite.name, squad);
+            Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y, -15);
+            rs.ChangeSelection(this);
+            buttonDownSound.Play();
+            if (state == Statement.next)
+            {
+                sip.RoomInfoReceiving(this, EventSr.sprite.name, locationName, squad);
+            }
         }
     }
 
     void OnMouseUp()
     {
-        buttonUpSound.Play();
+        if (!cam.isKinematic)
+        {
+            buttonUpSound.Play();
+        }
     }
 
     public void UpdateAllLines()
@@ -136,49 +160,38 @@ public class Room : MonoBehaviour
         }
         lr.SetPositions(vecFin.ToArray());
     }
-    private void OnTriggerEnter2D(Collider2D collision)
+    public void CanBePlaced(List<Room> rooms)
     {
-        if (collision.gameObject.tag == "RoomArea")
+        foreach (Room r in rooms)
         {
-            numbersOfAreas++;
-            if (numbersOfAreas >= 2)
+            if (Vector3.Distance(r.transform.position, transform.position) < 3)
             {
-                Merge(collision.transform.parent.GetComponent<Room>());
+                Merge(r);
             }
         }
     }
 
     private void Merge(Room other)
     {
-        if (j < other.j)
+        if (other.isStart)
+        {
+            Destroy(gameObject);
+        }
+        else
         {
             Merging(other);
-            numbersOfAreas = 1;
-        }
-        else if (j == other.j)
-        {
-            if (i < other.i)
-            {
-                Merging(other);
-                numbersOfAreas = 1;
-            }
-            else if (i == other.i)
-            {
-                if (k < other.k)
-                {
-                    Merging(other);
-                    numbersOfAreas = 1;
-                }
-            }
         }
     }
 
     private void Merging(Room other)
     {
-        foreach (Room r in other.connectedRooms)
+        for (int i = 0; i < other.connectedRooms.Count; i++)
         {
-            r.connectedRooms.Remove(other);
-            r.connectedRooms.Add(this);
+            if (other.connectedRooms[i] != null)
+            {
+                other.connectedRooms[i].connectedRooms.Remove(other);
+                other.connectedRooms[i].connectedRooms.Add(this);
+            }
         }
         connectedRooms.AddRange(other.connectedRooms);
         Destroy(other.gameObject);
@@ -186,23 +199,24 @@ public class Room : MonoBehaviour
 
     public void SetColorsToDefault()
     {
+        GetComponent<LineRenderer>().SetWidth(0.2f, 0.2f);
+        Color color = Color.white;
         if (state == Statement.unable)
         {
             GetComponent<LineRenderer>().sortingOrder = -3;
-            sr.color = new Color(0.490566f, 0.490566f, 0.490566f);
-            GetComponent<LineRenderer>().SetColors(new Color(0.490566f, 0.490566f, 0.490566f), new Color(0.490566f, 0.490566f, 0.490566f));
+            color = new Color(0.4339623f, 0.4339623f, 0.4339623f);
         }
         else if (state == Statement.completed)
         {
             GetComponent<LineRenderer>().sortingOrder = -1;
-            sr.color = new Color(0.2117647f, 0.4901961f, 0.2156863f);
-            GetComponent<LineRenderer>().SetColors(new Color(0.2117647f, 0.4901961f, 0.2156863f), new Color(0.2117647f, 0.4901961f, 0.2156863f));
+            color = new Color(0.2117647f, 0.4901961f, 0.2156863f);
         }
         else if (state == Statement.next)
         {
             GetComponent<LineRenderer>().sortingOrder = -2;
-            sr.color = new Color(0.8396226f, 0.5861914f, 0.1703008f);
-            GetComponent<LineRenderer>().SetColors(new Color(0.490566f, 0.490566f, 0.490566f), new Color(0.490566f, 0.490566f, 0.490566f));
+            color = new Color(0.8396226f, 0.5861914f, 0.1703008f);
         }
+        transform.Find("Outline").GetComponent<SpriteRenderer>().color = color;
+        GetComponent<LineRenderer>().SetColors(color, color);
     }
 }
