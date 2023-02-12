@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class CancelSquadInfoButton : MonoBehaviour
+public class CancelSquadInfoButton : MonoBehaviour, IButton
 {
     private SquadInfoPanel sq;
     private RoomSelector rs;
@@ -14,7 +14,7 @@ public class CancelSquadInfoButton : MonoBehaviour
         rs = GameObject.Find("AbilityOnCursor").GetComponent<RoomSelector>();
     }
 
-    public void OnPointerClick()
+    void IButton.OnPointerClick()
     {
         rs.ChangeSelection(null);
         sq.isOpened = false;

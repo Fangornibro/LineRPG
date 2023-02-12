@@ -1,11 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
-using System;
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
-using UnityEditorInternal.Profiling.Memory.Experimental;
-using UnityEngine.EventSystems;
 
 public class Icon : MonoBehaviour
 {
@@ -16,7 +11,6 @@ public class Icon : MonoBehaviour
     private GameObject inventory;
     public int damageOrArmour, cost;
     public float criticalChance, criticalDamage;
-    public Texture2D cursorTexture;
     private FightManager fm;
     public TextMeshProUGUI damageOrArmourText, manaCostText;
     private AbilityOnCursor abilityOnCursor;
@@ -29,7 +23,7 @@ public class Icon : MonoBehaviour
     public enum Effect { none, HPSteal, AOE, passivePlusMana, passiveArmorEveryRound, passiveSharpenedWeapon, disarm, armorDestruction, poison }
     public Effect effect;
     //Attack, Block or passive
-    public enum Type { none, attack, block, passive, magic }
+    public enum Type { none, attack, block, passive, magicAttack }
     public Type type;
     //Player
     private Player player;

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class EventHud : MonoBehaviour
+public class EventHUD : MonoBehaviour
 {
     private GameObject childHud, reward;
     [HideInInspector]

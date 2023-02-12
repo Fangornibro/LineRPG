@@ -25,9 +25,12 @@ public class AbilityOnCursor : MonoBehaviour
     public Icon ability;
     [SerializeField]
     private Sprite cellDefault, cellSelected;
+
+    private Texture2D cursorTexture;
     private void Start()
     {
         player = GameObject.Find("Player").GetComponent<Player>();
+        cursorTexture = Resources.Load<Texture2D>("Cursors/AttackCursor");
     }
     public void newCursor(Icon ability)
     {
@@ -38,8 +41,8 @@ public class AbilityOnCursor : MonoBehaviour
             abilitySound = ability.abilitySound;
             effect = ability.effect;
             isCursorDeafult = 0.1f;
-            Cursor.SetCursor(ability.cursorTexture, Vector2.zero, CursorMode.Auto);
-            if (abilityType == Icon.Type.attack)
+            Cursor.SetCursor(cursorTexture, Vector2.zero, CursorMode.Auto);
+            if (abilityType == Icon.Type.attack || abilityType == Icon.Type.magicAttack)
             {
                 curDamageOrArmour = ability.damageOrArmour + player.passiveDamage;
             }

@@ -9,10 +9,10 @@ using UnityEngine.Rendering;
 using Unity.VisualScripting;
 using UnityEngine.UIElements;
 
-public class EventHudOkButton : MonoBehaviour
+public class EventHudOkButton : MonoBehaviour, IButton
 {
     private FightManager fm;
-    private EventHud eh;
+    private EventHUD eh;
     private TextMeshProUGUI buttonText;
     //Effect
     private bool startLeaving = false;
@@ -27,12 +27,12 @@ public class EventHudOkButton : MonoBehaviour
         //Fight manager
         fm = GameObject.Find("FightManager").GetComponent<FightManager>();
         //Event hud
-        eh = GameObject.Find("EventHud").GetComponent<EventHud>();
+        eh = GameObject.Find("EventHud").GetComponent<EventHUD>();
         //Button text
         buttonText = transform.GetChild(0).GetComponent<TextMeshProUGUI>();
     }
 
-    public void OnPointerClick()
+    void IButton.OnPointerClick()
     {
         if (eh.eventString != "Defeat")
         {
@@ -87,7 +87,7 @@ public class EventHudOkButton : MonoBehaviour
         }
         else
         {
-            //BackToMenu
+            SceneTransition.SwitchToScene("MainMenu");
         }
     }
     private void Update()

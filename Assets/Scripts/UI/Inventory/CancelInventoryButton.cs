@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class CancelInventoryButton : MonoBehaviour
+public class CancelInventoryButton : MonoBehaviour, IButton
 {
     private Inventory inv;
 
@@ -12,7 +12,7 @@ public class CancelInventoryButton : MonoBehaviour
         inv = GameObject.Find("Inventory").GetComponent<Inventory>();
     }
 
-    public void OnPointerClick()
+    void IButton.OnPointerClick()
     {
         inv.isInventOpen = false;
     }

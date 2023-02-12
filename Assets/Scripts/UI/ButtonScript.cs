@@ -2,6 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+interface IButton
+{
+    void OnPointerClick();
+}
 
 public class ButtonScript : MonoBehaviour, IPointerClickHandler, IPointerDownHandler, IPointerUpHandler
 {
@@ -34,30 +38,7 @@ public class ButtonScript : MonoBehaviour, IPointerClickHandler, IPointerDownHan
     {
         if (eventData.button == PointerEventData.InputButton.Left && isActive)
         {
-            if (name == "StartFightButton")
-            {
-                rt.GetComponent<StartFightButton>().OnPointerClick();
-            }
-            else if (name == "EventHudOkButton")
-            {
-                rt.GetComponent<EventHudOkButton>().OnPointerClick();
-            }
-            else if (name == "DialogueButton1" || name == "DialogueButton2" || name == "DialogueButton3" || name == "DialogueButton4")
-            {
-                rt.GetComponent<DialogueButton>().OnPointerClick();
-            }
-            else if (name == "NextTurnButtonTop")
-            {
-                rt.GetComponent<NextTurnButton>().OnPointerClick();
-            }
-            else if (name == "CancelInventoryButton")
-            {
-                rt.GetComponent<CancelInventoryButton>().OnPointerClick();
-            }
-            else if (name == "CancelSquadInfoButton")
-            {
-                rt.GetComponent<CancelSquadInfoButton>().OnPointerClick();
-            }
+            rt.GetComponent<IButton>().OnPointerClick();
         }
     }
 

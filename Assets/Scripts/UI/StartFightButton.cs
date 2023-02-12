@@ -1,42 +1,54 @@
-using Microsoft.Unity.VisualStudio.Editor;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor.PackageManager;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.Rendering;
-using UnityEngine.Rendering.Universal;
-using UnityEngine.SocialPlatforms;
 
-public class StartFightButton : MonoBehaviour
+
+public class StartFightButton : MonoBehaviour, IButton
 {
     private SquadInfoPanel sip;
     private Inventory inventory;
+    private VisibleInventory visibleInventory;
     private CameraScript cam;
 
     private bool isStartedAnim = false;
     [HideInInspector]
-    public Vector3 roomPos;
+    public Room room;
 
     private void Start()
     {
         cam = GameObject.Find("Main Camera").GetComponent<CameraScript>();
         sip = GameObject.Find("SquadInfoPanel").GetComponent<SquadInfoPanel>();
         inventory = GameObject.Find("Inventory").GetComponent<Inventory>();
+        visibleInventory = GameObject.Find("VisibleInventory").GetComponent<VisibleInventory>();
     }
-    public void OnPointerClick()
+    void IButton.OnPointerClick()
     {
-        isStartedAnim = true;
-        sip.isOpened= false;
-        inventory.isInventOpen= false;
+        bool canStart = false;
+        if (!room.isStart)
+        {
+            foreach (Cell c in visibleInventory.cells)
+            {
+                if (c.icon != null && (c.icon.type == Icon.Type.attack || c.icon.type == Icon.Type.magicAttack))
+                {
+                    canStart = true;
+                }
+            }
+        }
+        else
+        {
+            canStart = true;
+        }
+        if (canStart)
+        {
+            isStartedAnim = true;
+            sip.isOpened = false;
+            inventory.isInventOpen = false;
+        }
     }
 
     private void Update()
     {
         if (isStartedAnim)
         {
-            isStartedAnim = cam.Approximation(roomPos, 1, true);
+            isStartedAnim = cam.Approximation(room.transform.position, 1, true);
         }
     }
 }

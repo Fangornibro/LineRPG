@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class DialogueActivation : MonoBehaviour
 {
+    [Header("Initialisations")]
+    [SerializeField] private DialogueStructure dialogueStructure;
     void Update()
     {
-        if (DialogueStructure.isDialogueOpen)
+        if (dialogueStructure.isDialogueOpen)
         {
             transform.Find("DialogueHud").GetComponent<RectTransform>().anchoredPosition = new Vector3(0, 0, 0);
         }

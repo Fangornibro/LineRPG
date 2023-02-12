@@ -5,41 +5,59 @@ using TMPro;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class DialogueStructure
+public class DialogueStructure : MonoBehaviour
 {
-    public TextMeshProUGUI text = GameObject.Find("Text").GetComponent<TextMeshProUGUI>(), person = GameObject.Find("Person").GetComponent<TextMeshProUGUI>();
-    public GameObject faceIcon = GameObject.Find("DialogueHudFaceIcon"), button1 = GameObject.Find("DialogueButton1").transform.GetChild(0).gameObject, button2 = GameObject.Find("DialogueButton2").transform.GetChild(0).gameObject, button3 = GameObject.Find("DialogueButton3").transform.GetChild(0).gameObject, button4 = GameObject.Find("DialogueButton4").transform.GetChild(0).gameObject;
-    public static bool isDialogueOpen = false;
-    int ichar = 0;
-    public bool epressed = false, stringEnded = false, initialization = true;
-    string Text = "";
-    float delayBetweenLetters = 0.1f, startdelayBetweenLetters = 0.1f;
-    public AudioSource textSound = GameObject.Find("textSound").GetComponent<AudioSource>();
-    public List<DialogueBranch> dialogues;
-    public DialogueBranch curDialogueBranch;
-    public int Statement = 0;
-    private FightManager ld = GameObject.Find("FightManager").GetComponent<FightManager>();
+    [HideInInspector] public bool isDialogueOpen = false;
+    private int ichar = 0;
+    [HideInInspector] public bool epressed = false, stringEnded = false;
+    private string Text = "";
+    private float delayBetweenLetters = 0.1f, startdelayBetweenLetters = 0.1f;
+    
+    [HideInInspector] public List<DialogueBranch> dialogues;
+    [HideInInspector] public DialogueBranch curDialogueBranch;
+    [HideInInspector] public int Statement = 0;
+
+
+    //Player sprite
+    private Sprite playerSprite;
+
+
+    [Header("Initialisations")]
+    public GameObject faceIcon;
+    public TextMeshProUGUI text, person;
+    public RectTransform button1, button2, button3, button4;
+    [SerializeField] private FightManager fightManager;
+
+
+    [Space]
+    [Space]
+    [Header("Sounds")]
+    [SerializeField] private AudioSource textSound;
+
+
     //For double click
     private float clicked = 0;
     private float clicktime = 0;
     private float clickdelay = 1f;
-    public DialogueStructure(List<DialogueBranch> Dialogues)
+    private void Start()
     {
-        dialogues = Dialogues;
+        playerSprite = SelectCharacterButton.curPlayer.GetComponent<SpriteRenderer>().sprite;
+    }
+    public void Initialization(List<DialogueBranch> dialogues)
+    {
+        button1.anchoredPosition = new Vector3(-1000, -1000, 0);
+        button2.anchoredPosition = new Vector3(-1000, -1000, 0);
+        button3.anchoredPosition = new Vector3(-1000, -1000, 0);
+        button4.anchoredPosition = new Vector3(-1000, -1000, 0);
+
+        Statement = 0;
+        this.dialogues = dialogues;
+        curDialogueBranch = dialogues[0];
+        epressed = true;
     }
 
     public int Interaction()
     {
-        if (initialization)
-        {
-            button1.transform.parent.GetComponent<RectTransform>().anchoredPosition = new Vector3(-1000, -1000, 0);
-            button2.transform.parent.GetComponent<RectTransform>().anchoredPosition = new Vector3(-1000, -1000, 0);
-            button3.transform.parent.GetComponent<RectTransform>().anchoredPosition = new Vector3(-1000, -1000, 0);
-            button4.transform.parent.GetComponent<RectTransform>().anchoredPosition = new Vector3(-1000, -1000, 0);
-            curDialogueBranch = dialogues[0];
-            initialization = false;
-            epressed = true;
-        }
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             clicked++;
@@ -74,54 +92,54 @@ public class DialogueStructure
             DialogueButton.curInteractableItem = this;
             if (curDialogueBranch.choice1text != "")
             {
-                button1.transform.parent.GetComponent<RectTransform>().anchoredPosition = button1.GetComponent<DialogueButton>().defpos;
-                button1.GetComponentInChildren<TextMeshProUGUI>().text = curDialogueBranch.choice1text;
+                button1.anchoredPosition = button1.GetChild(0).GetComponent<DialogueButton>().defpos;
+                button1.GetChild(0).GetComponentInChildren<TextMeshProUGUI>().text = curDialogueBranch.choice1text;
                 if (curDialogueBranch.button1active)
                 {
-                    button1.transform.parent.GetComponent<ButtonScript>().activation();
+                    button1.GetComponent<ButtonScript>().activation();
                 }
                 else
                 {
-                    button1.transform.parent.GetComponent<ButtonScript>().deactivation();
+                    button1.GetComponent<ButtonScript>().deactivation();
                 }
             }
             if (curDialogueBranch.choice2text != "")
             {
-                button2.transform.parent.GetComponent<RectTransform>().anchoredPosition = button2.GetComponent<DialogueButton>().defpos;
-                button2.GetComponentInChildren<TextMeshProUGUI>().text = curDialogueBranch.choice2text;
+                button2.anchoredPosition = button2.GetChild(0).GetComponent<DialogueButton>().defpos;
+                button2.GetChild(0).GetComponentInChildren<TextMeshProUGUI>().text = curDialogueBranch.choice2text;
                 if (curDialogueBranch.button2active)
                 {
-                    button2.transform.parent.GetComponent<ButtonScript>().activation();
+                    button2.GetComponent<ButtonScript>().activation();
                 }
                 else
                 {
-                    button2.transform.parent.GetComponent<ButtonScript>().deactivation();
+                    button2.GetComponent<ButtonScript>().deactivation();
                 }
             }
             if (curDialogueBranch.choice3text != "")
             {
-                button3.transform.parent.GetComponent<RectTransform>().anchoredPosition = button3.GetComponent<DialogueButton>().defpos;
-                button3.GetComponentInChildren<TextMeshProUGUI>().text = curDialogueBranch.choice3text;
+                button3.anchoredPosition = button3.GetChild(0).GetComponent<DialogueButton>().defpos;
+                button3.GetChild(0).GetComponentInChildren<TextMeshProUGUI>().text = curDialogueBranch.choice3text;
                 if (curDialogueBranch.button3active)
                 {
-                    button3.transform.parent.GetComponent<ButtonScript>().activation();
+                    button3.GetComponent<ButtonScript>().activation();
                 }
                 else
                 {
-                    button3.transform.parent.GetComponent<ButtonScript>().deactivation();
+                    button3.GetComponent<ButtonScript>().deactivation();
                 }
             }
             if (curDialogueBranch.choice4text != "")
             {
-                button4.transform.parent.GetComponent<RectTransform>().anchoredPosition = button4.GetComponent<DialogueButton>().defpos;
-                button4.GetComponentInChildren<TextMeshProUGUI>().text = curDialogueBranch.choice4text;
+                button4.anchoredPosition = button4.GetChild(0).GetComponent<DialogueButton>().defpos;
+                button4.GetChild(0).GetComponentInChildren<TextMeshProUGUI>().text = curDialogueBranch.choice4text;
                 if (curDialogueBranch.button4active)
                 {
-                    button4.transform.parent.GetComponent<ButtonScript>().activation();
+                    button4.GetComponent<ButtonScript>().activation();
                 }
                 else
                 {
-                    button4.transform.parent.GetComponent<ButtonScript>().deactivation();
+                    button4.GetComponent<ButtonScript>().deactivation();
                 }
             }
         }
@@ -137,11 +155,14 @@ public class DialogueStructure
                 stringEnded = false;
                 epressed = false;
                 isDialogueOpen = false;
-                initialization = true;
-                ld.start = false;
+                fightManager.start = false;
             }
             else
             {
+                if (curDialogueBranch.icon == null)
+                {
+                    curDialogueBranch.icon = playerSprite;
+                }
                 faceIcon.GetComponent<Image>().sprite = curDialogueBranch.icon;
                 float iconWidth = faceIcon.GetComponent<RectTransform>().sizeDelta.x / curDialogueBranch.icon.rect.width;
                 float iconHeight = faceIcon.GetComponent<RectTransform>().sizeDelta.y / curDialogueBranch.icon.rect.height;
@@ -180,10 +201,10 @@ public class DialogueStructure
         if (stringEnded)
         {
             Statement = curDialogueBranch.eventNumber;
-            button1.transform.parent.GetComponent<RectTransform>().anchoredPosition = new Vector3(-1000, -1000, 0);
-            button2.transform.parent.GetComponent<RectTransform>().anchoredPosition = new Vector3(-1000, -1000, 0);
-            button3.transform.parent.GetComponent<RectTransform>().anchoredPosition = new Vector3(-1000, -1000, 0);
-            button4.transform.parent.GetComponent<RectTransform>().anchoredPosition = new Vector3(-1000, -1000, 0);
+            button1.anchoredPosition = new Vector3(-1000, -1000, 0);
+            button2.anchoredPosition = new Vector3(-1000, -1000, 0);
+            button3.anchoredPosition = new Vector3(-1000, -1000, 0);
+            button4.anchoredPosition = new Vector3(-1000, -1000, 0);
             faceIcon.GetComponent<RectTransform>().sizeDelta = new Vector2(380, 380);
             curDialogueBranch = nextDialogueBranch;
             text.SetText("");

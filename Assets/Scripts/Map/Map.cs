@@ -167,8 +167,7 @@ public class Map : MonoBehaviour
     {
         room.state = Room.Statement.completed;
         Camera.main.transform.position = new Vector3(150, 0, -15);
-        fm.curEventString = eventName;
-        fm.curLocationString = locationName;
+        fm.curLocationName = locationName;
         fm.curSquad = squad;
         fm.roomPos = room.transform.position;
         fm.RoomStart();

@@ -1,8 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using UnityEditor;
-using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.UI;
 public class SquadInfoPanel : MonoBehaviour
@@ -89,15 +86,8 @@ public class SquadInfoPanel : MonoBehaviour
         float iconWidth = faceIcon.GetComponent<RectTransform>().sizeDelta.x / Squad.GetComponent<SpriteRenderer>().sprite.rect.width;
         float iconHeight = faceIcon.GetComponent<RectTransform>().sizeDelta.y / Squad.GetComponent<SpriteRenderer>().sprite.rect.height;
         faceIcon.GetComponent<RectTransform>().sizeDelta = new Vector2(Squad.GetComponent<SpriteRenderer>().sprite.rect.width * Mathf.Min(iconWidth, iconHeight), Squad.GetComponent<SpriteRenderer>().sprite.rect.height * Mathf.Min(iconWidth, iconHeight));
-        if (LocationName != "None")
-        {
-            transform.Find("LocationName").GetComponent<TextMeshProUGUI>().text = LocationName.Replace("Icon", "");
-        }
-        else 
-        {
-            transform.Find("LocationName").GetComponent<TextMeshProUGUI>().text = "";
-        }
+        transform.Find("LocationName").GetComponent<TextMeshProUGUI>().text = LocationName;
         GameObject.Find("Map").GetComponent<Map>().RoomInfoReceiving(room, EventName, LocationName, Squad);
-        transform.Find("StartFightButton").GetChild(0).GetComponent<StartFightButton>().roomPos = room.transform.position;
+        transform.Find("StartFightButton").GetChild(0).GetComponent<StartFightButton>().room = room;
     }
 }

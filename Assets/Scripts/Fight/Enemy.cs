@@ -24,6 +24,7 @@ public class Enemy : MonoBehaviour
     private float deathTime = 0;
     [HideInInspector]
     public bool death = false;
+    private bool runningAway = false;
     private Animator anim;
     private float hitDuration = 0.7f, attackDuration = 0.5f;
     private bool gotHit = false, attack = false;
@@ -56,6 +57,7 @@ public class Enemy : MonoBehaviour
 
 
     //Effects
+    private Vector3 effectPos;
     public List<GameObject> effectIconPrefabs = new List<GameObject>();
     [HideInInspector]
     public List<GameObject> curEffectIcons = new List<GameObject>();
@@ -65,7 +67,9 @@ public class Enemy : MonoBehaviour
     public int plusDamage = 0;
     public EnemyAttack noneAttack;
     [SerializeField]
-    private List<Enemy> segmentationEnemies;
+    private List<Enemy> divideEnemies;
+    [SerializeField]
+    private List<Vector3> positionsForDivideEnemies;
     public void Create(float damage, bool isCrit)
     {
         damagePopup = GameObject.Instantiate(textPrefab, new Vector2(transform.position.x + UnityEngine.Random.Range(0, transform.localScale.x), transform.position.y + transform.localScale.y), Quaternion.identity);
@@ -80,6 +84,8 @@ public class Enemy : MonoBehaviour
     }
     void Start()
     {
+        //Effects
+        effectPos = transform.Find("EffectsPosition").position;
         //Crit sound
         critSound = GameObject.Find("CritSound").GetComponent<AudioSource>();
         //Temp
@@ -118,11 +124,6 @@ public class Enemy : MonoBehaviour
         armorText.SetText(armor.ToString());
         armorGO.color = new Color(1f, 1f, 1f, 1f);
     }
-
-    private void RunningAway()
-    {
-        death = true;
-    }
     public void Hit()
     {
         StartAttackAnimation();
@@ -136,8 +137,7 @@ public class Enemy : MonoBehaviour
             }
             else if (nextAttack.effect == EnemyAttack.Effect.runningAway)
             {
-                gold = 0;
-                RunningAway();
+                runningAway = true;
             }
             else if (nextAttack.effect == EnemyAttack.Effect.flock)
             {
@@ -193,6 +193,10 @@ public class Enemy : MonoBehaviour
         if (HP <= 0)
         {
             HP = 0;
+            if (divideEnemies.Count != 0)
+            {
+                anim.SetBool("Death", true);
+            }
             death = true;
         }
         if (armor <= 0)
@@ -236,25 +240,25 @@ public class Enemy : MonoBehaviour
 
         if (plusDamage > 0)
         {
-            GameObject effectIcon = Instantiate(effectIconPrefabs[0], transform.position, Quaternion.Euler(0, 0, 0), transform);
+            GameObject effectIcon = Instantiate(effectIconPrefabs[0], effectPos, Quaternion.Euler(0, 0, 0), transform);
             effectIcon.transform.GetChild(0).GetComponent<TextMeshPro>().SetText(plusDamage.ToString());
             curEffectIcons.Add(effectIcon);
         }
         if (poison > 0)
         {
-            GameObject effectIcon = Instantiate(effectIconPrefabs[1], transform.position, Quaternion.Euler(0, 0, 0), transform);
+            GameObject effectIcon = Instantiate(effectIconPrefabs[1], effectPos, Quaternion.Euler(0, 0, 0), transform);
             effectIcon.transform.GetChild(0).GetComponent<TextMeshPro>().SetText(poison.ToString() + "t");
             curEffectIcons.Add(effectIcon);
         }
         if (nextAttack == noneAttack)
         {
-            GameObject effectIcon = Instantiate(effectIconPrefabs[2], transform.position, Quaternion.Euler(0, 0, 0), transform);
+            GameObject effectIcon = Instantiate(effectIconPrefabs[2], effectPos, Quaternion.Euler(0, 0, 0), transform);
             effectIcon.transform.GetChild(0).GetComponent<TextMeshPro>().SetText("");
             curEffectIcons.Add(effectIcon);
         }
-        if (segmentationEnemies.Count != 0)
+        if (divideEnemies.Count != 0)
         {
-            GameObject effectIcon = Instantiate(effectIconPrefabs[3], transform.position, Quaternion.Euler(0, 0, 0), transform);
+            GameObject effectIcon = Instantiate(effectIconPrefabs[3], effectPos, Quaternion.Euler(0, 0, 0), transform);
             effectIcon.transform.GetChild(0).GetComponent<TextMeshPro>().SetText("");
             curEffectIcons.Add(effectIcon);
         }
@@ -283,18 +287,22 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
-        if (death)
+        if (death && divideEnemies.Count == 0)
         {
             deathTime += Time.deltaTime;
             sr.material = deathMat;
             sr.material.SetFloat("_OutlineWidth", deathTime);
             if (deathTime >= 1)
             {
-                fm.AddGold(gold);
-                if (segmentationEnemies != null)
-                {
-                    fm.AddEnemies(segmentationEnemies);
-                }
+                Die();
+            }
+        }
+        else if (runningAway)
+        {
+            deathTime += Time.deltaTime;
+            sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, 1 - deathTime);
+            if (deathTime >= 1)
+            {
                 Destroy(gameObject);
             }
         }
@@ -337,5 +345,14 @@ public class Enemy : MonoBehaviour
                 }
             }
         }
+    }
+    public void Die()
+    {
+        if (divideEnemies != null)
+        {
+            fm.AddEnemies(divideEnemies, positionsForDivideEnemies, transform.position);
+        }
+        fm.AddGold(gold);
+        Destroy(gameObject);
     }
 }

@@ -215,7 +215,7 @@ MonoBehaviour:
     choice3dialoguebranch: 
     choice4dialoguebranch: 
     eventNumber: 302
-    icon: {fileID: 21300000, guid: 3a89be8e7871dba4db02783ec6da7999, type: 3}
+    icon: {fileID: 0}
   - text: Let's see if he has something.
     person: Me
     choice1text: His body has disappeared.(Leave)
@@ -231,4 +231,4 @@ MonoBehaviour:
     choice3dialoguebranch: 
     choice4dialoguebranch: 
     eventNumber: 301
-    icon: {fileID: 21300000, guid: 3a89be8e7871dba4db02783ec6da7999, type: 3}
+    icon: {fileID: 0}

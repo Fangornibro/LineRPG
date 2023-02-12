@@ -1,51 +1,67 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using static EnemyAttack;
-using static Icon;
-using static UnityEditorInternal.ReorderableList;
 
 public class Player : MonoBehaviour
 {
-    public int curMana, maxMana, HP, maxHP, armor;
-    public float passiveCriticalChance, passiveCriticalDamage;
-    [HideInInspector]
-    public int maxPassiveDamage = 0, passiveDamage = 0, passiveMana = 0, weakness = 0, passiveArmor = 0;
-    public int gold;
+    //Animation
     private bool gotHit, attack;
     private SpriteRenderer sr;
     private Animator anim;
     private float hitDuration = 0.4f, attackDuration = 0.5f;
-    private TextMeshProUGUI armourText, goldText;
 
-    private TopPanels fightHUD;
-    //Damage popup
-    [SerializeField]
-    private DamagePopup textPrefab;
+
+    [HideInInspector] public int gold;
+    [HideInInspector] public int curMana, maxMana = 3, HP, maxHP = 30, armor;
+    [HideInInspector] public float passiveCriticalChance, passiveCriticalDamage;
+
+
+    [Header("Damage popup")]
+    [SerializeField] private DamagePopup textPrefab;
     private DamagePopup damagePopup;
-    //Event hud
-    EventHud eh;
-    //Ability on cursor
-    AbilityOnCursor abilityOnCursor;
-    //Temp
-    private Transform temp;
-    //Crit sound
-    private AudioSource critSound;
-    //Effects
+
+
+    [Space]
+    [Space]
+    [Header("Effects")]
     public List<GameObject> effectIconPrefabs = new List<GameObject>();
-    [HideInInspector]
-    public List<GameObject> curEffectIcons = new List<GameObject>();
-    [HideInInspector]
-    public int poison = 0;
+    [HideInInspector] public List<GameObject> curEffectIcons = new List<GameObject>();
+    [HideInInspector] public int poison = 0, maxPassiveDamage = 0, passiveDamage = 0, passiveMana = 0, weakness = 0, passiveArmor = 0;
     private int minusManaEffect = 0;
-    [SerializeField]
-    private AudioSource ArmorUpSound;
-    private AudioSource poisonSound;
+
+
+    [Space]
+    [Space]
+    [Header("Initialisations")]
+    [SerializeField] private Transform temp;
+    [SerializeField] private EventHUD eh;
+    [SerializeField] private TopPanels topPanels;
+    [SerializeField] private AbilityOnCursor abilityOnCursor;
+
+
+    [Space]
+    [Space]
+    [Header("Texts")]
+    [SerializeField] private TextMeshProUGUI armorText;
+    [SerializeField] private TextMeshProUGUI goldText;
+
+
+    [Space]
+    [Space]
+    [Header("Sounds")]
+    [SerializeField] private AudioSource armorUpSound;
+    [SerializeField] private AudioSource poisonSound;
+    [SerializeField] private AudioSource critSound;
+
+
+    [Space]
+    [Space]
+    [Header("Only in editor")]
+    [SerializeField] private PlayerSelection defPlayer;
     public void Create(float damage, bool isHeal, bool isCrit)
     {
-        damagePopup = GameObject.Instantiate(textPrefab, new Vector2(transform.position.x + UnityEngine.Random.Range(0, transform.localScale.x), transform.position.y + transform.localScale.y), Quaternion.identity);
+        damagePopup = Instantiate(textPrefab, new Vector2(transform.position.x + UnityEngine.Random.Range(0, transform.localScale.x), transform.position.y + transform.localScale.y), Quaternion.identity);
         TextMeshPro text = damagePopup.GetComponent<TextMeshPro>();
         text.SetText(damage + (isCrit ? " crit" : ""));
         damagePopup.transform.localScale = new Vector2(damagePopup.transform.localScale.x + (damage / 100) * (isCrit ? 1.5f : 1), damagePopup.transform.localScale.y + damage / 100);
@@ -62,24 +78,29 @@ public class Player : MonoBehaviour
             damagePopup.textColor = new Color(0.682353f, (0.1215686f + damage / 122) + (isCrit ? 0.2f : 0f), 0.2078431f, 1f);
         }
     }
+#if (UNITY_EDITOR)
+    private void Awake()
+    {
+        if (SelectCharacterButton.curPlayer == null)
+        {
+            SelectCharacterButton.curPlayer = defPlayer;
+        }
+    }
+#endif
+
     private void Start()
     {
-        //Temp
-        temp = GameObject.Find("Temp").transform;
-        //Event hud
-        eh = GameObject.Find("EventHud").GetComponent<EventHud>();
         sr = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
-        fightHUD = GameObject.Find("TopPanels").GetComponent<TopPanels>();
-        armourText = GameObject.Find("ArmorText").GetComponent<TextMeshProUGUI>();
-        goldText = GameObject.Find("GoldText").GetComponent<TextMeshProUGUI>();
+        PlayerSelection p = SelectCharacterButton.curPlayer;
+        maxHP = p.maxHP;
+        maxMana = p.maxMana;
+        passiveCriticalChance = p.passiveCriticalChance;
+        passiveCriticalDamage = p.passiveCriticalDamage;
+        sr.sprite = p.GetComponent<SpriteRenderer>().sprite;
+        anim.runtimeAnimatorController = p.animatorController;
         HP = maxHP;
-
-        abilityOnCursor = GameObject.Find("AbilityOnCursor").GetComponent<AbilityOnCursor>();
-        //Poison sound
-        poisonSound = GameObject.Find("poisonSound").GetComponent<AudioSource>();
-        //Crit sound
-        critSound = GameObject.Find("CritSound").GetComponent<AudioSource>();
+        curMana = maxMana;
 
         BarsUpdate();
     }
@@ -87,7 +108,7 @@ public class Player : MonoBehaviour
     {
         foreach (GameObject gm in curEffectIcons)
         {
-            GameObject.Destroy(gm.gameObject);
+            Destroy(gm.gameObject);
         }
         curEffectIcons.Clear();
 
@@ -150,14 +171,14 @@ public class Player : MonoBehaviour
         if (poison > 0)
         {
             poisonSound.Play();
-            GetHit(maxHP / 10, false, EnemyAttack.Effect.throughArmor, "poison");
+            GetHit(3 * poison, false, EnemyAttack.Effect.throughArmor, "poison");
             poison--;
         }
         curMana = maxMana + passiveMana;
         if (passiveArmor > 0)
         {
             armor += passiveArmor;
-            ArmorUpSound.Play();
+            armorUpSound.Play();
         }
         passiveDamage = maxPassiveDamage;
         BarsUpdate();
@@ -176,13 +197,13 @@ public class Player : MonoBehaviour
     }
     public void BarsUpdate()
     {
-        armourText.SetText(armor.ToString());
-        fightHUD.UpdateMana((maxMana + passiveMana), curMana);
-        fightHUD.UpdateHP(maxHP, 20, HP);
+        armorText.SetText(armor.ToString());
+        topPanels.UpdateMana((maxMana + passiveMana), curMana);
+        topPanels.UpdateHP(maxHP, 20, HP);
     }
     public void Hit(Enemy enemy)
     {
-        if (abilityOnCursor.isOnCursor && abilityOnCursor.abilityType == Icon.Type.attack)
+        if (abilityOnCursor.isOnCursor && (abilityOnCursor.abilityType == Icon.Type.attack || abilityOnCursor.abilityType == Icon.Type.magicAttack))
         {
             if (curMana >= abilityOnCursor.curCost)
             {
@@ -367,7 +388,7 @@ public class Player : MonoBehaviour
     public void SetArmor(int armour)
     {
         this.armor = armour;
-        armourText.SetText(armour.ToString());
+        armorText.SetText(armour.ToString());
     }
 
     private void OnMouseDown()

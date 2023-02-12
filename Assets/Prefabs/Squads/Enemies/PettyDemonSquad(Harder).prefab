@@ -142,7 +142,7 @@ MonoBehaviour:
     choice3dialoguebranch: 
     choice4dialoguebranch: 
     eventNumber: 1
-    icon: {fileID: 21300000, guid: 3a89be8e7871dba4db02783ec6da7999, type: 3}
+    icon: {fileID: 0}
   - text: Where is he?
     person: Petty demon
     choice1text: Bye Bye!
@@ -190,4 +190,4 @@ MonoBehaviour:
     choice3dialoguebranch: 
     choice4dialoguebranch: 
     eventNumber: 2
-    icon: {fileID: 21300000, guid: 3a89be8e7871dba4db02783ec6da7999, type: 3}
+    icon: {fileID: 0}

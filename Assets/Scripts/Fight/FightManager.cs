@@ -5,71 +5,68 @@ using TMPro;
 
 public class FightManager : MonoBehaviour
 {
-    //Enemy types
-    public List<Squad> squads, events, bosses;
-    public Squad elder, baker, chest;
-    //Gold
-    public Icon goldIcon;
-    //Reward list
-    public List<Icon> startItems, commonItems, rareItems, epicItems, legendaryItems, eventItems;
-    [HideInInspector]
-    public bool start = false, startTempChecking = false;
-    private DialogueStructure ds;
-    [HideInInspector]
-    public string curEventString, curLocationString;
-    [HideInInspector]
-    public Squad curSquad;
+    [HideInInspector] public bool start = false, startTempChecking = false;
+    //Location name
+    [HideInInspector] public string curLocationName;
+    //Current squad
+    [HideInInspector] public Squad curSquad;
     //Room position(for camera)
-    [HideInInspector]
-    public Vector2 roomPos;
+    [HideInInspector] public Vector2 roomPos;
     //Current turn
     private int curTurn = 1;
     //Is enemy still hit/in hit
-    [HideInInspector]
-    public bool isEnemiesStillHit = false;
-    //Start position
-    public int startPositionx, startPositiony;
+    [HideInInspector] public bool isEnemiesStillHit = false;
     //Gold sum
     private int Gold = 0;
 
-    //Camera
-    private CameraScript cam;
-    //Temp
-    private Transform temp;
-    //Player
-    private Player player;
-    //Turn text
-    private TextMeshProUGUI turnText;
-    //Event hud
-    private EventHud eh;
-    //Bottom panel
-    private BottomPanel bp;
-    //FightHUD
-    private FightHUD fh;
-    //Map
-    private Map map;
-    //Poison sound
-    private AudioSource poisonSound;
-    public void Start()
+    [Header("All characters variables")]
+    public List<Squad> squads;
+    public List<Squad> events;
+    public List<Squad> bosses;
+    public Squad elder, baker, chest;
+
+
+    [Space]
+    [Space]
+    [Header("Rewards")]
+    [SerializeField] private Icon goldIcon;
+    [SerializeField] private List<Icon> commonItems, rareItems, epicItems, legendaryItems, eventItems;
+    private List<Icon> startItems;
+
+
+    [Space]
+    [Space]
+    [Header("Start enemy spawn positions")]
+    [SerializeField] private int startPositionx;
+    [SerializeField] private int startPositiony;
+
+
+    [Space]
+    [Space]
+    [Header("Initialisations")]
+    [SerializeField] private EventHUD eventHUD;
+    [SerializeField] private VisibleInventory visibleInventory;
+    [SerializeField] private FightHUD fightHUD;
+    [SerializeField] private Map map;
+    [SerializeField] private Player player;
+    [SerializeField] private Transform temp;
+    [SerializeField] private CameraScript cam;
+    [SerializeField] private DialogueStructure dialogueStructure;
+
+
+    [Space]
+    [Space]
+    [Header("Sounds")]
+    [SerializeField] private AudioSource poisonSound;
+
+
+    [Space]
+    [Space]
+    [Header("Texts")]
+    [SerializeField] private TextMeshProUGUI turnText;
+    private void Start()
     {
-        //Camera
-        cam = GameObject.Find("Main Camera").GetComponent<CameraScript>();
-        //Player
-        player = GameObject.Find("Player").GetComponent<Player>();
-        //Temp
-        temp = GameObject.Find("Temp").transform;
-        //Turn text
-        turnText = GameObject.Find("TurnText").GetComponent<TextMeshProUGUI>();
-        //Event hud
-        eh = GameObject.Find("EventHud").GetComponent<EventHud>();
-        //Bottom panel
-        bp = GameObject.Find("VisibleInventory").GetComponent<BottomPanel>();
-        //FightHUD
-        fh = GameObject.Find("FightHUD").GetComponent<FightHUD>();
-        //Mapp
-        map = GameObject.Find("Map").GetComponent<Map>();
-        //Poison sound
-        poisonSound = GameObject.Find("poisonSound").GetComponent<AudioSource>();
+        startItems = SelectCharacterButton.curPlayer.startItems;
     }
     public void RoomStart()
     {
@@ -99,43 +96,43 @@ public class FightManager : MonoBehaviour
             Instantiate(selectedEnemies[i], new Vector2(startPositionx + i * 10, i % 2 == 0 ? startPositiony : startPositiony + 5), Quaternion.Euler(0, 0, 0), temp);
         }
         //Dialogue
-        ds = new DialogueStructure(curSquad.dialogues);
+        dialogueStructure.Initialization(curSquad.dialogues);
     }
     public void Update()
     {
         if (start)
         {
             map.gameObject.SetActive(false);
-            bp.checkPassive();
+            visibleInventory.checkPassive();
             player.FightStart();
-            int st = ds.Interaction();
+            int st = dialogueStructure.Interaction();
             if (st == 101)
             {
                 for (int i = 0; i < startItems.Count; i++)
                 {
-                    eh.rewardItems.Add(startItems[i]);
+                    eventHUD.rewardItems.Add(startItems[i]);
                 }
-                eh.Activation("Victory");
+                eventHUD.Activation("Victory");
             }
             else if (st == 201)
             {
-                eh.Activation("Leaving");
+                eventHUD.Activation("Leaving");
             }
             else if (st == 202)
             {
                 player.GetHeal(player.maxHP/4);
-                eh.Activation("Leaving");
+                eventHUD.Activation("Leaving");
             }
             else if (st == 203)
             {
                 player.AddGold(-((player.maxHP - player.HP) * 3));
                 player.GetHeal(player.maxHP - player.HP);
-                eh.Activation("Leaving");
+                eventHUD.Activation("Leaving");
             }
             else if (st == 204)
             {
                 player.AddGold(-player.gold / 5);
-                eh.Activation("Leaving");
+                eventHUD.Activation("Leaving");
             }
             else if (st == 205)
             {
@@ -143,19 +140,19 @@ public class FightManager : MonoBehaviour
             }
             else if (st == 301)
             {
-                eh.Activation("Leaving");
+                eventHUD.Activation("Leaving");
             }
             else if (st == 302)
             {
-                eh.rewardItems.Add(eventItems[0]);
-                eh.Activation("Victory");
+                eventHUD.rewardItems.Add(eventItems[0]);
+                eventHUD.Activation("Victory");
             }
             else if (st == 303)
             {
                 player.GetHit(player.maxHP / 4, false, EnemyAttack.Effect.none, "Vampire");
                 if (player.HP > 0)
                 {
-                    eh.Activation("Leaving");
+                    eventHUD.Activation("Leaving");
                 }
             }
             else if (st == 304)
@@ -163,18 +160,18 @@ public class FightManager : MonoBehaviour
                 player.GetHit(player.maxHP / 4, false, EnemyAttack.Effect.none, "Vampire");
                 if (player.HP > 0)
                 {
-                    eh.rewardItems.Add(eventItems[0]);
-                    eh.Activation("Victory");
+                    eventHUD.rewardItems.Add(eventItems[0]);
+                    eventHUD.Activation("Victory");
                 }
             }
             else if (st == 401)
             {
                 RewardCalculation();
-                eh.Activation("Victory");
+                eventHUD.Activation("Victory");
             }
             else if (st == 1)
             {
-                fh.VisibilityChange(true);
+                fightHUD.VisibilityChange(true);
                 curTurn = 1;
                 turnText.text = "Turn " + curTurn.ToString();
                 AllEnemiesPrepareHit();
@@ -183,11 +180,11 @@ public class FightManager : MonoBehaviour
             else if (st == 2)
             {
                 //Back to map
-                eh.Activation("Running away");
+                eventHUD.Activation("Running away");
             }
             else if (st == 3)
             {
-                fh.VisibilityChange(true);
+                fightHUD.VisibilityChange(true);
                 curTurn = 1;
                 turnText.text = "Turn " + curTurn.ToString();
                 AllEnemiesPrepareHit();
@@ -211,8 +208,8 @@ public class FightManager : MonoBehaviour
             Icon gold = goldIcon;
             gold.damageOrArmour = Gold;
             Gold = 0;
-            eh.rewardItems.Add(gold);
-            eh.Activation("Victory");
+            eventHUD.rewardItems.Add(gold);
+            eventHUD.Activation("Victory");
         }
     }
     public void NextTurn()
@@ -257,7 +254,7 @@ public class FightManager : MonoBehaviour
                 if (curEnemy.poison > 0)
                 {
                     poisonSound.Play();
-                    curEnemy.GetHit(3, false);
+                    curEnemy.GetHit(3 * curEnemy.poison, false);
                     curEnemy.poison--;
                 }
             }
@@ -299,7 +296,7 @@ public class FightManager : MonoBehaviour
 
     public void BackToMap()
     {
-        fh.VisibilityChange(false);
+        fightHUD.VisibilityChange(false);
         map.gameObject.SetActive(true);
         for (int i = 0; i < temp.childCount; i++)
         {
@@ -316,11 +313,12 @@ public class FightManager : MonoBehaviour
         Gold += gold;
     }
 
-    public void AddEnemies(List<Enemy> enemies)
+    public void AddEnemies(List<Enemy> enemies, List<Vector3> positions, Vector3 pos)
     {
-        for (int i = 0; i < enemies.Count; i++)
+        for (int i = 0; i < positions.Count; i++)
         {
-            Enemy curEnemy = Instantiate(enemies[i], new Vector2(startPositionx + (temp.childCount - 1) * 10, (temp.childCount - 1) % 2 == 0 ? startPositiony : startPositiony + 5), Quaternion.Euler(0, 0, 0), temp);
+            Enemy curEnemy = Instantiate(enemies[i], positions[i] + pos, Quaternion.Euler(0, 0, 0), temp);
+
             curEnemy.nextAttack = curEnemy.attacks[Random.Range(1, curEnemy.attacks.Count)];
 
             curEnemy.transform.Find("AttackIcon").GetComponent<SpriteRenderer>().sprite = curEnemy.nextAttack.attackIcon;
@@ -334,7 +332,7 @@ public class FightManager : MonoBehaviour
             int rand = Random.Range(0, 3);
             if (rand == 0)
             {
-                eh.rewardItems.Add(commonItems[Random.Range(0, commonItems.Count)]);
+                eventHUD.rewardItems.Add(commonItems[Random.Range(0, commonItems.Count)]);
             }
         }
         else if (curSquad.difficult == 1)
@@ -342,7 +340,7 @@ public class FightManager : MonoBehaviour
             int rand = Random.Range(0, 1);
             if (rand == 0)
             {
-                eh.rewardItems.Add(commonItems[Random.Range(0, commonItems.Count)]);
+                eventHUD.rewardItems.Add(commonItems[Random.Range(0, commonItems.Count)]);
             }
         }
         else if (curSquad.difficult == 2)
@@ -354,11 +352,11 @@ public class FightManager : MonoBehaviour
             }
             else if (rand == 2)
             {
-                eh.rewardItems.Add(rareItems[Random.Range(0, rareItems.Count)]);
+                eventHUD.rewardItems.Add(rareItems[Random.Range(0, rareItems.Count)]);
             }
             else
             {
-                eh.rewardItems.Add(commonItems[Random.Range(0, commonItems.Count)]);
+                eventHUD.rewardItems.Add(commonItems[Random.Range(0, commonItems.Count)]);
             }
         }
         else if (curSquad.difficult == 3)
@@ -366,27 +364,27 @@ public class FightManager : MonoBehaviour
             int rand = Random.Range(0, 5);
             if (rand == 0)
             {
-                eh.rewardItems.Add(rareItems[Random.Range(0, rareItems.Count)]);
+                eventHUD.rewardItems.Add(rareItems[Random.Range(0, rareItems.Count)]);
             }
             else
             {
-                eh.rewardItems.Add(commonItems[Random.Range(0, commonItems.Count)]);
+                eventHUD.rewardItems.Add(commonItems[Random.Range(0, commonItems.Count)]);
             }
         }
         else if (curSquad.difficult == 4)
         {
-            eh.rewardItems.Add(rareItems[Random.Range(0, rareItems.Count)]);
+            eventHUD.rewardItems.Add(rareItems[Random.Range(0, rareItems.Count)]);
         }
         else if (curSquad.difficult == 5)
         {
             int rand = Random.Range(0, 9);
             if (rand == 0)
             {
-                eh.rewardItems.Add(epicItems[Random.Range(0, epicItems.Count)]);
+                eventHUD.rewardItems.Add(epicItems[Random.Range(0, epicItems.Count)]);
             }
             else
             {
-                eh.rewardItems.Add(rareItems[Random.Range(0, rareItems.Count)]);
+                eventHUD.rewardItems.Add(rareItems[Random.Range(0, rareItems.Count)]);
             }
         }
         else if (curSquad.difficult >= 6)
@@ -394,11 +392,11 @@ public class FightManager : MonoBehaviour
             int rand = Random.Range(0, 5);
             if (rand == 0)
             {
-                eh.rewardItems.Add(epicItems[Random.Range(0, epicItems.Count)]);
+                eventHUD.rewardItems.Add(epicItems[Random.Range(0, epicItems.Count)]);
             }
             else
             {
-                eh.rewardItems.Add(rareItems[Random.Range(0, rareItems.Count)]);
+                eventHUD.rewardItems.Add(rareItems[Random.Range(0, rareItems.Count)]);
             }
         }
     }

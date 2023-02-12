@@ -5,20 +5,23 @@ using UnityEngine.UI;
 
 public class Inventory : MonoBehaviour
 {
-    public Transform menu;
-    public List<Cell> cells;
     [HideInInspector]
     public bool isInventOpen = false;
-    private ContextMenu cm;
 
-    private void Start()
-    {
-        cm = GameObject.Find("ContextMenu").GetComponent<ContextMenu>();
-    }
+
+    public List<Cell> cells;
+
+
+    [Space]
+    [Space]
+    [Header("Initialisations")]
+    [SerializeField] private Transform menu;
+    [SerializeField] private ContextMenu contextMenu;
+    [SerializeField] private DialogueStructure dialogueStructure;
     void Update()
     {
         //Inventory open/close
-        if (Input.GetKeyDown(KeyCode.I) && !menu.GetComponent<Menu>().isMenuOpen && !DialogueStructure.isDialogueOpen || isInventOpen && Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.I) && !menu.GetComponent<Menu>().isMenuOpen && !dialogueStructure.isDialogueOpen || isInventOpen && Input.GetKeyDown(KeyCode.Escape))
         {
             if (isInventOpen)
             {
@@ -32,7 +35,7 @@ public class Inventory : MonoBehaviour
                 }
             }
             isInventOpen = !isInventOpen;
-            cm.UnShow();
+            contextMenu.UnShow();
         }
         //Activation/deactivation of UI when inventory opened
         if (isInventOpen)

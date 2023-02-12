@@ -38,6 +38,7 @@ Transform:
   - {fileID: 3232834350323459507}
   - {fileID: 6904184107857799572}
   - {fileID: 7714504779391717474}
+  - {fileID: 2750819401877522747}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -150,9 +151,12 @@ MonoBehaviour:
   poison: 0
   plusDamage: 0
   noneAttack: {fileID: -8549199934320519844, guid: 6de3467a2fb68d14caef295b623c4e07, type: 3}
-  segmentationEnemies:
+  divideEnemies:
   - {fileID: 214563111168147071, guid: f1645622275f12a45a7057b4164df7a8, type: 3}
   - {fileID: 214563111168147071, guid: f1645622275f12a45a7057b4164df7a8, type: 3}
+  positionsForDivideEnemies:
+  - {x: 3.75, y: 0, z: 0}
+  - {x: -3.75, y: 0, z: 0}
 --- !u!61 &214563111168147070
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -449,6 +453,37 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &4638608233500261235
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2750819401877522747}
+  m_Layer: 0
+  m_Name: EffectsPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2750819401877522747
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4638608233500261235}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.39, z: 0}
+  m_LocalScale: {x: 0.2, y: 0.2, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 214563111168147067}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4929929484171304445
 GameObject:
   m_ObjectHideFlags: 0

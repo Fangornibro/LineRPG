@@ -17,10 +17,10 @@ public class OutlineScript : MonoBehaviour
         sr = GetComponent<SpriteRenderer>();
         //Outline
         outlineList = new List<SpriteRenderer>();
-        outlineList.Add(GameObject.Instantiate(outlinePrefab, new Vector3(transform.position.x + 0.62f, transform.position.y, 0), new Quaternion(0, 0, 0, 0).normalized, transform));
-        outlineList.Add(GameObject.Instantiate(outlinePrefab, new Vector3(transform.position.x - 0.62f, transform.position.y, 0), new Quaternion(0, 0, 0, 0).normalized, transform));
-        outlineList.Add(GameObject.Instantiate(outlinePrefab, new Vector3(transform.position.x, transform.position.y + 0.62f, 0), new Quaternion(0, 0, 0, 0).normalized, transform));
-        outlineList.Add(GameObject.Instantiate(outlinePrefab, new Vector3(transform.position.x, transform.position.y - 0.62f, 0), new Quaternion(0, 0, 0, 0).normalized, transform));
+        outlineList.Add(Instantiate(outlinePrefab, new Vector3(transform.position.x + 0.62f, transform.position.y, 0), new Quaternion(0, 0, 0, 0).normalized, transform));
+        outlineList.Add(Instantiate(outlinePrefab, new Vector3(transform.position.x - 0.62f, transform.position.y, 0), new Quaternion(0, 0, 0, 0).normalized, transform));
+        outlineList.Add(Instantiate(outlinePrefab, new Vector3(transform.position.x, transform.position.y + 0.62f, 0), new Quaternion(0, 0, 0, 0).normalized, transform));
+        outlineList.Add(Instantiate(outlinePrefab, new Vector3(transform.position.x, transform.position.y - 0.62f, 0), new Quaternion(0, 0, 0, 0).normalized, transform));
         foreach (SpriteRenderer s in outlineList)
         {
             s.gameObject.SetActive(false);
@@ -36,7 +36,7 @@ public class OutlineScript : MonoBehaviour
 
     private void OnMouseOver()
     {
-        if (character == Character.enemy && abilityOnCursor.abilityType == Icon.Type.attack && abilityOnCursor.isOnCursor)
+        if (character == Character.enemy && (abilityOnCursor.abilityType == Icon.Type.attack || abilityOnCursor.abilityType == Icon.Type.magicAttack) && abilityOnCursor.isOnCursor)
         {
             foreach (SpriteRenderer s in outlineList)
             {

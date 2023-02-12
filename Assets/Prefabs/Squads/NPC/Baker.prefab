@@ -199,4 +199,4 @@ MonoBehaviour:
     choice3dialoguebranch: 
     choice4dialoguebranch: 
     eventNumber: 204
-    icon: {fileID: 21300000, guid: 3a89be8e7871dba4db02783ec6da7999, type: 3}
+    icon: {fileID: 0}

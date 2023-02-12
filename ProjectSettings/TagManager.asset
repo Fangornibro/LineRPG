@@ -5,8 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Enemy
-  - Wall
   - Inventory
+  - Wall
   layers:
   - Default
   - TransparentFX

@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class DialogueButton : MonoBehaviour
+public class DialogueButton : MonoBehaviour, IButton
 {
     public static DialogueStructure curInteractableItem;
     [HideInInspector]
@@ -14,7 +14,7 @@ public class DialogueButton : MonoBehaviour
     {
         defpos = transform.parent.GetComponent<RectTransform>().anchoredPosition;
     }
-    public void OnPointerClick()
+    void IButton.OnPointerClick()
     {
         if (curInteractableItem != null)
         {

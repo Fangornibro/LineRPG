@@ -1,10 +1,9 @@
-using Microsoft.Unity.VisualStudio.Editor;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class NextTurnButton : MonoBehaviour
+public class NextTurnButton : MonoBehaviour, IButton
 {
     private FightManager fm;
     private AudioSource nextTurnSound;
@@ -13,7 +12,7 @@ public class NextTurnButton : MonoBehaviour
         fm = GameObject.Find("FightManager").GetComponent<FightManager>();
         nextTurnSound = GameObject.Find("NextTurnSound").GetComponent<AudioSource>();
     }
-    public void OnPointerClick()
+    void IButton.OnPointerClick()
     {
         if (!fm.isEnemiesStillHit && !fm.IsAllEnemiesStillInHit())
         {
