@@ -14,6 +14,14 @@ public class CharacterSelection : MonoBehaviour
     {
         CharacterDisplay();
     }
+
+    private void Update()
+    {
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            SceneTransition.SwitchToScene("MainMenu");
+        }
+    }
     public void ChangeSelectionRight()
     {
         List<PlayerSelection> temp = new List<PlayerSelection>();

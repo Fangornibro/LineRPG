@@ -4,18 +4,17 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using static Room;
 
 public class DialogueStructure : MonoBehaviour
 {
-    [HideInInspector] public bool isDialogueOpen = false;
     private int ichar = 0;
-    [HideInInspector] public bool epressed = false, stringEnded = false;
+    [HideInInspector] public bool stringEnded = false;
     private string Text = "";
-    private float delayBetweenLetters = 0.1f, startdelayBetweenLetters = 0.1f;
+    private float delayBetweenLetters = 0.1f;
     
     [HideInInspector] public List<DialogueBranch> dialogues;
     [HideInInspector] public DialogueBranch curDialogueBranch;
-    [HideInInspector] public int Statement = 0;
 
 
     //Player sprite
@@ -25,8 +24,10 @@ public class DialogueStructure : MonoBehaviour
     [Header("Initialisations")]
     public GameObject faceIcon;
     public TextMeshProUGUI text, person;
-    public RectTransform button1, button2, button3, button4;
+    public ButtonScript dialogueButton1, dialogueButton2, dialogueButton3, dialogueButton4;
+    [SerializeField] private TextMeshProUGUI dialogueButton1Text, dialogueButton2Text, dialogueButton3Text, dialogueButton4Text;
     [SerializeField] private FightManager fightManager;
+    [SerializeField] private GameManager uiManager;
 
 
     [Space]
@@ -35,185 +36,148 @@ public class DialogueStructure : MonoBehaviour
     [SerializeField] private AudioSource textSound;
 
 
-    //For double click
-    private float clicked = 0;
-    private float clicktime = 0;
-    private float clickdelay = 1f;
+    //For click
+    [HideInInspector] public float clickTime = 0.1f;
+
+
+    public enum statement { Null, StartFight, RunningAway, EnemiesAttacksFirst, Leaving, DestroyEverybody, NextSquad, 
+        CHESTOpening, BAKERFreeHeal, BAKERPayForHeal, BAKERSteal, EVENTVampireGiveAndReward, EVENTVampireGiveAndLeave, 
+        TUTORIALJustDatePanel, TUTORIALRewarAndEnemies, TUTORIALArrowDeactivation, TUTORIALArrowMovement1, TUTORIALArrowMovement2, 
+        TUTORIALArrowMovement3, TUTORIALArrowMovement4, TUTORIALArrowMovement5, TUTORIALRewardAndEnemiesWithGeneration, 
+        TUTORIALArrowMovement6, TUTORIALArrowMovement7, TUTORIALArrowMovement8, CHESTMimicSpawn, CHESTSomethingInTheBoxSpawn,
+        TUTORIALSkip
+    };
+    private statement Statement;
+
+
     private void Start()
     {
         playerSprite = SelectCharacterButton.curPlayer.GetComponent<SpriteRenderer>().sprite;
+        DectivateAllButtons();
+    }
+    private void Update()
+    {
+        if (clickTime > 0)
+        {
+            clickTime -= Time.deltaTime;
+        }
+        else
+        {
+            if (!stringEnded && Input.GetKeyDown(KeyCode.Mouse0))
+            {
+                delayBetweenLetters = 0;
+            }
+        }
+        if (!stringEnded && Input.GetKeyDown(KeyCode.Space))
+        {
+            delayBetweenLetters = 0;
+        }
     }
     public void Initialization(List<DialogueBranch> dialogues)
     {
-        button1.anchoredPosition = new Vector3(-1000, -1000, 0);
-        button2.anchoredPosition = new Vector3(-1000, -1000, 0);
-        button3.anchoredPosition = new Vector3(-1000, -1000, 0);
-        button4.anchoredPosition = new Vector3(-1000, -1000, 0);
-
-        Statement = 0;
+        uiManager.DialogueStructureVisible(true);
         this.dialogues = dialogues;
         curDialogueBranch = dialogues[0];
-        epressed = true;
+        Interaction();
     }
-
-    public int Interaction()
+    private void ActivateButton(ButtonScript button, TextMeshProUGUI buttonText, string choiceText, bool isButtonClickable)
     {
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+        if (choiceText != "")
         {
-            clicked++;
-            if (clicked == 1) clicktime = Time.time;
-
-            if (clicked > 1 && Time.time - clicktime < clickdelay)
+            button.gameObject.SetActive(true);
+            buttonText.text = choiceText;
+            if (isButtonClickable)
             {
-                clicked = 0;
-                clicktime = 0;
-                if (!stringEnded)
-                {
-                    if (epressed)
-                    {
-                        startdelayBetweenLetters = 0;
-                    }
-                }
-            }
-            else if (clicked > 2 || Time.time - clicktime > 1) clicked = 0;
-        }
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            if (!stringEnded)
-            {
-                if (epressed)
-                {
-                    startdelayBetweenLetters = 0;
-                }
-            }
-        }
-        if (stringEnded)
-        {
-            DialogueButton.curInteractableItem = this;
-            if (curDialogueBranch.choice1text != "")
-            {
-                button1.anchoredPosition = button1.GetChild(0).GetComponent<DialogueButton>().defpos;
-                button1.GetChild(0).GetComponentInChildren<TextMeshProUGUI>().text = curDialogueBranch.choice1text;
-                if (curDialogueBranch.button1active)
-                {
-                    button1.GetComponent<ButtonScript>().activation();
-                }
-                else
-                {
-                    button1.GetComponent<ButtonScript>().deactivation();
-                }
-            }
-            if (curDialogueBranch.choice2text != "")
-            {
-                button2.anchoredPosition = button2.GetChild(0).GetComponent<DialogueButton>().defpos;
-                button2.GetChild(0).GetComponentInChildren<TextMeshProUGUI>().text = curDialogueBranch.choice2text;
-                if (curDialogueBranch.button2active)
-                {
-                    button2.GetComponent<ButtonScript>().activation();
-                }
-                else
-                {
-                    button2.GetComponent<ButtonScript>().deactivation();
-                }
-            }
-            if (curDialogueBranch.choice3text != "")
-            {
-                button3.anchoredPosition = button3.GetChild(0).GetComponent<DialogueButton>().defpos;
-                button3.GetChild(0).GetComponentInChildren<TextMeshProUGUI>().text = curDialogueBranch.choice3text;
-                if (curDialogueBranch.button3active)
-                {
-                    button3.GetComponent<ButtonScript>().activation();
-                }
-                else
-                {
-                    button3.GetComponent<ButtonScript>().deactivation();
-                }
-            }
-            if (curDialogueBranch.choice4text != "")
-            {
-                button4.anchoredPosition = button4.GetChild(0).GetComponent<DialogueButton>().defpos;
-                button4.GetChild(0).GetComponentInChildren<TextMeshProUGUI>().text = curDialogueBranch.choice4text;
-                if (curDialogueBranch.button4active)
-                {
-                    button4.GetComponent<ButtonScript>().activation();
-                }
-                else
-                {
-                    button4.GetComponent<ButtonScript>().deactivation();
-                }
-            }
-        }
-        if (epressed)
-        {
-            isDialogueOpen = true;
-            if (curDialogueBranch == null)
-            {
-                text.SetText("");
-                person.SetText("");
-                Text = "";
-                ichar = 0;
-                stringEnded = false;
-                epressed = false;
-                isDialogueOpen = false;
-                fightManager.start = false;
+                button.activation();
             }
             else
             {
-                if (curDialogueBranch.icon == null)
-                {
-                    curDialogueBranch.icon = playerSprite;
-                }
-                faceIcon.GetComponent<Image>().sprite = curDialogueBranch.icon;
-                float iconWidth = faceIcon.GetComponent<RectTransform>().sizeDelta.x / curDialogueBranch.icon.rect.width;
-                float iconHeight = faceIcon.GetComponent<RectTransform>().sizeDelta.y / curDialogueBranch.icon.rect.height;
-                faceIcon.GetComponent<RectTransform>().sizeDelta = new Vector2 (curDialogueBranch.icon.rect.width * Mathf.Min(iconWidth, iconHeight), curDialogueBranch.icon.rect.height * Mathf.Min(iconWidth, iconHeight));
-                person.SetText(curDialogueBranch.person);
-                if (ichar < curDialogueBranch.textToChars().Count)
-                {
-                    if (delayBetweenLetters <= 0)
-                    {
-                        Text += curDialogueBranch.textToChars()[ichar];
-                        if (curDialogueBranch.textToChars()[ichar] != " ")
-                        {
-                            textSound.Play();
-                        }
-                        delayBetweenLetters = startdelayBetweenLetters;
-                        ichar++;
-                    }
-                    else
-                    {
-                        delayBetweenLetters -= Time.deltaTime;
-                    }
-                }
-                else
-                {
-                    startdelayBetweenLetters = 0.1f;
-                    epressed = false;
-                    stringEnded = true;
-                }
-                text.SetText(Text);
+                button.deactivation();
             }
         }
-        return (Statement);
+    }
+
+    private void ActivateAllButtons()
+    {
+        ActivateButton(dialogueButton1, dialogueButton1Text, curDialogueBranch.choice1text, curDialogueBranch.isButton1Clickable);
+        ActivateButton(dialogueButton2, dialogueButton2Text, curDialogueBranch.choice2text, curDialogueBranch.isButton2Clickable);
+        ActivateButton(dialogueButton3, dialogueButton3Text, curDialogueBranch.choice3text, curDialogueBranch.isButton3Clickable);
+        ActivateButton(dialogueButton4, dialogueButton4Text, curDialogueBranch.choice4text, curDialogueBranch.isButton4Clickable);
+    }
+
+    private void DectivateAllButtons()
+    {
+        dialogueButton1.gameObject.SetActive(false);
+        dialogueButton2.gameObject.SetActive(false);
+        dialogueButton3.gameObject.SetActive(false);
+        dialogueButton4.gameObject.SetActive(false);
+    }
+
+    public void Interaction()
+    {
+        Sprite curSrite;
+        if (curDialogueBranch.icon == null)
+        {
+            curSrite = playerSprite;
+        }
+        else
+        {
+            curSrite = curDialogueBranch.icon;
+        }
+        faceIcon.GetComponent<Image>().sprite = curSrite;
+        float iconWidth = faceIcon.GetComponent<RectTransform>().sizeDelta.x / curSrite.rect.width;
+        float iconHeight = faceIcon.GetComponent<RectTransform>().sizeDelta.y / curSrite.rect.height;
+        faceIcon.GetComponent<RectTransform>().sizeDelta = new Vector2(curSrite.rect.width * Mathf.Min(iconWidth, iconHeight), curSrite.rect.height * Mathf.Min(iconWidth, iconHeight));
+        person.SetText(curDialogueBranch.person);
+
+        StartCoroutine(characterPrint());
+    }
+
+    private IEnumerator characterPrint()
+    {
+        while (ichar < curDialogueBranch.textToChars().Count)
+        {
+            Text += curDialogueBranch.textToChars()[ichar];
+            text.SetText(Text);
+            if (curDialogueBranch.textToChars()[ichar] != " ")
+            {
+                textSound.Play();
+            }
+            ichar++;
+            if (delayBetweenLetters == 0 && ichar > curDialogueBranch.textToChars().Count)
+            {
+                Text += curDialogueBranch.textToChars()[ichar];
+                ichar++;
+            }
+            yield return new WaitForSeconds(delayBetweenLetters);
+        }
+        delayBetweenLetters = 0.1f;
+        stringEnded = true;
+        ActivateAllButtons();
+
     }
     public void DialogueSelection(DialogueBranch nextDialogueBranch)
     {
-        if (stringEnded)
+        Statement = curDialogueBranch.Statement;
+        curDialogueBranch = nextDialogueBranch;
+
+        text.SetText("");
+        person.SetText("");
+        Text = "";
+        ichar = 0;
+        stringEnded = false;
+        DectivateAllButtons();
+        faceIcon.GetComponent<RectTransform>().sizeDelta = new Vector2(380, 380);
+        if (curDialogueBranch == null)
         {
-            Statement = curDialogueBranch.eventNumber;
-            button1.anchoredPosition = new Vector3(-1000, -1000, 0);
-            button2.anchoredPosition = new Vector3(-1000, -1000, 0);
-            button3.anchoredPosition = new Vector3(-1000, -1000, 0);
-            button4.anchoredPosition = new Vector3(-1000, -1000, 0);
-            faceIcon.GetComponent<RectTransform>().sizeDelta = new Vector2(380, 380);
-            curDialogueBranch = nextDialogueBranch;
-            text.SetText("");
-            person.SetText("");
-            Text = "";
-            ichar = 0;
-            stringEnded = false;
-            epressed = true;
+            uiManager.DialogueStructureVisible(false);
+            fightManager.StartFight();
         }
+        else
+        {
+            Interaction();
+        }
+        fightManager.StatementUpdate(Statement);
     }
 }
 

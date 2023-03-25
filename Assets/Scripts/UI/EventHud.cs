@@ -5,67 +5,58 @@ using UnityEngine;
 
 public class EventHUD : MonoBehaviour
 {
-    private GameObject childHud, reward;
     [HideInInspector]
-    public TextMeshProUGUI eventHudText, warningText;
-    private TextMeshProUGUI eventText;
+    public List<Item> rewardItems = new List<Item>();
     [HideInInspector]
-    public string eventString;
-    [HideInInspector]
-    public List<Icon> rewardItems = new List<Icon>();
-    [HideInInspector]
-    public List<Icon> curRewardItems = new List<Icon>();
-    void Start()
-    {
-        childHud = transform.Find("EventHudChild").gameObject;
-        reward = childHud.transform.Find("Reward").gameObject;
-        eventHudText = childHud.transform.Find("EventHudText").GetComponent<TextMeshProUGUI>();
-        warningText = reward.transform.Find("WarningText").GetComponent<TextMeshProUGUI>();
-        eventText = childHud.transform.Find("EventText").GetComponent<TextMeshProUGUI>();
-        DeActivation();
-    }
+    public List<Item> curRewardItems = new List<Item>();
 
-    public void Activation(string eventString)
+    [Header("Initialisations")]
+    [SerializeField] private GameObject reward;
+    [Space]
+    [Space]
+    [Header("Text")]
+    [SerializeField] private TextMeshProUGUI eventText;
+    public TextMeshProUGUI eventHudText, warningText;
+
+    public enum statement { Victory, RunningAway, Leaving, Defeat, FirstFight, FirstFightWithGeneration };
+    [HideInInspector] public statement Statement;
+
+    public void Activation(statement Statement)
     {
-        this.eventString = eventString;
-        childHud.GetComponent<RectTransform>().anchoredPosition = Vector3.zero;
-        eventText.SetText(this.eventString);
+        this.Statement = Statement;
+        eventText.SetText(Statement.ToString());
         eventHudText.text = "";
         warningText.gameObject.SetActive(false);
-        if (this.eventString == "Victory")
+        if (Statement == statement.Victory || Statement == statement.FirstFight || Statement == statement.FirstFightWithGeneration)
         {
+            eventText.SetText("Victory");
             reward.SetActive(true);
             eventHudText.text = "Reward:";
             for (int i = 0; i < rewardItems.Count; i++)
             {
-                Icon curItem = Instantiate(rewardItems[i], Vector3.zero, Quaternion.Euler(0, 0, 0), reward.transform);
+                Item curItem = Instantiate(rewardItems[i], Vector3.zero, Quaternion.Euler(0, 0, 0), reward.transform);
                 if (curItem.GetComponent<CellType>().cellType == CellType.Type.CoinBag)
                 {
-                    curItem.damageOrArmourText.text = curItem.damageOrArmour.ToString();
+                    curItem.damageOrArmourText.text = curItem.damage.ToString();
                 }
                 curRewardItems.Add(curItem);
                 curItem.GetComponent<RectTransform>().localPosition = reward.transform.GetChild(i).GetComponent<RectTransform>().localPosition + new Vector3(-4.5f, 4.5f);
             }
             rewardItems.Clear();
         }
-        else if (this.eventString == "Running away")
+        else if (Statement == statement.RunningAway)
         {
             reward.SetActive(false);
             eventHudText.text = "You ran away, so you didn't get any reward.";
         }
-        else if (this.eventString == "Leaving")
+        else if (Statement == statement.Leaving)
         {
             reward.SetActive(false);
             eventHudText.text = "You just left.";
         }
-        else if (this.eventString == "Defeat")
+        else if (Statement == statement.Defeat)
         {
             reward.SetActive(false);
         }
-    }
-
-    public void DeActivation()
-    {
-        childHud.GetComponent<RectTransform>().anchoredPosition = new Vector3(-2000, -2000, 0);
     }
 }

@@ -97,14 +97,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc872169d0b3b404ab5b0638c6442d1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemies:
-  - myList:
-    - {fileID: 214563111168147064, guid: c02742f5554d7c74d8cbbe7cfb73f0f9, type: 3}
-    - {fileID: 214563111168147064, guid: c02742f5554d7c74d8cbbe7cfb73f0f9, type: 3}
-    - {fileID: 214563111168147064, guid: c02742f5554d7c74d8cbbe7cfb73f0f9, type: 3}
   squadName: Bloodhound
   description: They attack in packs. You may regret if you drag out the fight...
   difficult: 2
+  numberOfRewards:
+  - possibleRewards:
+    - itemPool: {fileID: -3405236714419396024, guid: 861850b60eb360a408cc5b2d0b502b7e, type: 3}
+      possibility: 100
+  - possibleRewards:
+    - itemPool: {fileID: -3405236714419396024, guid: 861850b60eb360a408cc5b2d0b502b7e, type: 3}
+      possibility: 10
+  squadVariations:
+  - enemies:
+    - {fileID: 214563111168147064, guid: c02742f5554d7c74d8cbbe7cfb73f0f9, type: 3}
+    - {fileID: 214563111168147064, guid: c02742f5554d7c74d8cbbe7cfb73f0f9, type: 3}
+    - {fileID: 214563111168147064, guid: c02742f5554d7c74d8cbbe7cfb73f0f9, type: 3}
+    - {fileID: 214563111168147064, guid: c02742f5554d7c74d8cbbe7cfb73f0f9, type: 3}
+    - {fileID: 0}
+    - {fileID: 0}
+  - enemies:
+    - {fileID: 214563111168147064, guid: c02742f5554d7c74d8cbbe7cfb73f0f9, type: 3}
+    - {fileID: 214563111168147064, guid: c02742f5554d7c74d8cbbe7cfb73f0f9, type: 3}
+    - {fileID: 214563111168147064, guid: c02742f5554d7c74d8cbbe7cfb73f0f9, type: 3}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
   dialogues:
   - text: Woof, woof!
     person: Bloodhound
@@ -112,15 +129,15 @@ MonoBehaviour:
     choice2text: Not today.
     choice3text: 
     choice4text: 
-    button1active: 1
-    button2active: 1
-    button3active: 1
-    button4active: 1
-    choice1dialoguebranch: 01000000
-    choice2dialoguebranch: 02000000030000000300000003000000
-    choice3dialoguebranch: 
-    choice4dialoguebranch: 
-    eventNumber: 0
+    isButton1Clickable: 1
+    isButton2Clickable: 1
+    isButton3Clickable: 1
+    isButton4Clickable: 1
+    choice1DialogueBranch: 01000000
+    choice2DialogueBranch: 02000000030000000300000003000000
+    choice3DialogueBranch: 
+    choice4DialogueBranch: 
+    Statement: 0
     icon: {fileID: 21300000, guid: 705b35b2e46f7824eac0fe0b1f98008e, type: 3}
   - text: There is no other choice.
     person: Me
@@ -128,15 +145,15 @@ MonoBehaviour:
     choice2text: 
     choice3text: 
     choice4text: 
-    button1active: 1
-    button2active: 1
-    button3active: 1
-    button4active: 1
-    choice1dialoguebranch: 
-    choice2dialoguebranch: 
-    choice3dialoguebranch: 
-    choice4dialoguebranch: 
-    eventNumber: 1
+    isButton1Clickable: 1
+    isButton2Clickable: 1
+    isButton3Clickable: 1
+    isButton4Clickable: 1
+    choice1DialogueBranch: 
+    choice2DialogueBranch: 
+    choice3DialogueBranch: 
+    choice4DialogueBranch: 
+    Statement: 1
     icon: {fileID: 0}
   - text: Woof, woof, woof!
     person: Bloodhound
@@ -144,15 +161,15 @@ MonoBehaviour:
     choice2text: 
     choice3text: 
     choice4text: 
-    button1active: 1
-    button2active: 1
-    button3active: 1
-    button4active: 1
-    choice1dialoguebranch: 04000000
-    choice2dialoguebranch: 
-    choice3dialoguebranch: 
-    choice4dialoguebranch: 
-    eventNumber: 0
+    isButton1Clickable: 1
+    isButton2Clickable: 1
+    isButton3Clickable: 1
+    isButton4Clickable: 1
+    choice1DialogueBranch: 04000000
+    choice2DialogueBranch: 
+    choice3DialogueBranch: 
+    choice4DialogueBranch: 
+    Statement: 0
     icon: {fileID: 21300000, guid: 0f9e49408f53e2045a13af853cb48a8f, type: 3}
   - text: Woof!
     person: Bloodhound
@@ -160,15 +177,15 @@ MonoBehaviour:
     choice2text: 
     choice3text: 
     choice4text: 
-    button1active: 1
-    button2active: 1
-    button3active: 1
-    button4active: 1
-    choice1dialoguebranch: 
-    choice2dialoguebranch: 
-    choice3dialoguebranch: 
-    choice4dialoguebranch: 
-    eventNumber: 3
+    isButton1Clickable: 1
+    isButton2Clickable: 1
+    isButton3Clickable: 1
+    isButton4Clickable: 1
+    choice1DialogueBranch: 
+    choice2DialogueBranch: 
+    choice3DialogueBranch: 
+    choice4DialogueBranch: 
+    Statement: 3
     icon: {fileID: 21300000, guid: dbfa12f6255243d41be72499dcbe4faa, type: 3}
   - text: Lucky!
     person: Me
@@ -176,13 +193,14 @@ MonoBehaviour:
     choice2text: 
     choice3text: 
     choice4text: 
-    button1active: 1
-    button2active: 1
-    button3active: 1
-    button4active: 1
-    choice1dialoguebranch: 
-    choice2dialoguebranch: 
-    choice3dialoguebranch: 
-    choice4dialoguebranch: 
-    eventNumber: 2
+    isButton1Clickable: 1
+    isButton2Clickable: 1
+    isButton3Clickable: 1
+    isButton4Clickable: 1
+    choice1DialogueBranch: 
+    choice2DialogueBranch: 
+    choice3DialogueBranch: 
+    choice4DialogueBranch: 
+    Statement: 2
     icon: {fileID: 0}
+  isCursed: 0

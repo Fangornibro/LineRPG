@@ -4,18 +4,17 @@ using UnityEngine;
 
 public class TurnPanel : MonoBehaviour
 {
-    public RectTransform text;
-    private Vector3 defaultPosition;
-    private void Start()
-    {
-        defaultPosition = text.position;
-    }
+    [SerializeField] private GameObject dayText, hourText, timeIcon;
     public void textShowUP()
     {
-        text.position = defaultPosition;
+        dayText.SetActive(true);
+        hourText.SetActive(true);
+        timeIcon.SetActive(true);
     }
     public void textHideUP()
     {
-        text.position = Vector3.one * 4000;
+        dayText.SetActive(false);
+        hourText.SetActive(false);
+        timeIcon.SetActive(false);
     }
 }

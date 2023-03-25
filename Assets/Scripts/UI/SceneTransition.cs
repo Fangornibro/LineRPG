@@ -14,13 +14,19 @@ public class SceneTransition : MonoBehaviour
     public TextMeshProUGUI loadingText;
     public Image loadingImage;
 
+    public static bool inAnimation = false;
+
     private Animator anim;
     public static void SwitchToScene(string sceneName)
     {
-        instance.anim.SetTrigger("sceneClosing");
+        if (!inAnimation)
+        {
+            inAnimation = true;
+            instance.anim.SetTrigger("sceneClosing");
 
-        instance.loadingSceneOperation =  SceneManager.LoadSceneAsync(sceneName);
-        instance.loadingSceneOperation.allowSceneActivation = false;
+            instance.loadingSceneOperation = SceneManager.LoadSceneAsync(sceneName);
+            instance.loadingSceneOperation.allowSceneActivation = false;
+        }
     }
     void Start()
     {
@@ -42,6 +48,7 @@ public class SceneTransition : MonoBehaviour
     }
     public void OnAnimationOver() 
     {
+        inAnimation = false;
         shouldPlayOpening = true;
         instance.loadingSceneOperation.allowSceneActivation = true;
     }

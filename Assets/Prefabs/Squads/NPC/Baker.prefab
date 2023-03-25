@@ -97,12 +97,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc872169d0b3b404ab5b0638c6442d1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemies:
-  - myList:
-    - {fileID: 214563111168147064, guid: ce70e556ebe54b84d931f7cc868964df, type: 3}
   squadName: Baker
   description: Can restore your health if you pay well.
   difficult: 0
+  numberOfRewards: []
+  squadVariations:
+  - enemies:
+    - {fileID: 0}
+    - {fileID: 214563111168147064, guid: ce70e556ebe54b84d931f7cc868964df, type: 3}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
   dialogues:
   - text: Would you like to eat?
     person: Baker
@@ -110,15 +116,15 @@ MonoBehaviour:
     choice2text: I do not have money.
     choice3text: No thanks
     choice4text: 
-    button1active: 1
-    button2active: 1
-    button3active: 1
-    button4active: 1
-    choice1dialoguebranch: 01000000
-    choice2dialoguebranch: 020000000300000003000000
-    choice3dialoguebranch: 04000000
-    choice4dialoguebranch: 
-    eventNumber: 0
+    isButton1Clickable: 1
+    isButton2Clickable: 1
+    isButton3Clickable: 1
+    isButton4Clickable: 1
+    choice1DialogueBranch: 01000000
+    choice2DialogueBranch: 030000000300000002000000
+    choice3DialogueBranch: 04000000
+    choice4DialogueBranch: 
+    Statement: 0
     icon: {fileID: 21300000, guid: ca73fe5f4a1e28c48b0fb989aeb4ba83, type: 3}
   - text: Enjoy your meal!
     person: Baker
@@ -126,15 +132,15 @@ MonoBehaviour:
     choice2text: 
     choice3text: 
     choice4text: 
-    button1active: 1
-    button2active: 1
-    button3active: 1
-    button4active: 1
-    choice1dialoguebranch: 
-    choice2dialoguebranch: 
-    choice3dialoguebranch: 
-    choice4dialoguebranch: 
-    eventNumber: 203
+    isButton1Clickable: 1
+    isButton2Clickable: 1
+    isButton3Clickable: 1
+    isButton4Clickable: 1
+    choice1DialogueBranch: 
+    choice2DialogueBranch: 
+    choice3DialogueBranch: 
+    choice4DialogueBranch: 
+    Statement: 9
     icon: {fileID: 21300000, guid: ca73fe5f4a1e28c48b0fb989aeb4ba83, type: 3}
   - text: "It's okay, I've got some \nleftover food for you."
     person: Baker
@@ -142,15 +148,15 @@ MonoBehaviour:
     choice2text: 
     choice3text: 
     choice4text: 
-    button1active: 1
-    button2active: 1
-    button3active: 1
-    button4active: 1
-    choice1dialoguebranch: 
-    choice2dialoguebranch: 
-    choice3dialoguebranch: 
-    choice4dialoguebranch: 
-    eventNumber: 202
+    isButton1Clickable: 1
+    isButton2Clickable: 1
+    isButton3Clickable: 1
+    isButton4Clickable: 1
+    choice1DialogueBranch: 
+    choice2DialogueBranch: 
+    choice3DialogueBranch: 
+    choice4DialogueBranch: 
+    Statement: 8
     icon: {fileID: 21300000, guid: ca73fe5f4a1e28c48b0fb989aeb4ba83, type: 3}
   - text: I think you're lying.
     person: Baker
@@ -158,15 +164,15 @@ MonoBehaviour:
     choice2text: 
     choice3text: 
     choice4text: 
-    button1active: 1
-    button2active: 1
-    button3active: 1
-    button4active: 1
-    choice1dialoguebranch: 05000000
-    choice2dialoguebranch: 
-    choice3dialoguebranch: 
-    choice4dialoguebranch: 
-    eventNumber: 205
+    isButton1Clickable: 1
+    isButton2Clickable: 1
+    isButton3Clickable: 1
+    isButton4Clickable: 1
+    choice1DialogueBranch: 05000000
+    choice2DialogueBranch: 
+    choice3DialogueBranch: 
+    choice4DialogueBranch: 
+    Statement: 10
     icon: {fileID: 21300000, guid: ca73fe5f4a1e28c48b0fb989aeb4ba83, type: 3}
   - text: Come again.
     person: Baker
@@ -174,15 +180,15 @@ MonoBehaviour:
     choice2text: 
     choice3text: 
     choice4text: 
-    button1active: 1
-    button2active: 1
-    button3active: 1
-    button4active: 1
-    choice1dialoguebranch: 
-    choice2dialoguebranch: 
-    choice3dialoguebranch: 
-    choice4dialoguebranch: 
-    eventNumber: 201
+    isButton1Clickable: 1
+    isButton2Clickable: 1
+    isButton3Clickable: 1
+    isButton4Clickable: 1
+    choice1DialogueBranch: 
+    choice2DialogueBranch: 
+    choice3DialogueBranch: 
+    choice4DialogueBranch: 
+    Statement: 4
     icon: {fileID: 21300000, guid: ca73fe5f4a1e28c48b0fb989aeb4ba83, type: 3}
   - text: He stole 0 coins from me.
     person: Me
@@ -190,13 +196,14 @@ MonoBehaviour:
     choice2text: 
     choice3text: 
     choice4text: 
-    button1active: 1
-    button2active: 1
-    button3active: 1
-    button4active: 1
-    choice1dialoguebranch: 
-    choice2dialoguebranch: 
-    choice3dialoguebranch: 
-    choice4dialoguebranch: 
-    eventNumber: 204
+    isButton1Clickable: 1
+    isButton2Clickable: 1
+    isButton3Clickable: 1
+    isButton4Clickable: 1
+    choice1DialogueBranch: 
+    choice2DialogueBranch: 
+    choice3DialogueBranch: 
+    choice4DialogueBranch: 
+    Statement: 4
     icon: {fileID: 0}
+  isCursed: 0

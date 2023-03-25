@@ -7,27 +7,24 @@ public class Cell : MonoBehaviour
 {
     [HideInInspector]
     public float x, y;
-    public Icon icon;
+    public Item icon;
     public KeyCode key;
 
-    private AbilityOnCursor abilityOnCursor;
-    [SerializeField]
-    private Sprite cellSelected, cellDefault;
+    [SerializeField] private AbilityOnCursor abilityOnCursor;
+    [SerializeField] private Sprite cellSelected, cellDefault;
     private void Start()
     {
-        abilityOnCursor = GameObject.Find("AbilityOnCursor").GetComponent<AbilityOnCursor>();
         x = GetComponent<RectTransform>().position.x;
         y = GetComponent<RectTransform>().position.y;
-        icon = null;
     }
 
     private void Update()
     {
         if (icon != null && cellSelected != null)
         {
-            if (abilityOnCursor.ability != null)
+            if (abilityOnCursor.action != null)
             {
-                if (icon == abilityOnCursor.ability)
+                if (icon == abilityOnCursor.action)
                 {
                     GetComponent<Image>().sprite = cellSelected;
                 }

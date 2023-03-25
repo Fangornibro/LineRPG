@@ -97,39 +97,79 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc872169d0b3b404ab5b0638c6442d1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemies:
-  - myList:
-    - {fileID: 214563111168147064, guid: 689f1e10039bf054ea63a161b6a4e3c6, type: 3}
-    - {fileID: 214563111168147064, guid: c02742f5554d7c74d8cbbe7cfb73f0f9, type: 3}
-    - {fileID: 214563111168147064, guid: c02742f5554d7c74d8cbbe7cfb73f0f9, type: 3}
-  - myList:
-    - {fileID: 214563111168147064, guid: 689f1e10039bf054ea63a161b6a4e3c6, type: 3}
-    - {fileID: 214563111168147064, guid: 7e8acec4e74c77b44b37e6d9ce45a567, type: 3}
-    - {fileID: 214563111168147064, guid: 7e8acec4e74c77b44b37e6d9ce45a567, type: 3}
-    - {fileID: 214563111168147064, guid: 7e8acec4e74c77b44b37e6d9ce45a567, type: 3}
-  - myList:
-    - {fileID: 214563111168147064, guid: 689f1e10039bf054ea63a161b6a4e3c6, type: 3}
-    - {fileID: 214563111168147064, guid: 689f1e10039bf054ea63a161b6a4e3c6, type: 3}
-    - {fileID: 214563111168147064, guid: 7e8acec4e74c77b44b37e6d9ce45a567, type: 3}
   squadName: Middle demon
-  description: Middle demonis very vindictive. Especially when it comes to his henchmen.
+  description: Middle demon is very vindictive. Especially when it comes to his henchmen.
   difficult: 4
+  numberOfRewards:
+  - possibleRewards:
+    - itemPool: {fileID: -3405236714419396024, guid: 3a346d08719f3dd44a273c095dcb7a1c, type: 3}
+      possibility: 15
+    - itemPool: {fileID: -3405236714419396024, guid: 331b07a8c1e173b42a4c44fef965544f, type: 3}
+      possibility: 85
+  - possibleRewards:
+    - itemPool: {fileID: -3405236714419396024, guid: 861850b60eb360a408cc5b2d0b502b7e, type: 3}
+      possibility: 8
+    - itemPool: {fileID: -3405236714419396024, guid: 331b07a8c1e173b42a4c44fef965544f, type: 3}
+      possibility: 20
+  squadVariations:
+  - enemies:
+    - {fileID: 214563111168147064, guid: 689f1e10039bf054ea63a161b6a4e3c6, type: 3}
+    - {fileID: 214563111168147064, guid: 689f1e10039bf054ea63a161b6a4e3c6, type: 3}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+  - enemies:
+    - {fileID: 214563111168147064, guid: 689f1e10039bf054ea63a161b6a4e3c6, type: 3}
+    - {fileID: 214563111168147064, guid: 37e391dcc939e9d48a19f39ba3389d7b, type: 3}
+    - {fileID: 214563111168147064, guid: 37e391dcc939e9d48a19f39ba3389d7b, type: 3}
+    - {fileID: 214563111168147064, guid: 37e391dcc939e9d48a19f39ba3389d7b, type: 3}
+    - {fileID: 214563111168147064, guid: 37e391dcc939e9d48a19f39ba3389d7b, type: 3}
+    - {fileID: 0}
+  - enemies:
+    - {fileID: 214563111168147064, guid: 689f1e10039bf054ea63a161b6a4e3c6, type: 3}
+    - {fileID: 214563111168147064, guid: c02742f5554d7c74d8cbbe7cfb73f0f9, type: 3}
+    - {fileID: 214563111168147064, guid: c02742f5554d7c74d8cbbe7cfb73f0f9, type: 3}
+    - {fileID: 214563111168147064, guid: c02742f5554d7c74d8cbbe7cfb73f0f9, type: 3}
+    - {fileID: 0}
+    - {fileID: 0}
+  - enemies:
+    - {fileID: 214563111168147064, guid: 689f1e10039bf054ea63a161b6a4e3c6, type: 3}
+    - {fileID: 214563111168147064, guid: c02742f5554d7c74d8cbbe7cfb73f0f9, type: 3}
+    - {fileID: 214563111168147064, guid: c02742f5554d7c74d8cbbe7cfb73f0f9, type: 3}
+    - {fileID: 214563111168147064, guid: c02742f5554d7c74d8cbbe7cfb73f0f9, type: 3}
+    - {fileID: 214563111168147064, guid: c02742f5554d7c74d8cbbe7cfb73f0f9, type: 3}
+    - {fileID: 0}
+  - enemies:
+    - {fileID: 214563111168147064, guid: 689f1e10039bf054ea63a161b6a4e3c6, type: 3}
+    - {fileID: 214563111168147064, guid: 7e8acec4e74c77b44b37e6d9ce45a567, type: 3}
+    - {fileID: 214563111168147064, guid: 7e8acec4e74c77b44b37e6d9ce45a567, type: 3}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+  - enemies:
+    - {fileID: 214563111168147064, guid: 689f1e10039bf054ea63a161b6a4e3c6, type: 3}
+    - {fileID: 214563111168147064, guid: 7e8acec4e74c77b44b37e6d9ce45a567, type: 3}
+    - {fileID: 214563111168147064, guid: 7e8acec4e74c77b44b37e6d9ce45a567, type: 3}
+    - {fileID: 214563111168147064, guid: 7e8acec4e74c77b44b37e6d9ce45a567, type: 3}
+    - {fileID: 0}
+    - {fileID: 0}
   dialogues:
-  - text: "All mankind must die for the \nneeds of the king."
+  - text: All mankind must die for the needs of the king.
     person: Middle demon
     choice1text: Now you will die!
     choice2text: Not today.
     choice3text: 
     choice4text: 
-    button1active: 1
-    button2active: 1
-    button3active: 1
-    button4active: 1
-    choice1dialoguebranch: 01000000
-    choice2dialoguebranch: 020000000300000003000000030000000300000003000000
-    choice3dialoguebranch: 
-    choice4dialoguebranch: 
-    eventNumber: 0
+    isButton1Clickable: 1
+    isButton2Clickable: 1
+    isButton3Clickable: 1
+    isButton4Clickable: 1
+    choice1DialogueBranch: 01000000
+    choice2DialogueBranch: 020000000300000003000000030000000300000003000000
+    choice3DialogueBranch: 
+    choice4DialogueBranch: 
+    Statement: 0
     icon: {fileID: 21300000, guid: e758bd9629fd62f4991438d6f62ec850, type: 3}
   - text: There is no other choice.
     person: Me
@@ -137,15 +177,15 @@ MonoBehaviour:
     choice2text: 
     choice3text: 
     choice4text: 
-    button1active: 1
-    button2active: 1
-    button3active: 1
-    button4active: 1
-    choice1dialoguebranch: 
-    choice2dialoguebranch: 
-    choice3dialoguebranch: 
-    choice4dialoguebranch: 
-    eventNumber: 1
+    isButton1Clickable: 1
+    isButton2Clickable: 1
+    isButton3Clickable: 1
+    isButton4Clickable: 1
+    choice1DialogueBranch: 
+    choice2DialogueBranch: 
+    choice3DialogueBranch: 
+    choice4DialogueBranch: 
+    Statement: 1
     icon: {fileID: 0}
   - text: More victims will come...
     person: Middle demon
@@ -153,15 +193,15 @@ MonoBehaviour:
     choice2text: 
     choice3text: 
     choice4text: 
-    button1active: 1
-    button2active: 1
-    button3active: 1
-    button4active: 1
-    choice1dialoguebranch: 04000000
-    choice2dialoguebranch: 
-    choice3dialoguebranch: 
-    choice4dialoguebranch: 
-    eventNumber: 0
+    isButton1Clickable: 1
+    isButton2Clickable: 1
+    isButton3Clickable: 1
+    isButton4Clickable: 1
+    choice1DialogueBranch: 04000000
+    choice2DialogueBranch: 
+    choice3DialogueBranch: 
+    choice4DialogueBranch: 
+    Statement: 0
     icon: {fileID: 21300000, guid: 4745294639d1e694fbd7d8de8d5ee495, type: 3}
   - text: I won't let you!
     person: Middle demon
@@ -169,15 +209,15 @@ MonoBehaviour:
     choice2text: 
     choice3text: 
     choice4text: 
-    button1active: 1
-    button2active: 1
-    button3active: 1
-    button4active: 1
-    choice1dialoguebranch: 
-    choice2dialoguebranch: 
-    choice3dialoguebranch: 
-    choice4dialoguebranch: 
-    eventNumber: 3
+    isButton1Clickable: 1
+    isButton2Clickable: 1
+    isButton3Clickable: 1
+    isButton4Clickable: 1
+    choice1DialogueBranch: 
+    choice2DialogueBranch: 
+    choice3DialogueBranch: 
+    choice4DialogueBranch: 
+    Statement: 3
     icon: {fileID: 21300000, guid: 643fb8d944d01cc41af5d4deb2211cf6, type: 3}
   - text: Lucky!
     person: Me
@@ -185,13 +225,14 @@ MonoBehaviour:
     choice2text: 
     choice3text: 
     choice4text: 
-    button1active: 1
-    button2active: 1
-    button3active: 1
-    button4active: 1
-    choice1dialoguebranch: 
-    choice2dialoguebranch: 
-    choice3dialoguebranch: 
-    choice4dialoguebranch: 
-    eventNumber: 2
+    isButton1Clickable: 1
+    isButton2Clickable: 1
+    isButton3Clickable: 1
+    isButton4Clickable: 1
+    choice1DialogueBranch: 
+    choice2DialogueBranch: 
+    choice3DialogueBranch: 
+    choice4DialogueBranch: 
+    Statement: 2
     icon: {fileID: 0}
+  isCursed: 0

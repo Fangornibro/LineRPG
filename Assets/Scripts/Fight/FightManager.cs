@@ -2,56 +2,52 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
+using Unity.VisualScripting;
 
 public class FightManager : MonoBehaviour
 {
-    [HideInInspector] public bool start = false, startTempChecking = false;
-    //Location name
-    [HideInInspector] public string curLocationName;
-    //Current squad
-    [HideInInspector] public Squad curSquad;
-    //Room position(for camera)
-    [HideInInspector] public Vector2 roomPos;
-    //Current turn
-    private int curTurn = 1;
-    //Is enemy still hit/in hit
-    [HideInInspector] public bool isEnemiesStillHit = false;
-    //Gold sum
-    private int Gold = 0;
+    //Is enemy still hit/in hit    And checking if all enemies Die
+    [HideInInspector] public bool isEnemiesStillHit = false, startTempChecking = false;
+    //Global difficult
+    [HideInInspector] public int globalDifficult;
 
     [Header("All characters variables")]
     public List<Squad> squads;
     public List<Squad> events;
     public List<Squad> bosses;
-    public Squad elder, baker, chest;
+    public List<Squad> chests;
+    public Squad elder, baker, tutorial1;
+    [HideInInspector] public Squad curSquad;
+    [SerializeField] private List<Squad> cursedSquads;
+    private List<Transform> curEnemies = new List<Transform>();
+
+
+    private string locationName;
 
 
     [Space]
     [Space]
-    [Header("Rewards")]
-    [SerializeField] private Icon goldIcon;
-    [SerializeField] private List<Icon> commonItems, rareItems, epicItems, legendaryItems, eventItems;
-    private List<Icon> startItems;
-
-
-    [Space]
-    [Space]
-    [Header("Start enemy spawn positions")]
-    [SerializeField] private int startPositionx;
-    [SerializeField] private int startPositiony;
+    [Header("Gold")]
+    [SerializeField] private Item goldIcon;
+    private int Gold = 0;
 
 
     [Space]
     [Space]
     [Header("Initialisations")]
+    [SerializeField] private GameManager gameManager;
+    [SerializeField] private BottomInventory bottomInventory;
     [SerializeField] private EventHUD eventHUD;
-    [SerializeField] private VisibleInventory visibleInventory;
-    [SerializeField] private FightHUD fightHUD;
-    [SerializeField] private Map map;
     [SerializeField] private Player player;
     [SerializeField] private Transform temp;
-    [SerializeField] private CameraScript cam;
+    [SerializeField] private CameraScript cameraScript;
     [SerializeField] private DialogueStructure dialogueStructure;
+    [SerializeField] private GlobalDifficults globalDifficults;
+    [SerializeField] private Map map;
+    [SerializeField] private List<Transform> positionsForSpawning;
+    [SerializeField] private ArrowScript arrow;
+
 
 
     [Space]
@@ -62,26 +58,36 @@ public class FightManager : MonoBehaviour
 
     [Space]
     [Space]
-    [Header("Texts")]
-    [SerializeField] private TextMeshProUGUI turnText;
+    [Header("Time")]
+    [SerializeField] private Image timeIcon;
+    [SerializeField] private Sprite morning, evening;
+    [SerializeField] private TextMeshProUGUI hourText;
+    [SerializeField] private TextMeshProUGUI dayText;
+    private int hour = 1, day = 1;
     private void Start()
     {
-        startItems = SelectCharacterButton.curPlayer.startItems;
+        if (SelectCharacterButton.isTutuorial)
+        {
+            cameraScript.actualCamera.orthographicSize = 15;
+            RoomStart("Tutorial", tutorial1);
+        }
     }
-    public void RoomStart()
+    public void RoomStart(string locationName, Squad curSquad)
     {
+        this.curSquad = curSquad;
+        this.locationName = locationName;
         //Camera
-        cam.isKinematic = true;
+        cameraScript.isKinematic = true;
         if (curSquad.squadName == "Baker")
         {
             curSquad.dialogues[0].choice1text = "Yeah sure(Pay " + ((player.maxHP-player.HP) * 3) + " gold.)";
             if (player.gold < (player.maxHP - player.HP) * 3)
             {
-                curSquad.dialogues[0].button1active = false;
+                curSquad.dialogues[0].isButton1Clickable = false;
             }
             else
             {
-                curSquad.dialogues[0].button1active = true;
+                curSquad.dialogues[0].isButton1Clickable = true;
             }
         }
         else if (curSquad.dialogues[0].person == "Vampire")
@@ -89,133 +95,279 @@ public class FightManager : MonoBehaviour
             curSquad.dialogues[0].choice2text = "Let the vampire drink your blood (" + player.maxHP/4 + " hp)";        
         }
         //Selection
-        List<GameObject> selectedEnemies = curSquad.enemies[Random.Range(0, curSquad.enemies.Count)].myList;
+        List<GameObject> selectedEnemies = curSquad.squadVariations[Random.Range(0, curSquad.squadVariations.Count)].enemies;
         //Spawn
+        curEnemies = new List<Transform> { null, null, null, null, null, null };
         for (int i = 0; i < selectedEnemies.Count; i++)
         {
-            Instantiate(selectedEnemies[i], new Vector2(startPositionx + i * 10, i % 2 == 0 ? startPositiony : startPositiony + 5), Quaternion.Euler(0, 0, 0), temp);
+            if (selectedEnemies[i] != null)
+            {
+                curEnemies[i] = (Instantiate(selectedEnemies[i], Vector3.zero, Quaternion.Euler(0, 0, 0), temp).transform);
+            }
         }
+
+        EnemySetPosition(curEnemies);
         //Dialogue
         dialogueStructure.Initialization(curSquad.dialogues);
+        StartFight();
+    }
+
+    public void SpawnSquad(Squad squad)
+    {
+        DestroyAllEnemies();
+        RoomStart(locationName, squad);
+    }
+
+    public void StartFight()
+    {
+        gameManager.CurRoomVisible(true);
+        bottomInventory.checkPassive();
+        player.FightStart();
     }
     public void Update()
     {
-        if (start)
-        {
-            map.gameObject.SetActive(false);
-            visibleInventory.checkPassive();
-            player.FightStart();
-            int st = dialogueStructure.Interaction();
-            if (st == 101)
-            {
-                for (int i = 0; i < startItems.Count; i++)
-                {
-                    eventHUD.rewardItems.Add(startItems[i]);
-                }
-                eventHUD.Activation("Victory");
-            }
-            else if (st == 201)
-            {
-                eventHUD.Activation("Leaving");
-            }
-            else if (st == 202)
-            {
-                player.GetHeal(player.maxHP/4);
-                eventHUD.Activation("Leaving");
-            }
-            else if (st == 203)
-            {
-                player.AddGold(-((player.maxHP - player.HP) * 3));
-                player.GetHeal(player.maxHP - player.HP);
-                eventHUD.Activation("Leaving");
-            }
-            else if (st == 204)
-            {
-                player.AddGold(-player.gold / 5);
-                eventHUD.Activation("Leaving");
-            }
-            else if (st == 205)
-            {
-                curSquad.dialogues[5].text = "He stole " + player.gold/ 5 + " coins from me.";
-            }
-            else if (st == 301)
-            {
-                eventHUD.Activation("Leaving");
-            }
-            else if (st == 302)
-            {
-                eventHUD.rewardItems.Add(eventItems[0]);
-                eventHUD.Activation("Victory");
-            }
-            else if (st == 303)
-            {
-                player.GetHit(player.maxHP / 4, false, EnemyAttack.Effect.none, "Vampire");
-                if (player.HP > 0)
-                {
-                    eventHUD.Activation("Leaving");
-                }
-            }
-            else if (st == 304)
-            {
-                player.GetHit(player.maxHP / 4, false, EnemyAttack.Effect.none, "Vampire");
-                if (player.HP > 0)
-                {
-                    eventHUD.rewardItems.Add(eventItems[0]);
-                    eventHUD.Activation("Victory");
-                }
-            }
-            else if (st == 401)
-            {
-                RewardCalculation();
-                eventHUD.Activation("Victory");
-            }
-            else if (st == 1)
-            {
-                fightHUD.VisibilityChange(true);
-                curTurn = 1;
-                turnText.text = "Turn " + curTurn.ToString();
-                AllEnemiesPrepareHit();
-                startTempChecking = true;
-            }
-            else if (st == 2)
-            {
-                //Back to map
-                eventHUD.Activation("Running away");
-            }
-            else if (st == 3)
-            {
-                fightHUD.VisibilityChange(true);
-                curTurn = 1;
-                turnText.text = "Turn " + curTurn.ToString();
-                AllEnemiesPrepareHit();
-                startTempChecking = true;
-                player.NewTurn();
-                StartCoroutine(AllEnemiesHit());
-            }
-        }
         if (startTempChecking)
         {
             tempChecking();
         }
     }
+
+    public void StatementUpdate(DialogueStructure.statement Statement)
+    {
+        switch (Statement)
+        {
+            case DialogueStructure.statement.Null:
+                break;
+            case DialogueStructure.statement.StartFight:
+                gameManager.FightHUDVisible(true);
+                AllEnemiesPrepareHit();
+                startTempChecking = true;
+                break;
+            case DialogueStructure.statement.RunningAway:
+                gameManager.EventHUDVisible(EventHUD.statement.RunningAway);
+                break;
+            case DialogueStructure.statement.EnemiesAttacksFirst:
+                gameManager.FightHUDVisible(true);
+                AllEnemiesPrepareHit();
+                startTempChecking = true;
+                player.NewTurn();
+                StartCoroutine(AllEnemiesHit());
+                break;
+            case DialogueStructure.statement.Leaving:
+                gameManager.EventHUDVisible(EventHUD.statement.Leaving);
+                break;
+            case DialogueStructure.statement.CHESTOpening:
+                curEnemies[0].GetComponent<Animator>().SetBool("opening", true);
+                startTempChecking = true;
+                break;
+            case DialogueStructure.statement.CHESTMimicSpawn:
+                curEnemies[0].GetComponent<Animator>().SetBool("mimicSpawn", true);
+                break;
+            case DialogueStructure.statement.CHESTSomethingInTheBoxSpawn:
+                curEnemies[0].GetComponent<Animator>().SetBool("somethingInTheBoxSpawn", true);
+                break;
+            case DialogueStructure.statement.DestroyEverybody:
+                DestroyAllEnemies();
+                startTempChecking = true;
+                break;
+            case DialogueStructure.statement.BAKERFreeHeal:
+                player.GetHeal(player.maxHP / 4);
+                gameManager.EventHUDVisible(EventHUD.statement.Leaving);
+                break;
+            case DialogueStructure.statement.BAKERPayForHeal:
+                player.AddGold(-((player.maxHP - player.HP) * 3));
+                player.GetHeal(player.maxHP - player.HP);
+                gameManager.EventHUDVisible(EventHUD.statement.Leaving);
+                break;
+            case DialogueStructure.statement.BAKERSteal:
+                if (player.gold == 0)
+                {
+                    curSquad.dialogues[5].text = "He tried to take coins from me, but found nothing.";
+                }
+                else
+                {
+                    curSquad.dialogues[5].text = "He took " + player.gold / 5 + " coins from me.";
+                    player.AddGold(-player.gold / 5);
+                }
+                break;
+            case DialogueStructure.statement.EVENTVampireGiveAndLeave:
+                player.GetHit(player.maxHP / 4, false, false, false, true);
+                if (player.HP > 0)
+                {
+                    gameManager.EventHUDVisible(EventHUD.statement.Leaving);
+                }
+                break;
+            case DialogueStructure.statement.EVENTVampireGiveAndReward:
+                player.GetHit(player.maxHP / 4, false, false, false, true);
+                if (player.HP > 0)
+                {
+                    DestroyAllEnemies();
+                    startTempChecking = true;
+                }
+                break;
+            case DialogueStructure.statement.TUTORIALJustDatePanel:
+                gameManager.TimePanelVisible(true);
+                break;
+            case DialogueStructure.statement.TUTORIALRewarAndEnemies:
+                for (int i = 0; i < SelectCharacterButton.curPlayer.startItems.Count; i++)
+                {
+                    curSquad.numberOfRewards[i].possibleRewards[0].itemPool = SelectCharacterButton.curPlayer.startItems[i];
+                }
+                rewardCalculation();
+                gameManager.EventHUDVisible(EventHUD.statement.FirstFight);
+                break;
+            case DialogueStructure.statement.TUTORIALRewardAndEnemiesWithGeneration:
+                gameManager.JustMapVisible(true);
+                map.StartRoomsSpawnCoroutine(true);
+                for (int i = 0; i < SelectCharacterButton.curPlayer.startItems.Count; i++)
+                {
+                    curSquad.numberOfRewards[i].possibleRewards[0].itemPool = SelectCharacterButton.curPlayer.startItems[i];
+                }
+                rewardCalculation();
+                gameManager.EventHUDVisible(EventHUD.statement.FirstFightWithGeneration);
+                break;
+            case DialogueStructure.statement.TUTORIALArrowDeactivation:
+                arrow.gameObject.SetActive(false);
+                break;
+            case DialogueStructure.statement.TUTORIALArrowMovement1:
+                arrow.SetArrow(-980, 530);
+                break;
+            case DialogueStructure.statement.TUTORIALArrowMovement2:
+                arrow.SetArrow(-574, 530);
+                break;
+            case DialogueStructure.statement.TUTORIALArrowMovement3:
+                arrow.SetArrow(-340, 530);
+                break;
+            case DialogueStructure.statement.TUTORIALArrowMovement4:
+                gameManager.TimePanelVisible(true);
+                arrow.SetArrow(0, 410);
+                break;
+            case DialogueStructure.statement.TUTORIALArrowMovement5:
+                arrow.SetArrow(0, 520);
+                break;
+            case DialogueStructure.statement.TUTORIALArrowMovement6:
+                arrow.SetArrow(-213, 350);
+                break;
+            case DialogueStructure.statement.TUTORIALArrowMovement7:
+                arrow.SetArrow(-143, 350);
+                break;
+            case DialogueStructure.statement.TUTORIALArrowMovement8:
+                arrow.SetArrow(-60, 350);
+                break;
+            case DialogueStructure.statement.TUTORIALSkip:
+                gameManager.TimePanelVisible(true);
+                gameManager.JustMapVisible(true);
+                map.StartRoomsSpawnCoroutine(true);
+                for (int i = 0; i < SelectCharacterButton.curPlayer.startItems.Count; i++)
+                {
+                    curSquad.numberOfRewards[i].possibleRewards[0].itemPool = SelectCharacterButton.curPlayer.startItems[i];
+                }
+                rewardCalculation();
+                gameManager.EventHUDVisible(EventHUD.statement.Victory);
+                break;
+        }
+    }
+
+    private void EnemySetPosition(List<Transform> enemiesList)
+    {
+        for (int i = 0; i < enemiesList.Count; i++)
+        {
+            if (enemiesList[i] != null)
+            {
+                enemiesList[i].position = positionsForSpawning[i].position;
+                try
+                {
+                    curEnemies[i].GetComponent<Enemy>().cell = positionsForSpawning[i];
+                }
+                catch
+                {
+
+                }
+            }
+        }
+    }
+
     private void tempChecking()
     {
         if (temp.childCount == 0)
         {
+            if (curSquad.isCursed)
+            {
+                globalDifficult--;
+                if (globalDifficult < 0)
+                {
+                    globalDifficult = 0;
+                }
+                globalDifficults.UpdateDifficults(globalDifficult);
+                gameManager.EventHUDVisible(EventHUD.statement.RunningAway);
+            }
             startTempChecking = false;
-            //Back to map
-            RewardCalculation();
-            Icon gold = goldIcon;
-            gold.damageOrArmour = Gold;
-            Gold = 0;
-            eventHUD.rewardItems.Add(gold);
-            eventHUD.Activation("Victory");
+            rewardCalculation();
+            if (Gold != 0)
+            {
+                Item gold = goldIcon;
+                gold.damage = Gold;
+                Gold = 0;
+                eventHUD.rewardItems.Add(gold);
+            }
+            gameManager.EventHUDVisible(EventHUD.statement.Victory);
+        }
+    }
+    private void rewardCalculation()
+    {
+        int rand = Random.Range(0, 100);
+        int lastPossibility = 0, currentPossibility = 0;
+        eventHUD.rewardItems.Clear();
+        for (int i = 0; i < curSquad.numberOfRewards.Count; i++)
+        {
+            for (int j = 0; j < curSquad.numberOfRewards[i].possibleRewards.Count; j++)
+            {
+                currentPossibility += curSquad.numberOfRewards[i].possibleRewards[j].possibility;
+                if (rand <= currentPossibility && rand > lastPossibility)
+                {
+                    eventHUD.rewardItems.Add(curSquad.numberOfRewards[i].possibleRewards[j].itemPool.items[Random.Range(0, curSquad.numberOfRewards[i].possibleRewards[j].itemPool.items.Count)]);
+                    break;
+                }
+                lastPossibility = currentPossibility;
+            }
         }
     }
     public void NextTurn()
     {
-        curTurn++;
-        turnText.text= "Turn " + curTurn.ToString();
+        hour += 1;
+        if (hour == 24)
+        {
+            hour= 0;
+            day++;
+            dayText.text = "Day:" + day;
+            if (globalDifficult != 5)
+            {
+                globalDifficult++;
+                globalDifficults.UpdateDifficults(globalDifficult);
+                List<Squad> tempSquadList = new List<Squad>();
+                foreach (Squad s in cursedSquads)
+                {
+                    if (s.difficult == globalDifficult)
+                    {
+                        tempSquadList.Add(s);
+                    }
+                }
+                map.SetCursedRoom(tempSquadList[Random.Range(0 , tempSquadList.Count)]);
+            }
+            for (int i = 0; i < temp.childCount; i++)
+            {
+                temp.GetChild(i).GetComponent<Enemy>().AddHPForDifficult();
+            }
+        }
+        if (hour >= 6 && hour < 18)
+        {
+            timeIcon.sprite = morning;
+        }
+        else
+        {
+            timeIcon.sprite = evening;
+        }
+        hourText.text = "Hour:" + hour;
         player.NewTurn();
         StartCoroutine(AllEnemiesHit());
     }
@@ -234,7 +386,7 @@ public class FightManager : MonoBehaviour
             if (!curEnemy.death && curEnemy.nextAttack != null)
             {
                 yield return new WaitForSeconds(0.6f);
-                curEnemy.Hit();
+                curEnemy.Hit(globalDifficult);
             }
         }
         yield return new WaitForSeconds(0.6f);
@@ -251,10 +403,19 @@ public class FightManager : MonoBehaviour
             Enemy curEnemy = temp.GetChild(i).GetComponent<Enemy>();
             if (!curEnemy.death)
             {
+                if (curEnemy.isTerrifying)
+                {
+                    curEnemy.plusMissChance = 50;
+                }
+                else
+                {
+                    curEnemy.plusMissChance = 0;
+                }
+               
                 if (curEnemy.poison > 0)
                 {
                     poisonSound.Play();
-                    curEnemy.GetHit(3 * curEnemy.poison, false);
+                    curEnemy.GetHit(2 * curEnemy.poison, false, false, false, true);
                     curEnemy.poison--;
                 }
             }
@@ -296,108 +457,35 @@ public class FightManager : MonoBehaviour
 
     public void BackToMap()
     {
-        fightHUD.VisibilityChange(false);
-        map.gameObject.SetActive(true);
+        gameManager.FightHUDVisible(false);
+        gameManager.MapVisible(true);
+        DestroyAllEnemies();
+    }
+
+    private void DestroyAllEnemies()
+    {
         for (int i = 0; i < temp.childCount; i++)
         {
             Destroy(temp.GetChild(i).gameObject);
         }
-        
-        start = false;
-        cam.transform.position = new Vector3(roomPos.x, roomPos.y, -15);
-        cam.isKinematic = false;
     }
 
     public void AddGold(int gold)
     {
-        Gold += gold;
+        int r = Random.Range(-1, 1);
+        Gold += gold + (r * gold /10) + r;
     }
 
-    public void AddEnemies(List<Enemy> enemies, List<Vector3> positions, Vector3 pos)
+    public void AddEnemies(List<Enemy> enemies, List<Vector3> positions)
     {
         for (int i = 0; i < positions.Count; i++)
         {
-            Enemy curEnemy = Instantiate(enemies[i], positions[i] + pos, Quaternion.Euler(0, 0, 0), temp);
+            Enemy curEnemy = Instantiate(enemies[i], positions[i], Quaternion.Euler(0, 0, 0), temp);
 
             curEnemy.nextAttack = curEnemy.attacks[Random.Range(1, curEnemy.attacks.Count)];
 
             curEnemy.transform.Find("AttackIcon").GetComponent<SpriteRenderer>().sprite = curEnemy.nextAttack.attackIcon;
             curEnemy.EffectUpdate();
-        }
-    }
-    private void RewardCalculation()
-    {
-        if (curSquad.difficult == 0)
-        {
-            int rand = Random.Range(0, 3);
-            if (rand == 0)
-            {
-                eventHUD.rewardItems.Add(commonItems[Random.Range(0, commonItems.Count)]);
-            }
-        }
-        else if (curSquad.difficult == 1)
-        {
-            int rand = Random.Range(0, 1);
-            if (rand == 0)
-            {
-                eventHUD.rewardItems.Add(commonItems[Random.Range(0, commonItems.Count)]);
-            }
-        }
-        else if (curSquad.difficult == 2)
-        {
-            int rand = Random.Range(0, 9);
-            if (rand == 0 || rand == 1)
-            {
-                
-            }
-            else if (rand == 2)
-            {
-                eventHUD.rewardItems.Add(rareItems[Random.Range(0, rareItems.Count)]);
-            }
-            else
-            {
-                eventHUD.rewardItems.Add(commonItems[Random.Range(0, commonItems.Count)]);
-            }
-        }
-        else if (curSquad.difficult == 3)
-        {
-            int rand = Random.Range(0, 5);
-            if (rand == 0)
-            {
-                eventHUD.rewardItems.Add(rareItems[Random.Range(0, rareItems.Count)]);
-            }
-            else
-            {
-                eventHUD.rewardItems.Add(commonItems[Random.Range(0, commonItems.Count)]);
-            }
-        }
-        else if (curSquad.difficult == 4)
-        {
-            eventHUD.rewardItems.Add(rareItems[Random.Range(0, rareItems.Count)]);
-        }
-        else if (curSquad.difficult == 5)
-        {
-            int rand = Random.Range(0, 9);
-            if (rand == 0)
-            {
-                eventHUD.rewardItems.Add(epicItems[Random.Range(0, epicItems.Count)]);
-            }
-            else
-            {
-                eventHUD.rewardItems.Add(rareItems[Random.Range(0, rareItems.Count)]);
-            }
-        }
-        else if (curSquad.difficult >= 6)
-        {
-            int rand = Random.Range(0, 5);
-            if (rand == 0)
-            {
-                eventHUD.rewardItems.Add(epicItems[Random.Range(0, epicItems.Count)]);
-            }
-            else
-            {
-                eventHUD.rewardItems.Add(rareItems[Random.Range(0, rareItems.Count)]);
-            }
         }
     }
 }

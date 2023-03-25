@@ -48,9 +48,12 @@ MonoBehaviour:
   damage: 7
   criticalChance: 0
   criticalDamage: 0
-  attackSound: {fileID: 7749363482465277131, guid: d0d4e33e4d423f545baf1839e96a5c1e, type: 3}
-  effect: 4
+  missChance: 0
+  attackSound: {fileID: 8949378284502412865}
+  action: {fileID: 7211386614589965594, guid: 84ff4954e9049a5489dbbd10db22f10d, type: 3}
   attackIcon: {fileID: 21300000, guid: 8935749e6c7b0264ba39f4e2cf6ec4ca, type: 3}
+  isMagic: 0
+  isAOE: 0
 --- !u!1 &7045773745488723786
 GameObject:
   m_ObjectHideFlags: 0

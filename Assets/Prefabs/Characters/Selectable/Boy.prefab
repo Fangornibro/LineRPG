@@ -101,9 +101,11 @@ MonoBehaviour:
   description: An ordinary guy with big dreams.
   maxMana: 3
   maxHP: 40
-  passiveCriticalChance: 20
+  passiveCriticalChance: 15
   passiveCriticalDamage: 1.5
+  passiveMissChance: 5
+  evasionChance: 15
   animatorController: {fileID: 9100000, guid: 7161d616c5f3afd40b8fbed8bb181923, type: 2}
   startItems:
-  - {fileID: 2721988790157410024, guid: 48ad40d06d84c17488cd407e15bc6b6d, type: 3}
-  - {fileID: 2721988790157410024, guid: 9db3d5454b9b4cb48870b7771c7204c2, type: 3}
+  - {fileID: -3405236714419396024, guid: d0d7a941cb7da3f4e96d0820151c35ca, type: 3}
+  - {fileID: -3405236714419396024, guid: 44265f1986c9ab54d88e7ceddf300b2c, type: 3}

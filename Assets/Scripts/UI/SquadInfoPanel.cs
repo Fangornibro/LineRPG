@@ -4,40 +4,17 @@ using UnityEngine;
 using UnityEngine.UI;
 public class SquadInfoPanel : MonoBehaviour
 {
-    [HideInInspector]
-    public bool isOpened = false;
-    private Vector2 defaultPos;
-    private Image faceIcon;
-    public List<Sprite> icons;
-    [SerializeField]
-    private Transform difficults;
-    public Sprite difficultEmpty, difficultFull;
+    
+    [SerializeField] private List<Sprite> icons;
+    [SerializeField] private Transform difficults;
+    [SerializeField] private Sprite difficultEmpty, difficultFull;
 
-    private TextMeshProUGUI eventName, personName, description;
-    void Start()
-    {
-        defaultPos = GetComponent<RectTransform>().anchoredPosition;
-        faceIcon = transform.Find("SquadFaceIcon").GetComponent<Image>();
-        eventName = transform.Find("EventName").GetComponent<TextMeshProUGUI>();
-        personName = transform.Find("SquadName").GetComponent<TextMeshProUGUI>();
-        description = transform.Find("Description").GetComponent<TextMeshProUGUI>();
-    }
-    void Update()
-    {
-        if (isOpened && Input.GetKeyDown(KeyCode.Escape))
-        {
-            isOpened = false;
-        }
-        if (isOpened)
-        {
-            GetComponent<RectTransform>().anchoredPosition = defaultPos;
-        }
-        else
-        {
-            GetComponent<RectTransform>().anchoredPosition = new Vector2(-3000, -3000);
-        }
-    }
-
+    [Space]
+    [Space]
+    [Header("Initialisations")]
+    [SerializeField] private Map map;
+    [SerializeField] private Image faceIcon;
+    [SerializeField] private TextMeshProUGUI eventName, personName, description;
     public void RoomInfoReceiving(Room room, string EventName, string LocationName, Squad Squad)
     {
         eventName.text = "";
@@ -87,7 +64,7 @@ public class SquadInfoPanel : MonoBehaviour
         float iconHeight = faceIcon.GetComponent<RectTransform>().sizeDelta.y / Squad.GetComponent<SpriteRenderer>().sprite.rect.height;
         faceIcon.GetComponent<RectTransform>().sizeDelta = new Vector2(Squad.GetComponent<SpriteRenderer>().sprite.rect.width * Mathf.Min(iconWidth, iconHeight), Squad.GetComponent<SpriteRenderer>().sprite.rect.height * Mathf.Min(iconWidth, iconHeight));
         transform.Find("LocationName").GetComponent<TextMeshProUGUI>().text = LocationName;
-        GameObject.Find("Map").GetComponent<Map>().RoomInfoReceiving(room, EventName, LocationName, Squad);
+        map.RoomInfoReceiving(room, LocationName, Squad);
         transform.Find("StartFightButton").GetChild(0).GetComponent<StartFightButton>().room = room;
     }
 }

@@ -5,14 +5,14 @@ using UnityEngine;
 [System.Serializable]
 public class DialogueBranch
 {
-    [Multiline(5)]
+    [TextArea(3, 5)]
     public string text;
     public string person;
     public string choice1text, choice2text, choice3text, choice4text;
     [HideInInspector]
-    public bool button1active = true, button2active = true, button3active = true, button4active = true;
-    public List<int> choice1dialoguebranch, choice2dialoguebranch, choice3dialoguebranch, choice4dialoguebranch;
-    public int eventNumber;
+    public bool isButton1Clickable = true, isButton2Clickable = true, isButton3Clickable = true, isButton4Clickable = true;
+    public List<int> choice1DialogueBranch, choice2DialogueBranch, choice3DialogueBranch, choice4DialogueBranch;
+    public DialogueStructure.statement Statement;
     public Sprite icon;
 
     public List<string> textToChars()

@@ -13,7 +13,7 @@ public class PlayerSelection : MonoBehaviour
     [Header("Stats")]
     public int maxMana;
     public int maxHP;
-    public float passiveCriticalChance, passiveCriticalDamage;
+    public float passiveCriticalChance, passiveCriticalDamage, passiveMissChance, evasionChance;
 
 
     [Space]
@@ -23,5 +23,5 @@ public class PlayerSelection : MonoBehaviour
 
     [Space]
     [Space]
-    public List<Icon> startItems;
+    public List<ItemPool> startItems;
 }

@@ -16,11 +16,12 @@ public class OutlineScript : MonoBehaviour
         abilityOnCursor = GameObject.Find("AbilityOnCursor").GetComponent<AbilityOnCursor>();
         sr = GetComponent<SpriteRenderer>();
         //Outline
-        outlineList = new List<SpriteRenderer>();
-        outlineList.Add(Instantiate(outlinePrefab, new Vector3(transform.position.x + 0.62f, transform.position.y, 0), new Quaternion(0, 0, 0, 0).normalized, transform));
-        outlineList.Add(Instantiate(outlinePrefab, new Vector3(transform.position.x - 0.62f, transform.position.y, 0), new Quaternion(0, 0, 0, 0).normalized, transform));
-        outlineList.Add(Instantiate(outlinePrefab, new Vector3(transform.position.x, transform.position.y + 0.62f, 0), new Quaternion(0, 0, 0, 0).normalized, transform));
-        outlineList.Add(Instantiate(outlinePrefab, new Vector3(transform.position.x, transform.position.y - 0.62f, 0), new Quaternion(0, 0, 0, 0).normalized, transform));
+        outlineList = new List<SpriteRenderer> { 
+            Instantiate(outlinePrefab, new Vector3(transform.position.x + 0.248f, transform.position.y, 0), new Quaternion(0, 0, 0, 0).normalized, transform), 
+            Instantiate(outlinePrefab, new Vector3(transform.position.x - 0.248f, transform.position.y, 0), new Quaternion(0, 0, 0, 0).normalized, transform),
+            Instantiate(outlinePrefab, new Vector3(transform.position.x, transform.position.y + 0.248f, 0), new Quaternion(0, 0, 0, 0).normalized, transform),
+            Instantiate(outlinePrefab, new Vector3(transform.position.x, transform.position.y - 0.248f, 0), new Quaternion(0, 0, 0, 0).normalized, transform)
+        };
         foreach (SpriteRenderer s in outlineList)
         {
             s.gameObject.SetActive(false);
@@ -36,7 +37,7 @@ public class OutlineScript : MonoBehaviour
 
     private void OnMouseOver()
     {
-        if (character == Character.enemy && (abilityOnCursor.abilityType == Icon.Type.attack || abilityOnCursor.abilityType == Icon.Type.magicAttack) && abilityOnCursor.isOnCursor)
+        if (character == Character.enemy && (abilityOnCursor.abilityType == Item.Type.attack) && abilityOnCursor.isOnCursor)
         {
             foreach (SpriteRenderer s in outlineList)
             {
@@ -44,7 +45,7 @@ public class OutlineScript : MonoBehaviour
                 s.flipX = sr.flipX;
             }
         }
-        else if (character == Character.player && abilityOnCursor.abilityType == Icon.Type.block && abilityOnCursor.isOnCursor)
+        else if (character == Character.player && abilityOnCursor.abilityType == Item.Type.Buff && abilityOnCursor.isOnCursor)
         {
             foreach (SpriteRenderer s in outlineList)
             {

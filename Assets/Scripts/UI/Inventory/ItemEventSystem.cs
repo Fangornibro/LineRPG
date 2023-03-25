@@ -8,22 +8,25 @@ using UnityEngine.UI;
 public class ItemEventSystem : MonoBehaviour, IPointerClickHandler, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler, IPointerUpHandler, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
     private Inventory inventory;
-    private FightManager fm;
-    private ContextMenu cm;
+    private FightManager fightManager;
     private Player player;
+    private GameManager gameManager;
+    private Item item;
 
     private AudioSource buttonDownSound, buttonUpSound, coinSound;
 
     private void Start()
     {
-        cm = GameObject.Find("ContextMenu").GetComponent<ContextMenu>();
-        fm = GameObject.Find("FightManager").GetComponent<FightManager>();
-        inventory = GameObject.Find("Inventory").GetComponent<Inventory>();
-        player = GameObject.Find("Player").GetComponent<Player>();
+        gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
+        fightManager = gameManager.fightManager;
+        inventory = gameManager.inventory;
+        player = GameManager.player;
 
-        buttonDownSound = GameObject.Find("buttonDownSound").GetComponent<AudioSource>();
-        buttonUpSound = GameObject.Find("buttonUpSound").GetComponent<AudioSource>();
-        coinSound = GameObject.Find("coinSound").GetComponent<AudioSource>();
+        buttonDownSound = gameManager.buttonDownSound;
+        buttonUpSound = gameManager.buttonUpSound;
+        coinSound = gameManager.coinSound;
+
+        item = GetComponent<Item>();
     }
     public void OnPointerClick(PointerEventData eventData)
     {
@@ -35,14 +38,14 @@ public class ItemEventSystem : MonoBehaviour, IPointerClickHandler, IPointerDown
 
     public void takeAndUse()
     {
-        if (GetComponent<Icon>().isTakeable)
+        if (item.isTakeable)
         {
             if (GetComponent<CellType>().cellType == CellType.Type.CoinBag)
             {
                 coinSound.Play();
-                player.AddGold(Convert.ToInt32(GetComponent<Icon>().damageOrArmourText.text));
-                GetComponent<Icon>().DropOneItem();
-                cm.UnShow();
+                player.AddGold(Convert.ToInt32(item.damageOrArmourText.text));
+                item.DropOneItem();
+                gameManager.ContextMenuInvisible();
             }
             else
             {
@@ -50,14 +53,13 @@ public class ItemEventSystem : MonoBehaviour, IPointerClickHandler, IPointerDown
                 {
                     if (cell.icon == null)
                     {
-                        Icon icon = GetComponent<Icon>();
-
-                        icon.cell = cell;
-                        icon.transform.SetParent(icon.cell.transform.parent);
-                        icon.GetComponent<RectTransform>().anchoredPosition = cell.GetComponent<RectTransform>().anchoredPosition + new Vector2(-4.5f, 4.5f);
-                        cell.icon = icon;
-                        icon.transform.localScale = Vector3.one;
-                        icon.isTakeable = false;
+                        item.cell = cell;
+                        item.transform.SetParent(item.cell.transform.parent);
+                        item.GetComponent<RectTransform>().anchoredPosition = cell.GetComponent<RectTransform>().anchoredPosition + new Vector2(-4.5f, 4.5f);
+                        cell.icon = item;
+                        item.transform.localScale = Vector3.one;
+                        item.isTakeable = false;
+                        gameManager.ContextMenuInvisible();
                         break;
                     }
                 }
@@ -65,9 +67,9 @@ public class ItemEventSystem : MonoBehaviour, IPointerClickHandler, IPointerDown
         }
         else
         {
-            if (GetComponent<Icon>().cell.GetComponent<CellType>().cellType == CellType.Type.Usable && !inventory.isInventOpen)
+            if (item.cell.GetComponent<CellType>().cellType == CellType.Type.Usable && !inventory.isActiveAndEnabled)
             {
-                GetComponent<Icon>().Use();
+                item.Use();
             }
         }
     }
@@ -93,21 +95,21 @@ public class ItemEventSystem : MonoBehaviour, IPointerClickHandler, IPointerDown
     public void OnPointerEnter(PointerEventData eventData)
     {
         transform.GetComponent<Image>().color = Color.white;
-        Icon icon = transform.GetComponent<Icon>();
-        cm.Show(icon.Name, icon.rarity, icon.description, transform.position, icon.abilityTypeSprites);
+        Item icon = transform.GetComponent<Item>();
+        gameManager.ContextMenuVisible(icon.Name, icon.rarity, icon.description, transform.position, icon.abilityTypeSprites);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
         transform.GetComponent<Image>().color = new Color(0.6603774f, 0.6603774f, 0.6603774f, 1);
-        cm.UnShow();
+        gameManager.ContextMenuInvisible();
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        if (!fm.startTempChecking && inventory.isInventOpen)
+        if (!fightManager.startTempChecking && inventory.isActiveAndEnabled)
         {
-            cm.UnShow();
+            gameManager.ContextMenuInvisible();
             if (eventData.button == PointerEventData.InputButton.Left)
             {
                 transform.position = eventData.pointerCurrentRaycast.screenPosition;
@@ -117,32 +119,31 @@ public class ItemEventSystem : MonoBehaviour, IPointerClickHandler, IPointerDown
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if (!fm.startTempChecking)
+        if (!fightManager.startTempChecking)
         {
             transform.SetParent(GameObject.Find("Canvas").transform);
-            if (inventory.isInventOpen)
+            if (inventory.isActiveAndEnabled)
             {
-                cm.UnShow();
+                gameManager.ContextMenuInvisible();
             }
         }
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        if (!fm.startTempChecking && inventory.isInventOpen)
+        if (!fightManager.startTempChecking && inventory.isActiveAndEnabled)
         {
             foreach (Cell cellinv in inventory.cells)
             {
                 if (cellinv.GetComponent<Collider2D>().Distance(GetComponent<Collider2D>()).distance < cellinv.GetComponent<RectTransform>().sizeDelta.x / 4)
                 {
-                    GetComponent<Icon>().ChangeItemCell(cellinv);
-                    Icon icon = transform.GetComponent<Icon>();
-                    cm.Show(icon.Name, icon.rarity, icon.description, transform.position, icon.abilityTypeSprites);
+                    item.ChangeItemCell(cellinv);
+                    gameManager.ContextMenuVisible(item.Name, item.rarity, item.description, transform.position, item.abilityTypeSprites);
                 }
                 else
                 {
-                    transform.position = GetComponent<Icon>().cell.transform.position;
-                    transform.SetParent(GetComponent<Icon>().cell.transform.parent);
+                    transform.position = item.cell.transform.position;
+                    transform.SetParent(item.cell.transform.parent);
                 }
             }
         }

@@ -176,6 +176,9 @@ MonoBehaviour:
   damage: 7
   criticalChance: 0
   criticalDamage: 0
-  attackSound: {fileID: 3197654777531422435, guid: 656d9aaae325b204cb40457b6c1ed79c, type: 3}
-  effect: 1
+  missChance: 0
+  attackSound: {fileID: 2840428198788140021}
+  action: {fileID: 3213705299183239899, guid: 30811fe0452d28e4fbae2eba3092a8bc, type: 3}
   attackIcon: {fileID: 21300000, guid: 4e777b38856d57742bb94666343e8a8a, type: 3}
+  isMagic: 0
+  isAOE: 0

@@ -3,24 +3,27 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
+using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class CameraScript : MonoBehaviour
 {
-    private Map map;
-    public Camera actualCamera;
 
-    [HideInInspector]
-    public bool isKinematic = false;
-    private float time = 0;
-    private Vector3 startCameraPos;
+    [HideInInspector] public Camera actualCamera;
+
+    [HideInInspector] public bool isKinematic = false;
+
     private static int sizeForCameraMovement = Screen.width / 20;
 
-    bool onlyOne = true;
-
     private float maxPosX = 0, minPosX = 0, maxPosY = 0, minPosY = 0;
+
+    private bool isApproximation = false;
+
+    [Space]
+    [Space]
+    [Header("Initialisations")]
+    [SerializeField] private Map map;
     private void Awake()
     {
-        map = GameObject.Find("Map").GetComponent<Map>();
         actualCamera = GetComponent<Camera>();
     }
     private void Update()
@@ -55,38 +58,42 @@ public class CameraScript : MonoBehaviour
         this.minPosY = minPosY;
     }
 
-    public bool Approximation(Vector3 targetPos, float maxApproximation, bool isRoomEvent)
+    public void StartApproximationCoroutine(Vector3 targetPos, float maxApproximation, bool isRoomEvent)
     {
-        if (onlyOne)
+        StartCoroutine(Approximation(targetPos, maxApproximation, isRoomEvent));
+    }
+
+    private IEnumerator Approximation(Vector3 targetPos, float maxApproximation, bool isRoomEvent)
+    {
+        if (!isApproximation)
         {
-            startCameraPos = Camera.main.transform.position;
-            time = 0;
-            onlyOne = false;
-        }
-        time += Time.deltaTime;
-        transform.position = Vector3.Lerp(startCameraPos, targetPos, time / (isRoomEvent ? 1 : 1.5f));
-        transform.position = new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, -15);
-        GetComponent<Camera>().orthographicSize -= EasingInverseSquared(time / 3);
-        if (Camera.main.orthographicSize <= maxApproximation)
-        {
+            isKinematic = true;
+            isApproximation = true;
+            Vector3 startPosition = transform.position;
+            targetPos = new Vector3(targetPos.x, targetPos.y, -15);
+            Camera camera = GetComponent<Camera>();
+            float startApproximation = camera.orthographicSize;
+            for (float i = 0; i < 1; i += Time.deltaTime)
+            {
+                transform.position = Vector3.Lerp(startPosition, targetPos, EasingInverseSquared(i));
+                camera.orthographicSize = Mathf.Lerp(startApproximation, maxApproximation, i);
+                yield return null;
+            }
             Camera.main.orthographicSize = 15;
-            isKinematic = false;
             if (isRoomEvent)
             {
                 map.NextRoom();
             }
-            onlyOne = true;
-            return false;
+            else
+            {
+                isKinematic = false;
+            }
+            isApproximation = false;
         }
-        else
-        {
-            isKinematic = true;
-        }
-        return true;
+        
     }
-
     private float EasingInverseSquared(float x)
     {
-        return x * x;
+        return 1-(1-x)*(1-x);
     }
 }

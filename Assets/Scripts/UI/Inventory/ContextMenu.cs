@@ -6,26 +6,21 @@ using UnityEngine.UI;
 
 public class ContextMenu : MonoBehaviour
 {
-    private GameObject contextMenuHudGO;
-    private Image rarityIcon;
-    private TextMeshProUGUI nameGO, RarityGO, descriptionGO;
-    [SerializeField]
-    private Sprite commonIcon, rareIcon, epicIcon, legendaryIcon, defaultAbilityTypeIcon;
-    public List<Image> abilityTypeIcons;
-    private void Start()
-    {
-        contextMenuHudGO = transform.Find("ContextMenuHud").gameObject;
-        nameGO = contextMenuHudGO.transform.Find("Name").GetComponent<TextMeshProUGUI>();
-        RarityGO = contextMenuHudGO.transform.Find("Rarity").GetComponent<TextMeshProUGUI>();
-        descriptionGO = contextMenuHudGO.transform.Find("Description").GetComponent<TextMeshProUGUI>();
-        contextMenuHudGO.SetActive(false);
+    [Header("Text")]
+    [SerializeField] private TextMeshProUGUI nameText;
+    [SerializeField] private TextMeshProUGUI RarityText;
+    [SerializeField] private TextMeshProUGUI descriptionText;
 
-        rarityIcon = contextMenuHudGO.transform.Find("RarityIcon").gameObject.GetComponent<Image>();
-    }
-    public void Show(string Name, Icon.Rarity Rarity, string Description, Vector3 Position, List<Sprite> abilityTypeSprites)
+
+    [Space]
+    [Space]
+    [Header("Icons")]
+    [SerializeField] private Image rarityIcon;
+    [SerializeField] private Sprite commonIcon, rareIcon, epicIcon, legendaryIcon, defaultAbilityTypeIcon;
+    public List<Image> abilityTypeIcons;
+    public void Show(string Name, Item.Rarity Rarity, string Description, Vector3 Position, List<Sprite> abilityTypeSprites)
     {
-        contextMenuHudGO.SetActive(true);
-        nameGO.SetText(Name);
+        nameText.SetText(Name);
         for(int i = 0; i < abilityTypeIcons.Count; i++)
         {
             if (i < abilityTypeSprites.Count && abilityTypeSprites[i] != null)
@@ -37,48 +32,44 @@ public class ContextMenu : MonoBehaviour
                 abilityTypeIcons[i].sprite = defaultAbilityTypeIcon;
             }
         }
-        if (Rarity == Icon.Rarity.common)
+        if (Rarity == Item.Rarity.common)
         {
-            RarityGO.SetText("Common");
-            RarityGO.color = new Color(0.4666667f, 0.4666667f, 0.4666667f, 1f);
+            RarityText.SetText("Common");
+            RarityText.color = new Color(0.4666667f, 0.4666667f, 0.4666667f, 1f);
             rarityIcon.sprite = commonIcon;
         }
-        else if (Rarity == Icon.Rarity.rare)
+        else if (Rarity == Item.Rarity.rare)
         {
-            RarityGO.SetText("Rare");
-            RarityGO.color = new Color(0.2392157f, 0.3803922f, 0.7333333f, 1f);
+            RarityText.SetText("Rare");
+            RarityText.color = new Color(0.2392157f, 0.3803922f, 0.7333333f, 1f);
             rarityIcon.sprite = rareIcon;
         }
-        else if (Rarity == Icon.Rarity.epic)
+        else if (Rarity == Item.Rarity.epic)
         {
-            RarityGO.SetText("Epic");
-            RarityGO.color = new Color(0.5137255f, 0.2431373f, 0.5803922f, 1f);
+            RarityText.SetText("Epic");
+            RarityText.color = new Color(0.5137255f, 0.2431373f, 0.5803922f, 1f);
             rarityIcon.sprite = epicIcon;
         }
-        else if (Rarity == Icon.Rarity.legendary)
+        else if (Rarity == Item.Rarity.legendary)
         {
-            RarityGO.SetText("Legendary");
-            RarityGO.color = new Color(0.7803922f, 0.4509804f, 0.1215686f, 1f);
+            RarityText.SetText("Legendary");
+            RarityText.color = new Color(0.7803922f, 0.4509804f, 0.1215686f, 1f);
             rarityIcon.sprite = legendaryIcon;
         }
-        else if (Rarity == Icon.Rarity.gold)
+        else if (Rarity == Item.Rarity.gold)
         {
-            RarityGO.SetText("Gold");
-            RarityGO.color = new Color(1f, 0.881f, 0f, 1f);
+            RarityText.SetText("Gold");
+            RarityText.color = new Color(1f, 0.881f, 0f, 1f);
             rarityIcon.sprite = commonIcon;
         }
-        descriptionGO.SetText(Description);
+        descriptionText.SetText(Description);
         if (Input.mousePosition.y < Screen.height/2)
         {
-            contextMenuHudGO.transform.position = Position;
+            transform.position = Position;
         }
         else
         {
-            contextMenuHudGO.transform.position = Position - new Vector3(0, contextMenuHudGO.GetComponent<RectTransform>().sizeDelta.y/2);
+            transform.position = Position - new Vector3(0, GetComponent<RectTransform>().sizeDelta.y/2);
         }
-    }
-    public void UnShow()
-    {
-        contextMenuHudGO.SetActive(false);
     }
 }

@@ -7,62 +7,42 @@ using UnityEngine.UI;
 
 public class DialogueButton : MonoBehaviour, IButton
 {
-    public static DialogueStructure curInteractableItem;
-    [HideInInspector]
-    public Vector2 defpos;
+    [SerializeField] private DialogueStructure dialogueStructure;
+    [HideInInspector] public Vector2 defpos;
     void Start()
     {
         defpos = transform.parent.GetComponent<RectTransform>().anchoredPosition;
     }
     void IButton.OnPointerClick()
     {
-        if (curInteractableItem != null)
+        dialogueStructure.clickTime = 0.1f;
+        if (transform.name == "DialogueButton1")
         {
-            if (transform.name == "DialogueButton1")
-            {
-                if (curInteractableItem.curDialogueBranch.choice1dialoguebranch.Count != 0)
-                {
-                    curInteractableItem.DialogueSelection(curInteractableItem.dialogues[curInteractableItem.curDialogueBranch.choice1dialoguebranch[Random.Range(0, curInteractableItem.curDialogueBranch.choice1dialoguebranch.Count)]]);
-                }
-                else
-                {
-                    curInteractableItem.DialogueSelection(null);
-                }
-            }
-            if (transform.name == "DialogueButton2")
-            {
-                if (curInteractableItem.curDialogueBranch.choice2dialoguebranch.Count != 0)
-                {
-                    curInteractableItem.DialogueSelection(curInteractableItem.dialogues[curInteractableItem.curDialogueBranch.choice2dialoguebranch[Random.Range(0, curInteractableItem.curDialogueBranch.choice2dialoguebranch.Count)]]);
-                }
-                else
-                {
-                    curInteractableItem.DialogueSelection(null);
-                }
-            }
-            if (transform.name == "DialogueButton3")
-            {
-                if (curInteractableItem.curDialogueBranch.choice3dialoguebranch.Count != 0)
-                {
-                    curInteractableItem.DialogueSelection(curInteractableItem.dialogues[curInteractableItem.curDialogueBranch.choice3dialoguebranch[Random.Range(0, curInteractableItem.curDialogueBranch.choice3dialoguebranch.Count)]]);
-                }
-                else
-                {
-                    curInteractableItem.DialogueSelection(null);
-                }
-            }
-            if (transform.name == "DialogueButton4")
-            {
-                if (curInteractableItem.curDialogueBranch.choice4dialoguebranch.Count != 0)
-                {
-                    curInteractableItem.DialogueSelection(curInteractableItem.dialogues[curInteractableItem.curDialogueBranch.choice4dialoguebranch[Random.Range(0, curInteractableItem.curDialogueBranch.choice4dialoguebranch.Count)]]);
-                }
-                else
-                {
-                    curInteractableItem.DialogueSelection(null);
-                }
-            }
+            SelectDialogue(dialogueStructure.curDialogueBranch.choice1DialogueBranch);
         }
-        curInteractableItem = null;
+        else if (transform.name == "DialogueButton2")
+        {
+            SelectDialogue(dialogueStructure.curDialogueBranch.choice2DialogueBranch);
+        }
+        else if (transform.name == "DialogueButton3")
+        {
+            SelectDialogue(dialogueStructure.curDialogueBranch.choice3DialogueBranch);
+        }
+        else if (transform.name == "DialogueButton4")
+        {
+            SelectDialogue(dialogueStructure.curDialogueBranch.choice4DialogueBranch);
+        }
+    }
+
+    private void SelectDialogue(List<int> dialogueBranch)
+    {
+        if (dialogueBranch.Count != 0)
+        {
+            dialogueStructure.DialogueSelection(dialogueStructure.dialogues[dialogueBranch[Random.Range(0, dialogueBranch.Count)]]);
+        }
+        else
+        {
+            dialogueStructure.DialogueSelection(null);
+        }
     }
 }

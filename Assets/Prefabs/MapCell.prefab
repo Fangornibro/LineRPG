@@ -273,9 +273,15 @@ MonoBehaviour:
   EventSprites:
   - {fileID: 21300000, guid: 84feae7c354f9ae4490712e9bf1e5dc9, type: 3}
   - {fileID: 21300000, guid: 32e59d3fa70a1584382e7b688418b4af, type: 3}
+  - {fileID: 21300000, guid: 0623f69c4b3fb774197e65e554982f4a, type: 3}
+  - {fileID: 21300000, guid: 8bc8c4ccf0522e74ea353b35ac0ecda0, type: 3}
   - {fileID: 21300000, guid: 6d75ab6219ca0ff48859ad04dbeb39d2, type: 3}
   - {fileID: 21300000, guid: 11c4defdb94a27b49a8851b8a6ad22b4, type: 3}
   - {fileID: 21300000, guid: 40070cd0dc825ef49a4a772412b7c4d9, type: 3}
+  - {fileID: 21300000, guid: 40070cd0dc825ef49a4a772412b7c4d9, type: 3}
+  - {fileID: 21300000, guid: 8bc8c4ccf0522e74ea353b35ac0ecda0, type: 3}
+  - {fileID: 21300000, guid: 8bc8c4ccf0522e74ea353b35ac0ecda0, type: 3}
+  - {fileID: 21300000, guid: 8bc8c4ccf0522e74ea353b35ac0ecda0, type: 3}
   - {fileID: 21300000, guid: 8bc8c4ccf0522e74ea353b35ac0ecda0, type: 3}
   - {fileID: 21300000, guid: 8bc8c4ccf0522e74ea353b35ac0ecda0, type: 3}
   - {fileID: 21300000, guid: 8bc8c4ccf0522e74ea353b35ac0ecda0, type: 3}
@@ -294,11 +300,12 @@ MonoBehaviour:
     - {fileID: 21300000, guid: 55c3bcf113d30d54eba5729798013674, type: 3}
     - {fileID: 21300000, guid: 6f021a0fc65802847aa870b9fd278757, type: 3}
     - {fileID: 21300000, guid: 49251a53277981441bc250731f6a15ac, type: 3}
-  defaultSprite: {fileID: 0}
-  isBoss: 0
   isStart: 0
   squad: {fileID: 0}
   connectedRooms: []
+  maxDifficult: 4
+  difficult: 0
+  EventSr: {fileID: 5073610574460707818}
 --- !u!120 &-7889556340408062357
 LineRenderer:
   m_ObjectHideFlags: 0

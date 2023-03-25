@@ -102,9 +102,11 @@ MonoBehaviour:
     a duck.
   maxMana: 4
   maxHP: 20
-  passiveCriticalChance: 20
-  passiveCriticalDamage: 1.5
+  passiveCriticalChance: 0
+  passiveCriticalDamage: 0
+  passiveMissChance: 50
+  evasionChance: 0
   animatorController: {fileID: 9100000, guid: 7bd97cf2d8f255847964de778c3188ae, type: 2}
   startItems:
-  - {fileID: 2721988790157410024, guid: b3ee8c4613285e14790c5c1725ba9924, type: 3}
-  - {fileID: 2721988790157410024, guid: 9db3d5454b9b4cb48870b7771c7204c2, type: 3}
+  - {fileID: -3405236714419396024, guid: c41da06298bfa124380b110eb520735a, type: 3}
+  - {fileID: -3405236714419396024, guid: 8f6dbc94e1478f749850712d88f6dcb7, type: 3}

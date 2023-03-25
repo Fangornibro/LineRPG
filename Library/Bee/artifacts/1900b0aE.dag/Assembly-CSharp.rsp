@@ -404,6 +404,7 @@
 "Assets/Scripts/Fight/Player.cs"
 "Assets/Scripts/Fight/Squad.cs"
 "Assets/Scripts/MainMenu/NewGameButton.cs"
+"Assets/Scripts/Map/FocusButton.cs"
 "Assets/Scripts/Map/Map.cs"
 "Assets/Scripts/Map/Room.cs"
 "Assets/Scripts/Map/RoomSelector.cs"

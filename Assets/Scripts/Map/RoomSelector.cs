@@ -4,13 +4,7 @@ using static Room;
 public class RoomSelector : MonoBehaviour
 {
     private Room lastRoom;
-    private SquadInfoPanel sip;
-    private Inventory inventory;
-    private void Start()
-    {
-        sip = GameObject.Find("SquadInfoPanel").GetComponent<SquadInfoPanel>();
-        inventory = GameObject.Find("Inventory").GetComponent<Inventory>();
-    }
+    [SerializeField] private GameManager uiManager;
     private void Update()
     {
         if (Input.GetKey(KeyCode.Escape) && lastRoom != null)
@@ -29,11 +23,11 @@ public class RoomSelector : MonoBehaviour
         if (lastRoom != null)
         {
             Color color = Color.white;
+            uiManager.InventoryVisible(false);
+            uiManager.SquadInfoInvisible();
             if (lastRoom.state == Statement.unable)
             {
                 color = new Color(0.5943396f, 0.5943396f, 0.5943396f);
-                sip.isOpened = false;
-                inventory.isInventOpen = false;
             }
             else if (lastRoom.state == Statement.completed)
             {
@@ -42,13 +36,14 @@ public class RoomSelector : MonoBehaviour
             else if (lastRoom.state == Statement.next)
             {
                 color = new Color(0.9176471f, 0.7137255f, 0.3843137f);
-                sip.isOpened = true;
-                inventory.isInventOpen = true;
             }
+            LineRenderer line = lastRoom.GetComponent<LineRenderer>();
             lastRoom.transform.Find("Outline").GetComponent<SpriteRenderer>().color = color;
-            lastRoom.GetComponent<LineRenderer>().SetColors(color, color);
-            lastRoom.GetComponent<LineRenderer>().sortingOrder = 0;
-            lastRoom.GetComponent<LineRenderer>().SetWidth(0.3f, 0.3f);
+            line.startColor = color;
+            line.endColor = color;
+            line.sortingOrder = 0;
+            line.startWidth = 0.3f;
+            line.endWidth = 0.3f;
         }
     }
 }

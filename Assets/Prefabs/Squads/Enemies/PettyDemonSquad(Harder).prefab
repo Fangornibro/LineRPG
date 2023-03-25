@@ -97,19 +97,52 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc872169d0b3b404ab5b0638c6442d1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemies:
-  - myList:
-    - {fileID: 214563111168147064, guid: 7e8acec4e74c77b44b37e6d9ce45a567, type: 3}
-    - {fileID: 214563111168147064, guid: 7e8acec4e74c77b44b37e6d9ce45a567, type: 3}
-    - {fileID: 6154058463950934506, guid: 00e2f1c05606b0a4c8f0e21ae75b8eca, type: 3}
-  - myList:
-    - {fileID: 214563111168147064, guid: 7e8acec4e74c77b44b37e6d9ce45a567, type: 3}
-    - {fileID: 214563111168147064, guid: 7e8acec4e74c77b44b37e6d9ce45a567, type: 3}
-    - {fileID: 6154058463950934506, guid: 00e2f1c05606b0a4c8f0e21ae75b8eca, type: 3}
-    - {fileID: 6154058463950934506, guid: 00e2f1c05606b0a4c8f0e21ae75b8eca, type: 3}
   squadName: Petty demon
   description: Not a very strong opponent. Can hit ignoring armor.
   difficult: 2
+  numberOfRewards:
+  - possibleRewards:
+    - itemPool: {fileID: -3405236714419396024, guid: 861850b60eb360a408cc5b2d0b502b7e, type: 3}
+      possibility: 100
+  - possibleRewards:
+    - itemPool: {fileID: -3405236714419396024, guid: 861850b60eb360a408cc5b2d0b502b7e, type: 3}
+      possibility: 10
+  squadVariations:
+  - enemies:
+    - {fileID: 214563111168147064, guid: 7e8acec4e74c77b44b37e6d9ce45a567, type: 3}
+    - {fileID: 214563111168147064, guid: 7e8acec4e74c77b44b37e6d9ce45a567, type: 3}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+  - enemies:
+    - {fileID: 214563111168147064, guid: 7e8acec4e74c77b44b37e6d9ce45a567, type: 3}
+    - {fileID: 214563111168147064, guid: 7e8acec4e74c77b44b37e6d9ce45a567, type: 3}
+    - {fileID: 6154058463950934506, guid: 00e2f1c05606b0a4c8f0e21ae75b8eca, type: 3}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+  - enemies:
+    - {fileID: 214563111168147064, guid: 7e8acec4e74c77b44b37e6d9ce45a567, type: 3}
+    - {fileID: 6154058463950934506, guid: 00e2f1c05606b0a4c8f0e21ae75b8eca, type: 3}
+    - {fileID: 6154058463950934506, guid: 00e2f1c05606b0a4c8f0e21ae75b8eca, type: 3}
+    - {fileID: 6154058463950934506, guid: 00e2f1c05606b0a4c8f0e21ae75b8eca, type: 3}
+    - {fileID: 6154058463950934506, guid: 00e2f1c05606b0a4c8f0e21ae75b8eca, type: 3}
+    - {fileID: 0}
+  - enemies:
+    - {fileID: 214563111168147064, guid: 7e8acec4e74c77b44b37e6d9ce45a567, type: 3}
+    - {fileID: 214563111168147064, guid: 37e391dcc939e9d48a19f39ba3389d7b, type: 3}
+    - {fileID: 214563111168147064, guid: 37e391dcc939e9d48a19f39ba3389d7b, type: 3}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+  - enemies:
+    - {fileID: 214563111168147064, guid: 7e8acec4e74c77b44b37e6d9ce45a567, type: 3}
+    - {fileID: 214563111168147064, guid: c02742f5554d7c74d8cbbe7cfb73f0f9, type: 3}
+    - {fileID: 214563111168147064, guid: c02742f5554d7c74d8cbbe7cfb73f0f9, type: 3}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
   dialogues:
   - text: A new victim has arrived!
     person: Petty demon
@@ -117,15 +150,15 @@ MonoBehaviour:
     choice2text: Not today.
     choice3text: 
     choice4text: 
-    button1active: 1
-    button2active: 1
-    button3active: 1
-    button4active: 1
-    choice1dialoguebranch: 01000000
-    choice2dialoguebranch: 020000000300000003000000
-    choice3dialoguebranch: 
-    choice4dialoguebranch: 
-    eventNumber: 0
+    isButton1Clickable: 1
+    isButton2Clickable: 1
+    isButton3Clickable: 1
+    isButton4Clickable: 1
+    choice1DialogueBranch: 01000000
+    choice2DialogueBranch: 02000000030000000300000003000000
+    choice3DialogueBranch: 
+    choice4DialogueBranch: 
+    Statement: 0
     icon: {fileID: 21300000, guid: fdf2d79be40135f49ac38ee0c4cd5cd4, type: 3}
   - text: There is no other choice.
     person: Me
@@ -133,15 +166,15 @@ MonoBehaviour:
     choice2text: 
     choice3text: 
     choice4text: 
-    button1active: 1
-    button2active: 1
-    button3active: 1
-    button4active: 1
-    choice1dialoguebranch: 
-    choice2dialoguebranch: 
-    choice3dialoguebranch: 
-    choice4dialoguebranch: 
-    eventNumber: 1
+    isButton1Clickable: 1
+    isButton2Clickable: 1
+    isButton3Clickable: 1
+    isButton4Clickable: 1
+    choice1DialogueBranch: 
+    choice2DialogueBranch: 
+    choice3DialogueBranch: 
+    choice4DialogueBranch: 
+    Statement: 1
     icon: {fileID: 0}
   - text: Where is he?
     person: Petty demon
@@ -149,15 +182,15 @@ MonoBehaviour:
     choice2text: 
     choice3text: 
     choice4text: 
-    button1active: 1
-    button2active: 1
-    button3active: 1
-    button4active: 1
-    choice1dialoguebranch: 04000000
-    choice2dialoguebranch: 
-    choice3dialoguebranch: 
-    choice4dialoguebranch: 
-    eventNumber: 0
+    isButton1Clickable: 1
+    isButton2Clickable: 1
+    isButton3Clickable: 1
+    isButton4Clickable: 1
+    choice1DialogueBranch: 04000000
+    choice2DialogueBranch: 
+    choice3DialogueBranch: 
+    choice4DialogueBranch: 
+    Statement: 0
     icon: {fileID: 21300000, guid: 13784c40b147b334692e39a5acaccab0, type: 3}
   - text: Stop!
     person: Petty demon
@@ -165,15 +198,15 @@ MonoBehaviour:
     choice2text: 
     choice3text: 
     choice4text: 
-    button1active: 1
-    button2active: 1
-    button3active: 1
-    button4active: 1
-    choice1dialoguebranch: 
-    choice2dialoguebranch: 
-    choice3dialoguebranch: 
-    choice4dialoguebranch: 
-    eventNumber: 3
+    isButton1Clickable: 1
+    isButton2Clickable: 1
+    isButton3Clickable: 1
+    isButton4Clickable: 1
+    choice1DialogueBranch: 
+    choice2DialogueBranch: 
+    choice3DialogueBranch: 
+    choice4DialogueBranch: 
+    Statement: 3
     icon: {fileID: 21300000, guid: 521cdd975fa96604887a1817b8b6471f, type: 3}
   - text: Lucky!
     person: Me
@@ -181,13 +214,14 @@ MonoBehaviour:
     choice2text: 
     choice3text: 
     choice4text: 
-    button1active: 1
-    button2active: 1
-    button3active: 1
-    button4active: 1
-    choice1dialoguebranch: 
-    choice2dialoguebranch: 
-    choice3dialoguebranch: 
-    choice4dialoguebranch: 
-    eventNumber: 2
+    isButton1Clickable: 1
+    isButton2Clickable: 1
+    isButton3Clickable: 1
+    isButton4Clickable: 1
+    choice1DialogueBranch: 
+    choice2DialogueBranch: 
+    choice3DialogueBranch: 
+    choice4DialogueBranch: 
+    Statement: 2
     icon: {fileID: 0}
+  isCursed: 0

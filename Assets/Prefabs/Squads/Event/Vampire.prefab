@@ -97,12 +97,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc872169d0b3b404ab5b0638c6442d1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemies:
-  - myList:
-    - {fileID: 214563111168147064, guid: fb012e8d568272a4aa4224b83a525f03, type: 3}
   squadName: ???
   description: Who knows what awaits you here?
-  difficult: 1
+  difficult: 3
+  numberOfRewards:
+  - possibleRewards:
+    - itemPool: {fileID: -3405236714419396024, guid: cb09f8d884c9e7a429a19902cd07c90d, type: 3}
+      possibility: 100
+  squadVariations:
+  - enemies:
+    - {fileID: 0}
+    - {fileID: 214563111168147064, guid: fb012e8d568272a4aa4224b83a525f03, type: 3}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
   dialogues:
   - text: Help meeee...
     person: Vampire
@@ -110,15 +119,15 @@ MonoBehaviour:
     choice2text: Let the vampire drink your blood(5 hp)
     choice3text: Leave
     choice4text: 
-    button1active: 1
-    button2active: 1
-    button3active: 1
-    button4active: 1
-    choice1dialoguebranch: 010000000200000002000000020000000200000002000000
-    choice2dialoguebranch: 030000000400000004000000
-    choice3dialoguebranch: 05000000
-    choice4dialoguebranch: 
-    eventNumber: 0
+    isButton1Clickable: 1
+    isButton2Clickable: 1
+    isButton3Clickable: 1
+    isButton4Clickable: 1
+    choice1DialogueBranch: 01000000
+    choice2DialogueBranch: 020000000300000003000000
+    choice3DialogueBranch: 04000000
+    choice4DialogueBranch: 
+    Statement: 0
     icon: {fileID: 21300000, guid: 7ed1c5a10e34a1242bc75432454dbd33, type: 3}
   - text: Why?!
     person: Vampire
@@ -126,31 +135,15 @@ MonoBehaviour:
     choice2text: 
     choice3text: 
     choice4text: 
-    button1active: 1
-    button2active: 1
-    button3active: 1
-    button4active: 1
-    choice1dialoguebranch: 06000000
-    choice2dialoguebranch: 
-    choice3dialoguebranch: 
-    choice4dialoguebranch: 
-    eventNumber: 0
-    icon: {fileID: 21300000, guid: 7ed1c5a10e34a1242bc75432454dbd33, type: 3}
-  - text: Why?!
-    person: Vampire
-    choice1text: Die!
-    choice2text: 
-    choice3text: 
-    choice4text: 
-    button1active: 1
-    button2active: 1
-    button3active: 1
-    button4active: 1
-    choice1dialoguebranch: 07000000
-    choice2dialoguebranch: 
-    choice3dialoguebranch: 
-    choice4dialoguebranch: 
-    eventNumber: 0
+    isButton1Clickable: 1
+    isButton2Clickable: 1
+    isButton3Clickable: 1
+    isButton4Clickable: 1
+    choice1DialogueBranch: 0500000006000000060000000600000006000000
+    choice2DialogueBranch: 
+    choice3DialogueBranch: 
+    choice4DialogueBranch: 
+    Statement: 0
     icon: {fileID: 21300000, guid: 7ed1c5a10e34a1242bc75432454dbd33, type: 3}
   - text: "Yummy! Here is your reward for \nsalvation."
     person: Vampire
@@ -158,15 +151,15 @@ MonoBehaviour:
     choice2text: 
     choice3text: 
     choice4text: 
-    button1active: 1
-    button2active: 1
-    button3active: 1
-    button4active: 1
-    choice1dialoguebranch: 
-    choice2dialoguebranch: 
-    choice3dialoguebranch: 
-    choice4dialoguebranch: 
-    eventNumber: 304
+    isButton1Clickable: 1
+    isButton2Clickable: 1
+    isButton3Clickable: 1
+    isButton4Clickable: 1
+    choice1DialogueBranch: 
+    choice2DialogueBranch: 
+    choice3DialogueBranch: 
+    choice4DialogueBranch: 
+    Statement: 10
     icon: {fileID: 21300000, guid: 7ed1c5a10e34a1242bc75432454dbd33, type: 3}
   - text: Thank you. It was delicious. He he he.
     person: Vampire
@@ -174,15 +167,15 @@ MonoBehaviour:
     choice2text: 
     choice3text: 
     choice4text: 
-    button1active: 1
-    button2active: 1
-    button3active: 1
-    button4active: 1
-    choice1dialoguebranch: 
-    choice2dialoguebranch: 
-    choice3dialoguebranch: 
-    choice4dialoguebranch: 
-    eventNumber: 303
+    isButton1Clickable: 1
+    isButton2Clickable: 1
+    isButton3Clickable: 1
+    isButton4Clickable: 1
+    choice1DialogueBranch: 
+    choice2DialogueBranch: 
+    choice3DialogueBranch: 
+    choice4DialogueBranch: 
+    Statement: 11
     icon: {fileID: 21300000, guid: 7ed1c5a10e34a1242bc75432454dbd33, type: 3}
   - text: Noooooooo!
     person: Vampire
@@ -190,15 +183,15 @@ MonoBehaviour:
     choice2text: 
     choice3text: 
     choice4text: 
-    button1active: 1
-    button2active: 1
-    button3active: 1
-    button4active: 1
-    choice1dialoguebranch: 
-    choice2dialoguebranch: 
-    choice3dialoguebranch: 
-    choice4dialoguebranch: 
-    eventNumber: 301
+    isButton1Clickable: 1
+    isButton2Clickable: 1
+    isButton3Clickable: 1
+    isButton4Clickable: 1
+    choice1DialogueBranch: 
+    choice2DialogueBranch: 
+    choice3DialogueBranch: 
+    choice4DialogueBranch: 
+    Statement: 4
     icon: {fileID: 21300000, guid: 7ed1c5a10e34a1242bc75432454dbd33, type: 3}
   - text: Let's see if he has something.
     person: Me
@@ -206,15 +199,15 @@ MonoBehaviour:
     choice2text: 
     choice3text: 
     choice4text: 
-    button1active: 1
-    button2active: 1
-    button3active: 1
-    button4active: 1
-    choice1dialoguebranch: 
-    choice2dialoguebranch: 
-    choice3dialoguebranch: 
-    choice4dialoguebranch: 
-    eventNumber: 302
+    isButton1Clickable: 1
+    isButton2Clickable: 1
+    isButton3Clickable: 1
+    isButton4Clickable: 1
+    choice1DialogueBranch: 
+    choice2DialogueBranch: 
+    choice3DialogueBranch: 
+    choice4DialogueBranch: 
+    Statement: 5
     icon: {fileID: 0}
   - text: Let's see if he has something.
     person: Me
@@ -222,13 +215,14 @@ MonoBehaviour:
     choice2text: 
     choice3text: 
     choice4text: 
-    button1active: 1
-    button2active: 1
-    button3active: 1
-    button4active: 1
-    choice1dialoguebranch: 
-    choice2dialoguebranch: 
-    choice3dialoguebranch: 
-    choice4dialoguebranch: 
-    eventNumber: 301
+    isButton1Clickable: 1
+    isButton2Clickable: 1
+    isButton3Clickable: 1
+    isButton4Clickable: 1
+    choice1DialogueBranch: 
+    choice2DialogueBranch: 
+    choice3DialogueBranch: 
+    choice4DialogueBranch: 
+    Statement: 4
     icon: {fileID: 0}
+  isCursed: 0

@@ -97,14 +97,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc872169d0b3b404ab5b0638c6442d1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemies:
-  - myList:
-    - {fileID: 6154058463950934506, guid: 00e2f1c05606b0a4c8f0e21ae75b8eca, type: 3}
-    - {fileID: 6154058463950934506, guid: 00e2f1c05606b0a4c8f0e21ae75b8eca, type: 3}
   squadName: Inferior demon
   description: Pretty mediocre strength enemies. Spending HP on them is... well...
     just embarrassing.
   difficult: 0
+  numberOfRewards:
+  - possibleRewards:
+    - itemPool: {fileID: -3405236714419396024, guid: 861850b60eb360a408cc5b2d0b502b7e, type: 3}
+      possibility: 20
+  squadVariations:
+  - enemies:
+    - {fileID: 6154058463950934506, guid: 00e2f1c05606b0a4c8f0e21ae75b8eca, type: 3}
+    - {fileID: 6154058463950934506, guid: 00e2f1c05606b0a4c8f0e21ae75b8eca, type: 3}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
   dialogues:
   - text: Human!
     person: Inferior demon
@@ -112,15 +120,15 @@ MonoBehaviour:
     choice2text: Not today.
     choice3text: 
     choice4text: 
-    button1active: 1
-    button2active: 1
-    button3active: 1
-    button4active: 1
-    choice1dialoguebranch: 01000000
-    choice2dialoguebranch: 0200000003000000
-    choice3dialoguebranch: 
-    choice4dialoguebranch: 
-    eventNumber: 0
+    isButton1Clickable: 1
+    isButton2Clickable: 1
+    isButton3Clickable: 1
+    isButton4Clickable: 1
+    choice1DialogueBranch: 01000000
+    choice2DialogueBranch: 0200000003000000
+    choice3DialogueBranch: 
+    choice4DialogueBranch: 
+    Statement: 0
     icon: {fileID: 21300000, guid: 81f12fb5413d46f43bbb0921a9076c7c, type: 3}
   - text: There is no other choice.
     person: Me
@@ -128,15 +136,15 @@ MonoBehaviour:
     choice2text: 
     choice3text: 
     choice4text: 
-    button1active: 1
-    button2active: 1
-    button3active: 1
-    button4active: 1
-    choice1dialoguebranch: 
-    choice2dialoguebranch: 
-    choice3dialoguebranch: 
-    choice4dialoguebranch: 
-    eventNumber: 1
+    isButton1Clickable: 1
+    isButton2Clickable: 1
+    isButton3Clickable: 1
+    isButton4Clickable: 1
+    choice1DialogueBranch: 
+    choice2DialogueBranch: 
+    choice3DialogueBranch: 
+    choice4DialogueBranch: 
+    Statement: 1
     icon: {fileID: 0}
   - text: Where is he?
     person: Inferior demon
@@ -144,15 +152,15 @@ MonoBehaviour:
     choice2text: 
     choice3text: 
     choice4text: 
-    button1active: 1
-    button2active: 1
-    button3active: 1
-    button4active: 1
-    choice1dialoguebranch: 04000000
-    choice2dialoguebranch: 
-    choice3dialoguebranch: 
-    choice4dialoguebranch: 
-    eventNumber: 0
+    isButton1Clickable: 1
+    isButton2Clickable: 1
+    isButton3Clickable: 1
+    isButton4Clickable: 1
+    choice1DialogueBranch: 04000000
+    choice2DialogueBranch: 
+    choice3DialogueBranch: 
+    choice4DialogueBranch: 
+    Statement: 0
     icon: {fileID: 21300000, guid: a1c5d8acaa1bd1c44b59028a7dfea5d1, type: 3}
   - text: Stop!
     person: Inferior demon
@@ -160,15 +168,15 @@ MonoBehaviour:
     choice2text: 
     choice3text: 
     choice4text: 
-    button1active: 1
-    button2active: 1
-    button3active: 1
-    button4active: 1
-    choice1dialoguebranch: 
-    choice2dialoguebranch: 
-    choice3dialoguebranch: 
-    choice4dialoguebranch: 
-    eventNumber: 3
+    isButton1Clickable: 1
+    isButton2Clickable: 1
+    isButton3Clickable: 1
+    isButton4Clickable: 1
+    choice1DialogueBranch: 
+    choice2DialogueBranch: 
+    choice3DialogueBranch: 
+    choice4DialogueBranch: 
+    Statement: 3
     icon: {fileID: 21300000, guid: feca6a4c9559c4f4188cbf856fe15212, type: 3}
   - text: Lucky!
     person: Me
@@ -176,13 +184,14 @@ MonoBehaviour:
     choice2text: 
     choice3text: 
     choice4text: 
-    button1active: 1
-    button2active: 1
-    button3active: 1
-    button4active: 1
-    choice1dialoguebranch: 
-    choice2dialoguebranch: 
-    choice3dialoguebranch: 
-    choice4dialoguebranch: 
-    eventNumber: 2
+    isButton1Clickable: 1
+    isButton2Clickable: 1
+    isButton3Clickable: 1
+    isButton4Clickable: 1
+    choice1DialogueBranch: 
+    choice2DialogueBranch: 
+    choice3DialogueBranch: 
+    choice4DialogueBranch: 
+    Statement: 2
     icon: {fileID: 0}
+  isCursed: 0
